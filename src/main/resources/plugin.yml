@@ -7,20 +7,16 @@ main: cn.yescallop.essentialsnk.EssentialsNK
 
 permissions:
  essentialsnk.back:
-  description: "Allows the user to use /back command"
   default: true
+ essentialsnk.break:
+  default: op
  essentialsnk.broadcast:
-  description: "Allows the user to use /broadcast command"
   default: op
  essentialsnk.burn:
-  description: "Allows the user to use /burn command"
   default: op
  essentialsnk.burn.other:
-  description: "Allows the user to use /burn command on others"
   default: op
  essentialsnk.extinguish:
-  description: "Allows the user to use /extinguish command"
   default: op
  essentialsnk.extinguish.other:
-  description: "Allows the user to use /extinguish command on others"
   default: op

@@ -27,7 +27,7 @@ public class ExtinguishCommand extends CommandBase {
         } else if (args.length == 1) {
             player = plugin.getServer().getPlayer(args[0]);
             if (player == null) {
-                sender.sendMessage(lang.translateString("generic.player.notFound", args[0]));
+                sender.sendMessage(TextFormat.RED + lang.translateString("generic.player.notFound", args[0]));
                 return true;
             }
         } else {

@@ -1,17 +1,19 @@
 package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
+import cn.nukkit.block.Block;
+import cn.nukkit.block.BlockAir;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.level.Location;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsNK;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
-public class BackCommand extends CommandBase {
+import java.util.HashMap;
 
-    public BackCommand(EssentialsNK plugin) {
-        super("back", plugin);
-        this.setAliases(new String[]{"return"});
+public class BreakCommand extends CommandBase {
+
+    public BreakCommand(EssentialsNK plugin) {
+        super("break", plugin);
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {
@@ -26,13 +28,12 @@ public class BackCommand extends CommandBase {
             return false;
         }
         Player player = (Player) sender;
-        Location pos = plugin.getPlayerLastLocation(player);
-        if (pos == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("back.notavalible"));
+        Block block = player.getTargetBlock(120);
+        if (block.getId() == Block.AIR) {
+            sender.sendMessage(TextFormat.RED + lang.translateString("break.unreachable"));
             return true;
         }
-        player.teleport(pos);
-        sender.sendMessage(lang.translateString("back.success"));
+        player.getLevel().setBlock(block, new BlockAir(), true, true);
         return true;
     }
 }
