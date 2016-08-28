@@ -8,8 +8,6 @@ import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsNK;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
-import java.util.HashMap;
-
 public class BreakCommand extends CommandBase {
 
     public BreakCommand(EssentialsNK plugin) {
