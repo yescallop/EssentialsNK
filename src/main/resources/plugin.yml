@@ -22,6 +22,8 @@ permissions:
   default: op
  essentialsnk.compass:
   default: true
+ essentialsnk.depth:
+  default: true
  essentialsnk.extinguish:
   default: op
  essentialsnk.extinguish.other:
