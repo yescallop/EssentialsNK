@@ -1,7 +1,6 @@
 package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsNK;
@@ -20,7 +19,7 @@ public class BurnCommand extends CommandBase {
         if (args.length != 2) {
             return false;
         }
-        Player player = Server.getInstance().getPlayer(args[0]);
+        Player player = plugin.getServer().getPlayer(args[0]);
         if (player == null) {
             sender.sendMessage(lang.translateString("generic.player.notFound", args[0]));
             return true;
