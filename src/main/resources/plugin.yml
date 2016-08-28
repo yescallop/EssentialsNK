@@ -34,3 +34,7 @@ permissions:
   default: true
  essentialsnk.getpos.other:
   default: op
+ essentialsnk.heal:
+  default: op
+ essentialsnk.heal.other:
+  default: op
