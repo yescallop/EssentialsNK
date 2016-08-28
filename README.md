@@ -1,0 +1,1 @@
+Essentials plugin for Nukkit
