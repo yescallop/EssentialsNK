@@ -40,7 +40,7 @@ public class FlyCommand extends CommandBase {
         boolean allow = plugin.switchAllowFlight(player);
         player.sendMessage(allow ? lang.translateString("fly.enabled") : lang.translateString("fly.disabled"));
         if (sender != player) {
-            player.sendMessage(allow ? lang.translateString("fly.enabled.other") : lang.translateString("fly.disabled.other"));
+            sender.sendMessage(allow ? lang.translateString("fly.enabled.other") : lang.translateString("fly.disabled.other"));
         }
         return true;
     }
