@@ -14,8 +14,6 @@ permissions:
   default: op
  essentialsnk.burn:
   default: op
- essentialsnk.burn.other:
-  default: op
  essentialsnk.clearinventory:
   default: op
  essentialsnk.clearinventory.other:
@@ -27,4 +25,8 @@ permissions:
  essentialsnk.extinguish:
   default: op
  essentialsnk.extinguish.other:
+  default: op
+ essentialsnk.fly:
+  default: op
+ essentialsnk.fly.other:
   default: op

@@ -38,4 +38,10 @@ public class EssentialsNK extends PluginBase {
     public Location getPlayerLastLocation(Player player) {
         return this.playerLastLocation.get(player);
     }
+    
+    public boolean switchAllowFlight(Player player) {
+        boolean allow;
+        player.setAllowFlight(allow = !player.getAllowFlight());
+        return allow;
+    }
 }

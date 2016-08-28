@@ -7,11 +7,10 @@ import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsNK;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
-public class ExtinguishCommand extends CommandBase {
+public class FlyCommand extends CommandBase {
 
-    public ExtinguishCommand(EssentialsNK plugin) {
-        super("extinguish", plugin);
-        this.setAliases(new String[]{"ext"});
+    public FlyCommand(EssentialsNK plugin) {
+        super("fly", plugin);
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {
@@ -26,7 +25,7 @@ public class ExtinguishCommand extends CommandBase {
             }
             player = (Player) sender;
         } else if (args.length == 1) {
-            if (!sender.hasPermission("essentialsnk.extinguish.other")) {
+            if (!sender.hasPermission("essentialsnk.fly.other")) {
                 sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
                 return true;
             }
@@ -38,8 +37,11 @@ public class ExtinguishCommand extends CommandBase {
         } else {
             return false;
         }
-        player.extinguish();
-        sender.sendMessage(sender == player ? lang.translateString("extinguish.success") : lang.translateString("extinguish.success.other", player.getName()));
+        boolean allow = plugin.switchAllowFlight(player);
+        player.sendMessage(allow ? lang.translateString("fly.enabled") : lang.translateString("fly.disabled"));
+        if (sender != player) {
+            player.sendMessage(allow ? lang.translateString("fly.enabled.other") : lang.translateString("fly.disabled.other"));
+        }
         return true;
     }
 }

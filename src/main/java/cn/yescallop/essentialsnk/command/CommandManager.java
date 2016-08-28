@@ -18,5 +18,6 @@ public class CommandManager {
         map.register("essentialsnk", new CompassCommand(plugin));
         map.register("essentialsnk", new DepthCommand(plugin));
         map.register("essentialsnk", new ExtinguishCommand(plugin));
+        map.register("essentialsnk", new FlyCommand(plugin));
     }
 }

@@ -2,6 +2,7 @@ package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
+import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsNK;
 import cn.yescallop.essentialsnk.command.CommandBase;
@@ -25,6 +26,10 @@ public class ClearInventoryCommand extends CommandBase {
             }
             player = (Player) sender;
         } else if (args.length == 1) {
+            if (!sender.hasPermission("essentialsnk.clearinventory.other")) {
+                sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
+                return true;
+            }
             player = plugin.getServer().getPlayer(args[0]);
             if (player == null) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("generic.player.notFound", args[0]));
