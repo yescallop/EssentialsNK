@@ -15,3 +15,9 @@ permissions:
  essentialsnk.extinguish.other:
   description: "Allows the user to use /extinguish command on others"
   default: op
+ essentialsnk.burn:
+  description: "Allows the user to use /burn command"
+  default: op
+ essentialsnk.burn.other:
+  description: "Allows the user to use /burn command on others"
+  default: op
