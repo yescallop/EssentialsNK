@@ -34,6 +34,17 @@ public class EssentialsNK extends PluginBase {
         return lang;
     }
     
+    public String parseMessage(String[] args) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < args.length; i++) {
+            if (builder.length() != 0) {
+                builder.append(" ");
+            }
+            builder.append(args[i]);
+        }
+        return builder.toString();
+    }
+    
     public void setPlayerLastLocation(Player player) {
         this.setPlayerLastLocation(player, player.getLocation());
     }

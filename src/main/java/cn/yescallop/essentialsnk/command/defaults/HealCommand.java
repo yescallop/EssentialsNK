@@ -2,7 +2,6 @@ package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.event.entity.EntityRegainHealthEvent;
 import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.level.particle.HeartParticle;
 import cn.nukkit.utils.TextFormat;

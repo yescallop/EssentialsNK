@@ -19,18 +19,7 @@ public class BroadcastCommand extends CommandBase {
         if (args.length == 0) {
             return false;
         }
-        plugin.getServer().broadcastMessage(this.parseMessage(args));
+        plugin.getServer().broadcastMessage(plugin.parseMessage(args));
         return true;
-    }
-    
-    private String parseMessage(String[] args) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < args.length; i++) {
-            if (builder.length() != 0) {
-                builder.append(" ");
-            }
-            builder.append(args[i]);
-        }
-        return builder.toString();
     }
 }

@@ -42,3 +42,5 @@ permissions:
   default: true
  essentialsnk.jump:
   default: op
+ essentialsnk.kickall:
+  default: op
