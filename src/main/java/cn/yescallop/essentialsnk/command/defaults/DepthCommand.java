@@ -18,13 +18,13 @@ public class DepthCommand extends CommandBase {
             return true;
         }
         if (!(sender instanceof Player)) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("generic.ingame"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
             return true;
         }
         if (args.length != 0) {
             return false;
         }
-        sender.sendMessage(lang.translateString("depth.success", String.valueOf(((Player) sender).getFloorY() - 63)));
+        sender.sendMessage(lang.translateString("commands.depth.success", String.valueOf(((Player) sender).getFloorY() - 63)));
         return true;
     }
 }

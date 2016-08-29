@@ -13,9 +13,9 @@ public abstract class CommandBase extends Command implements PluginIdentifiableC
     public CommandBase(String name, EssentialsNK plugin) {
         super(name);
         this.lang = plugin.getLanguage();
-        this.description = lang.translateString(name + ".description");
-        String usageMessage = lang.translateString(name + ".usage");
-        this.usageMessage = usageMessage.equals(name + ".usage") ? "/" + name : usageMessage;
+        this.description = lang.translateString("commands." + name + ".description");
+        String usageMessage = lang.translateString("commands." + name + ".usage");
+        this.usageMessage = usageMessage.equals("commands." + name + ".usage") ? "/" + name : usageMessage;
         this.setPermission("essentialsnk." + name);
         this.plugin = plugin;
     }

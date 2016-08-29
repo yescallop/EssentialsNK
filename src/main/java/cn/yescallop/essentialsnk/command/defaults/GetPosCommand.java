@@ -21,7 +21,7 @@ public class GetPosCommand extends CommandBase {
         Player player;
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("generic.ingame"));
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
                 return true;
             }
             player = (Player) sender;
@@ -32,13 +32,13 @@ public class GetPosCommand extends CommandBase {
             }
             player = plugin.getServer().getPlayer(args[0]);
             if (player == null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("generic.player.notFound", args[0]));
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notFound", args[0]));
                 return true;
             }
         } else {
             return false;
         }
-        sender.sendMessage(sender == player ? lang.translateString("getpos.success", new String[]{player.getLevel().getName(), String.valueOf(player.getFloorX()), String.valueOf(player.getFloorY()), String.valueOf(player.getFloorZ())}) : lang.translateString("getpos.success.other", new String[]{player.getName(), player.getLevel().getName(), String.valueOf(player.getFloorX()), String.valueOf(player.getFloorY()), String.valueOf(player.getFloorZ())}));
+        sender.sendMessage(sender == player ? lang.translateString("commands.getpos.success", new String[]{player.getLevel().getName(), String.valueOf(player.getFloorX()), String.valueOf(player.getFloorY()), String.valueOf(player.getFloorZ())}) : lang.translateString("commands.getpos.success.other", new String[]{player.getName(), player.getLevel().getName(), String.valueOf(player.getFloorX()), String.valueOf(player.getFloorY()), String.valueOf(player.getFloorZ())}));
         return true;
     }
 }

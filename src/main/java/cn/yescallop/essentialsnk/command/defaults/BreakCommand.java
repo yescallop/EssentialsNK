@@ -19,7 +19,7 @@ public class BreakCommand extends CommandBase {
             return true;
         }
         if (!(sender instanceof Player)) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("generic.ingame"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
             return true;
         }
         if (args.length != 0) {
@@ -28,7 +28,7 @@ public class BreakCommand extends CommandBase {
         Player player = (Player) sender;
         Block block = player.getTargetBlock(120);
         if (block.getId() == Block.AIR) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("break.unreachable"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.break.unreachable"));
             return true;
         }
         player.getLevel().setBlock(block, new BlockAir(), true, true);

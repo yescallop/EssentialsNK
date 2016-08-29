@@ -21,5 +21,6 @@ public class CommandManager {
         map.register("essentialsnk", new FlyCommand(plugin));
         map.register("essentialsnk", new GetPosCommand(plugin));
         map.register("essentialsnk", new HealCommand(plugin));
+        map.register("essentialsnk", new ItemDBCommand(plugin));
     }
 }

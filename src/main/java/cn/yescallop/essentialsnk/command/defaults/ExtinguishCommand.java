@@ -21,7 +21,7 @@ public class ExtinguishCommand extends CommandBase {
         Player player;
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("generic.ingame"));
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
                 return true;
             }
             player = (Player) sender;
@@ -32,14 +32,14 @@ public class ExtinguishCommand extends CommandBase {
             }
             player = plugin.getServer().getPlayer(args[0]);
             if (player == null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("generic.player.notFound", args[0]));
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notFound", args[0]));
                 return true;
             }
         } else {
             return false;
         }
         player.extinguish();
-        sender.sendMessage(sender == player ? lang.translateString("extinguish.success") : lang.translateString("extinguish.success.other", player.getName()));
+        sender.sendMessage(sender == player ? lang.translateString("commands.extinguish.success") : lang.translateString("commands.extinguish.success.other", player.getName()));
         return true;
     }
 }

@@ -21,18 +21,18 @@ public class BurnCommand extends CommandBase {
         }
         Player player = plugin.getServer().getPlayer(args[0]);
         if (player == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("generic.player.notFound", args[0]));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notFound", args[0]));
             return true;
         }
         int time;
         try {
             time = Integer.parseInt(args[1]);
         } catch (NumberFormatException e) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("generic.number.invalidInteger", args[1]));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.number.invalidInteger", args[1]));
             return true;
         }
         player.setOnFire(time);
-        sender.sendMessage(lang.translateString("burn.success", player.getName()));
+        sender.sendMessage(lang.translateString("commands.burn.success", player.getName()));
         return true;
     }
 }

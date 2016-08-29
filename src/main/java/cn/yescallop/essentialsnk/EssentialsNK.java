@@ -1,6 +1,9 @@
 package cn.yescallop.essentialsnk;
 
 import cn.nukkit.Player;
+import cn.nukkit.item.Item;
+import cn.nukkit.item.ItemArmor;
+import cn.nukkit.item.ItemTool;
 import cn.nukkit.level.Location;
 import cn.nukkit.plugin.PluginBase;
 import cn.yescallop.essentialsnk.command.CommandManager;
@@ -43,5 +46,9 @@ public class EssentialsNK extends PluginBase {
         boolean allow;
         player.setAllowFlight(allow = !player.getAllowFlight());
         return allow;
+    }
+    
+    public boolean isRepairable(Item item) {
+        return item instanceof ItemTool || item instanceof ItemArmor;
     }
 }

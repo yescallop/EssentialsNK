@@ -18,7 +18,7 @@ public class CompassCommand extends CommandBase {
             return true;
         }
         if (!(sender instanceof Player)) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("generic.ingame"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
             return true;
         }
         if (args.length != 0) {
@@ -41,7 +41,7 @@ public class CompassCommand extends CommandBase {
             default:
                 direction = "error";
         }
-        sender.sendMessage(lang.translateString("compass.success", lang.translateString("compass." + direction)));
+        sender.sendMessage(lang.translateString("commands.compass.success", lang.translateString("commands.compass." + direction)));
         return true;
     }
 }

@@ -19,7 +19,7 @@ public class BackCommand extends CommandBase {
             return true;
         }
         if (!(sender instanceof Player)) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("generic.ingame"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
             return true;
         }
         if (args.length != 0) {
@@ -28,11 +28,11 @@ public class BackCommand extends CommandBase {
         Player player = (Player) sender;
         Location pos = plugin.getPlayerLastLocation(player);
         if (pos == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("back.notavalible"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.back.notavalible"));
             return true;
         }
         player.teleport(pos);
-        sender.sendMessage(lang.translateString("back.success"));
+        sender.sendMessage(lang.translateString("commands.back.success"));
         return true;
     }
 }

@@ -22,7 +22,7 @@ public class HealCommand extends CommandBase {
         Player player;
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("generic.ingame"));
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
                 return true;
             }
             player = (Player) sender;
@@ -33,7 +33,7 @@ public class HealCommand extends CommandBase {
             }
             player = plugin.getServer().getPlayer(args[0]);
             if (player == null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("generic.player.notFound", args[0]));
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notFound", args[0]));
                 return true;
             }
         } else {
@@ -41,9 +41,9 @@ public class HealCommand extends CommandBase {
         }
         player.heal(player.getMaxHealth() - player.getHealth());
         player.getLevel().addParticle(new HeartParticle(player.add(0, 2), 4));
-        player.sendMessage(lang.translateString("heal.success"));
+        player.sendMessage(lang.translateString("commands.heal.success"));
         if (sender != player) {
-            sender.sendMessage(lang.translateString("heal.success.other"));
+            sender.sendMessage(lang.translateString("commands.heal.success.other"));
         }
         return true;
     }

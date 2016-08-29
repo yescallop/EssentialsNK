@@ -20,7 +20,7 @@ public class FlyCommand extends CommandBase {
         Player player;
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("generic.ingame"));
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
                 return true;
             }
             player = (Player) sender;
@@ -31,16 +31,16 @@ public class FlyCommand extends CommandBase {
             }
             player = plugin.getServer().getPlayer(args[0]);
             if (player == null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("generic.player.notFound", args[0]));
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notFound", args[0]));
                 return true;
             }
         } else {
             return false;
         }
         boolean allow = plugin.switchAllowFlight(player);
-        player.sendMessage(allow ? lang.translateString("fly.enabled") : lang.translateString("fly.disabled"));
+        player.sendMessage(allow ? lang.translateString("commands.fly.enabled") : lang.translateString("commands.fly.disabled"));
         if (sender != player) {
-            sender.sendMessage(allow ? lang.translateString("fly.enabled.other") : lang.translateString("fly.disabled.other"));
+            sender.sendMessage(allow ? lang.translateString("commands.fly.enabled.other") : lang.translateString("commands.fly.disabled.other"));
         }
         return true;
     }

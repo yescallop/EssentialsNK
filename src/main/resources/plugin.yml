@@ -38,3 +38,5 @@ permissions:
   default: op
  essentialsnk.heal.other:
   default: op
+ essentialsnk.itemdb:
+  default: true
