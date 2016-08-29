@@ -40,3 +40,5 @@ permissions:
   default: op
  essentialsnk.itemdb:
   default: true
+ essentialsnk.jump:
+  default: op
