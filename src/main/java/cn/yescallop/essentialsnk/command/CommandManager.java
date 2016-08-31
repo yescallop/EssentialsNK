@@ -24,5 +24,7 @@ public class CommandManager {
         map.register("essentialsnk", new ItemDBCommand(plugin));
         map.register("essentialsnk", new JumpCommand(plugin));
         map.register("essentialsnk", new KickAllCommand(plugin));
+        map.register("essentialsnk", new LightningCommand(plugin));
+        map.register("essentialsnk", new MoreCommand(plugin));
     }
 }

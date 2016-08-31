@@ -2,10 +2,18 @@ package cn.yescallop.essentialsnk;
 
 import cn.nukkit.Player;
 import cn.nukkit.block.Block;
+import cn.nukkit.entity.weather.EntityLightning;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemArmor;
 import cn.nukkit.item.ItemTool;
+import cn.nukkit.level.Position;
+import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
+import cn.nukkit.level.format.FullChunk;
+import cn.nukkit.nbt.tag.CompoundTag;
+import cn.nukkit.nbt.tag.DoubleTag;
+import cn.nukkit.nbt.tag.FloatTag;
+import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.plugin.PluginBase;
 import cn.yescallop.essentialsnk.command.CommandManager;
 import cn.yescallop.essentialsnk.lang.BaseLang;
@@ -65,5 +73,23 @@ public class EssentialsNK extends PluginBase {
     
     public boolean isRepairable(Item item) {
         return item instanceof ItemTool || item instanceof ItemArmor;
+    }
+    
+    public void strikeLighting(Position pos) {
+        FullChunk chunk = pos.getLevel().getChunk((int) pos.getX() >> 4, (int) pos.getZ() >> 4);
+        CompoundTag nbt = new CompoundTag()
+                .putList(new ListTag<DoubleTag>("Pos")
+                        .add(new DoubleTag("", pos.getX()))
+                        .add(new DoubleTag("", pos.getY()))
+                        .add(new DoubleTag("", pos.getZ())))
+                .putList(new ListTag<DoubleTag>("Motion")
+                        .add(new DoubleTag("", 0))
+                        .add(new DoubleTag("", 0))
+                        .add(new DoubleTag("", 0)))
+                .putList(new ListTag<FloatTag>("Rotation")
+                        .add(new FloatTag("", 0))
+                        .add(new FloatTag("", 0)));
+        EntityLightning lightning = new EntityLightning(chunk, nbt);
+        lightning.spawnToAll();
     }
 }
