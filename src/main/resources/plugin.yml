@@ -48,6 +48,8 @@ permissions:
   default: op
  essentialsnk.more:
   default: op
+ essentialsnk.ping:
+  default: true
  essentialsnk.vanish:
   default: op
  essentialsnk.vanish.other:
