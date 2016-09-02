@@ -2,6 +2,7 @@ package cn.yescallop.essentialsnk;
 
 import cn.nukkit.Player;
 import cn.nukkit.block.Block;
+import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.weather.EntityLightning;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemArmor;
@@ -66,9 +67,15 @@ public class EssentialsNK extends PluginBase {
     }
     
     public boolean switchAllowFlight(Player player) {
-        boolean allow;
-        player.setAllowFlight(allow = !player.getAllowFlight());
-        return allow;
+        boolean b;
+        player.setAllowFlight(b = !player.getAllowFlight());
+        return b;
+    }
+    
+    public boolean switchVanish(Player player) {
+        boolean b;
+        player.setDataFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_INVISIBLE, b = !player.getDataFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_INVISIBLE));
+        return b;
     }
     
     public boolean isRepairable(Item item) {

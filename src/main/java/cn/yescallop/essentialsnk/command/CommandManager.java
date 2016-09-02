@@ -27,5 +27,6 @@ public class CommandManager {
         map.register("essentialsnk", new LightningCommand(plugin));
         map.register("essentialsnk", new MoreCommand(plugin));
         map.register("essentialsnk", new PingCommand(plugin));
+        map.register("essentialsnk", new VanishCommand(plugin));
     }
 }
