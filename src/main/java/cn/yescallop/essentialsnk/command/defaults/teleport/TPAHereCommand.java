@@ -6,11 +6,10 @@ import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsNK;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
-public class TPACommand extends CommandBase {
+public class TPAHereCommand extends CommandBase {
 
-    public TPACommand(EssentialsNK plugin) {
-        super("tpa", plugin);
-        this.setAliases(new String[]{"call", "tpask"});
+    public TPAHereCommand(EssentialsNK plugin) {
+        super("tpahere", plugin);
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {
@@ -31,16 +30,16 @@ public class TPACommand extends CommandBase {
             return false;
         }
         if (player.getName().equals(((Player) sender).getName())) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpa.self"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpahere.self"));
             return false;
         }
-        if (plugin.getTPRequestBetween((Player) sender, player, true) != null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpa.exists"));
+        if (plugin.getTPRequestBetween((Player) sender, player, false) != null) {
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpahere.exists"));
             return false;
         }
-        plugin.requestTP((Player) sender, player, true);
-        player.sendMessage(lang.translateString("commands.tpa.invite"));
-        sender.sendMessage(lang.translateString("commands.tpa.sent"));
+        plugin.requestTP((Player) sender, player, false);
+        player.sendMessage(lang.translateString("commands.tpahere.invite"));
+        sender.sendMessage(lang.translateString("commands.tpahere.sent"));
         return true;
     }
 }

@@ -19,7 +19,9 @@ import cn.nukkit.plugin.PluginBase;
 import cn.yescallop.essentialsnk.command.CommandManager;
 import cn.yescallop.essentialsnk.lang.BaseLang;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EssentialsNK extends PluginBase {
@@ -29,7 +31,7 @@ public class EssentialsNK extends PluginBase {
     public static final Integer[] NON_SOLID_BLOCKS = new Integer[]{Block.AIR, Block.SAPLING, Block.WATER, Block.STILL_WATER, Block.LAVA, Block.STILL_LAVA, Block.COBWEB, Block.TALL_GRASS, Block.BUSH, Block.DANDELION,
         Block.POPPY, Block.BROWN_MUSHROOM, Block.RED_MUSHROOM, Block.TORCH, Block.FIRE, Block.WHEAT_BLOCK, Block.SIGN_POST, Block.WALL_SIGN, Block.SUGARCANE_BLOCK,
         Block.PUMPKIN_STEM, Block.MELON_STEM, Block.VINE, Block.CARROT_BLOCK, Block.POTATO_BLOCK, Block.DOUBLE_PLANT};
-    private Map<Integer, Player[]> TPARequests = new HashMap<>();
+    private List<TPRequest> tpRequests = new ArrayList<>();
 
     @Override
     public void onEnable() {
@@ -97,8 +99,43 @@ public class EssentialsNK extends PluginBase {
         lightning.spawnToAll();
     }
     
-    public void requestTPA(Player from, Player to) {
-        Player[] players = new Player[]{from, to};
-        this.TPARequests.put((int) (System.currentTimeMillis() / 1000), players);
+    public void requestTP(Player from, Player to, boolean isTo) {
+        this.tpRequests.add(new TPRequest(System.currentTimeMillis(), from, to, isTo));
+    }
+    
+    public TPRequest getLatestTPRequestTo(Player player) {
+        TPRequest latest = null;
+        for (TPRequest request : this.tpRequests) {
+            if (request.getTo() == player && (latest == null || request.getStartTime() > latest.getStartTime())) {
+                latest = request;
+            }
+        }
+        return latest;
+    }
+    
+    public TPRequest getTPRequestBetween(Player from, Player to) {
+        for (TPRequest request : this.tpRequests) {
+            if (request.getFrom() == from && request.getTo() == to) {
+                return request;
+            }
+        }
+        return null;
+    }
+    
+    public TPRequest getTPRequestBetween(Player from, Player to, boolean isTo) {
+        for (TPRequest request : this.tpRequests) {
+            if (request.getFrom() == from && request.getTo() == to && request.isTo() == isTo) {
+                return request;
+            }
+        }
+        return null;
+    }
+    
+    public void removeTPRequestBetween(Player from, Player to) {
+        for (TPRequest request : this.tpRequests.stream().toArray(TPRequest[]::new)) {
+            if (request.getFrom() == from && request.getTo() == to) {
+                this.tpRequests.remove(request);
+            }
+        }
     }
 }

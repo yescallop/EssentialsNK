@@ -56,6 +56,14 @@ permissions:
   default: op
  essentialsnk.repair.armor:
   default: op
+ essentialsnk.tpa:
+  default: true
+ essentialsnk.tpaccept:
+  default: true
+ essentialsnk.tpahere:
+  default: true
+ essentialsnk.tpdeny:
+  default: true
  essentialsnk.vanish:
   default: op
  essentialsnk.vanish.other:
