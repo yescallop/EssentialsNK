@@ -16,13 +16,14 @@ public class KickAllCommand extends CommandBase {
         if (!this.testPermission(sender)) {
             return true;
         }
+        if (args.length != 0) {
+            this.sendUsage(sender);
+            return false;
+        }
         int count = plugin.getServer().getOnlinePlayers().size();
         if (count == 0 || (sender instanceof Player && count == 1)) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.kickall.noplayer"));
             return true;
-        } else {
-            this.sendUsage(sender);
-            return false;
         }
         String reason = plugin.parseMessage(args);
         for (Player player : plugin.getServer().getOnlinePlayers().values()) {
