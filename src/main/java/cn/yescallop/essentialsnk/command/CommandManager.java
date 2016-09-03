@@ -6,6 +6,7 @@ import cn.yescallop.essentialsnk.EssentialsNK;
 import cn.yescallop.essentialsnk.command.defaults.*;
 import cn.yescallop.essentialsnk.command.defaults.home.*;
 import cn.yescallop.essentialsnk.command.defaults.teleport.*;
+import cn.yescallop.essentialsnk.command.defaults.warp.*;
 
 
 public class CommandManager {
@@ -43,5 +44,9 @@ public class CommandManager {
         map.register("essentialsnk", new TPAllCommand(plugin));
         map.register("essentialsnk", new TPDenyCommand(plugin));
         map.register("essentialsnk", new TPHereCommand(plugin));
+        
+        map.register("essentialsnk", new DelWarpCommand(plugin));
+        map.register("essentialsnk", new WarpCommand(plugin));
+        map.register("essentialsnk", new SetWarpCommand(plugin));
     }
 }

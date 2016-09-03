@@ -26,6 +26,6 @@ public class EventListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerBedEnter(PlayerBedEnterEvent event) {
         Block bed = event.getBed();
-        plugin.setHome(event.getPlayer(), Location.fromObject(bed, bed.level, 0, 0), "bed");
+        plugin.setHome(event.getPlayer(), "bed", Location.fromObject(bed, bed.level, 0, 0));
     }
 }

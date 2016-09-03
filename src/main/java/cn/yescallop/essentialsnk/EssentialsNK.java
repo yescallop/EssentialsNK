@@ -141,7 +141,7 @@ public class EssentialsNK extends PluginBase {
         this.tpRequests.remove(this.getHashCode(from, to, false));
     }
     
-    public boolean setHome(Player player, Location pos, String name) {
+    public boolean setHome(Player player, String name, Location pos) {
         this.homeConfig.reload();
         Map<String, Object[]> map = this.homeConfig.get(player.getName().toLowerCase(), new HashMap<>());
         boolean replaced = map.containsKey(name);
@@ -154,7 +154,7 @@ public class EssentialsNK extends PluginBase {
     
     public Location getHome(Player player, String name) {
         this.homeConfig.reload();
-        Map<String, ArrayList<Object>> map = (HashMap<String, ArrayList<Object>>) this.homeConfig.get(player.getName().toLowerCase());
+        Map<String, ArrayList<Object>> map = (Map<String, ArrayList<Object>>) this.homeConfig.get(player.getName().toLowerCase());
         if (map == null) {
             return null;
         }
@@ -167,7 +167,7 @@ public class EssentialsNK extends PluginBase {
     
     public void removeHome(Player player, String name) {
         this.homeConfig.reload();
-        Map<String, Object> map = (HashMap<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
+        Map<String, Object> map = (Map<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
         if (map == null) {
             return;
         }
@@ -178,7 +178,7 @@ public class EssentialsNK extends PluginBase {
     
     public String[] getHomesList(Player player) {
         this.homeConfig.reload();
-        Map<String, Object> map = (HashMap<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
+        Map<String, Object> map = (Map<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
         if (map == null) {
             return new String[]{};
         }
@@ -189,10 +189,47 @@ public class EssentialsNK extends PluginBase {
     
     public boolean isHomeExists(Player player, String name) {
         this.homeConfig.reload();
-        Map<String, Object> map = (HashMap<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
+        Map<String, Object> map = (Map<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
         if (map == null) {
             return false;
         }
         return map.containsKey(name);
+    }
+    
+    public boolean setWarp(String name, Location pos) {
+        this.warpConfig.reload();
+        boolean replaced = warpConfig.exists(name);
+        Object[] home = new Object[]{pos.level.getName(), pos.x, pos.y, pos.z, pos.yaw, pos.pitch};
+        this.warpConfig.set(name, home);
+        this.warpConfig.save();
+        return replaced;
+    }
+    
+    public Location getWarp(String name) {
+        this.warpConfig.reload();
+        List<Object> warp = this.warpConfig.getList(name);
+        if (warp == null || warp.size() != 6) {
+            return null;
+        }
+        return new Location((double) warp.get(1), (double) warp.get(2), (double) warp.get(3), (double) warp.get(4), (double) warp.get(5), this.getServer().getLevelByName((String) warp.get(0)));
+    }
+    
+    public void removeWarp(String name) {
+        this.warpConfig.reload();
+        this.warpConfig.remove(name);
+        this.warpConfig.save();
+    }
+    
+    public String[] getWarpsList() {
+        this.warpConfig.reload();
+        Map<String, Object> map = this.warpConfig.getAll();
+        String[] list = map.keySet().stream().toArray(String[]::new);
+        Arrays.sort(list, String.CASE_INSENSITIVE_ORDER);
+        return list;
+    }
+    
+    public boolean isWarpExists(String name) {
+        this.warpConfig.reload();
+        return this.warpConfig.exists(name);
     }
 }

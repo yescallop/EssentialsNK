@@ -22,6 +22,8 @@ permissions:
   default: true
  essentialsnk.delhome:
   default: true
+ essentialsnk.delwarp:
+  default: true
  essentialsnk.depth:
   default: true
  essentialsnk.extinguish:
@@ -62,6 +64,8 @@ permissions:
   default: op
  essentialsnk.sethome:
   default: true
+ essentialsnk.setwarp:
+  default: true
  essentialsnk.tpa:
   default: true
  essentialsnk.tpaccept:
@@ -78,5 +82,7 @@ permissions:
   default: op
  essentialsnk.vanish.other:
   default: op
+ essentialsnk.warp:
+  default: true
  essentialsnk.world:
   default: true
