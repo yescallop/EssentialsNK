@@ -14,7 +14,7 @@ public class KickAllCommand extends CommandBase {
 
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!this.testPermission(sender)) {
-            return true;
+            return false;
         }
         if (args.length != 0) {
             this.sendUsage(sender);
@@ -23,7 +23,7 @@ public class KickAllCommand extends CommandBase {
         int count = plugin.getServer().getOnlinePlayers().size();
         if (count == 0 || (sender instanceof Player && count == 1)) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.kickall.noplayer"));
-            return true;
+            return false;
         }
         String reason = plugin.parseMessage(args);
         for (Player player : plugin.getServer().getOnlinePlayers().values()) {

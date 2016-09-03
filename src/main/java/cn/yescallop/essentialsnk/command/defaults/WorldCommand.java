@@ -14,11 +14,11 @@ public class WorldCommand extends CommandBase {
 
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!this.testPermission(sender)) {
-            return true;
+            return false;
         }
         if (!(sender instanceof Player)) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
-            return true;
+            return false;
         }
         if (args.length != 1) {
             this.sendUsage(sender);
@@ -26,12 +26,12 @@ public class WorldCommand extends CommandBase {
         }
         if (!plugin.getServer().isLevelGenerated(args[0])) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.world.notFound"));
-            return true;
+            return false;
         } else if (!plugin.getServer().isLevelLoaded(args[0])) {
             sender.sendMessage(lang.translateString("commands.world.loading"));
             if (!plugin.getServer().loadLevel(args[0])) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.world.unloadable"));
-                return true;
+                return false;
             }
         }
         ((Player) sender).teleport(plugin.getServer().getLevelByName(args[0]).getSpawnLocation());

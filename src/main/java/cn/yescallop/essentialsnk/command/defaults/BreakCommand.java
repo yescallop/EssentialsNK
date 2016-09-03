@@ -16,11 +16,11 @@ public class BreakCommand extends CommandBase {
 
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!this.testPermission(sender)) {
-            return true;
+            return false;
         }
         if (!(sender instanceof Player)) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
-            return true;
+            return false;
         }
         if (args.length != 0) {
             this.sendUsage(sender);
@@ -30,7 +30,7 @@ public class BreakCommand extends CommandBase {
         Block block = player.getTargetBlock(120);
         if (block == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.break.unreachable"));
-            return true;
+            return false;
         }
         player.getLevel().setBlock(block, new BlockAir(), true, true);
         return true;

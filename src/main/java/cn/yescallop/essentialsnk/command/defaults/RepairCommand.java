@@ -17,11 +17,11 @@ public class RepairCommand extends CommandBase {
 
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!this.testPermission(sender)) {
-            return true;
+            return false;
         }
         if (!(sender instanceof Player)) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
-            return true;
+            return false;
         }
         if (args.length != 1) {
             this.sendUsage(sender);
@@ -32,7 +32,7 @@ public class RepairCommand extends CommandBase {
             case "all":
                 if (!sender.hasPermission("essentialsnk.repair.all")) {
                     sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
-                    return true;
+                    return false;
                 }
                 for (Item item : player.getInventory().getContents().values()) {
                     if (plugin.isRepairable(item)) {
@@ -54,7 +54,7 @@ public class RepairCommand extends CommandBase {
                 Item item = player.getInventory().getItemInHand();
                 if (!plugin.isRepairable(item)) {
                     sender.sendMessage(lang.translateString("commands.repair.unrepairable"));
-                    return true;
+                    return false;
                 }
                 item.setDamage(0);
                 sender.sendMessage(lang.translateString("commands.repair.success"));

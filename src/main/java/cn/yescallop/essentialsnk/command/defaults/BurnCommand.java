@@ -14,7 +14,7 @@ public class BurnCommand extends CommandBase {
 
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!this.testPermission(sender)) {
-            return true;
+            return false;
         }
         if (args.length != 2) {
             this.sendUsage(sender);
@@ -23,14 +23,14 @@ public class BurnCommand extends CommandBase {
         Player player = plugin.getServer().getPlayer(args[0]);
         if (player == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notFound", args[0]));
-            return true;
+            return false;
         }
         int time;
         try {
             time = Integer.parseInt(args[1]);
         } catch (NumberFormatException e) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.number.invalidInteger", args[1]));
-            return true;
+            return false;
         }
         player.setOnFire(time);
         sender.sendMessage(lang.translateString("commands.burn.success", player.getName()));

@@ -17,20 +17,20 @@ public class LightningCommand extends CommandBase {
 
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!this.testPermission(sender)) {
-            return true;
+            return false;
         }
         Player player;
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
-                return true;
+                return false;
             }
             player = (Player) sender;
         } else if (args.length == 1) {
             player = plugin.getServer().getPlayer(args[0]);
             if (player == null) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notFound", args[0]));
-                return true;
+                return false;
             }
         } else {
             this.sendUsage(sender);
@@ -39,7 +39,7 @@ public class LightningCommand extends CommandBase {
         Position pos = args.length == 1 ? player : player.getTargetBlock(120);
         if (pos == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.lightning.unreachable"));
-            return true;
+            return false;
         }
         plugin.strikeLighting(pos);
         sender.sendMessage(lang.translateString("commands.lightning.success"));

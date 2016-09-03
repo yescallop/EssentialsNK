@@ -12,7 +12,7 @@ public class PingCommand extends CommandBase {
 
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!this.testPermission(sender)) {
-            return true;
+            return false;
         }
         sender.sendMessage("Pong!");
         return true;

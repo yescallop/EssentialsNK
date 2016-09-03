@@ -14,7 +14,7 @@ public class BroadcastCommand extends CommandBase {
 
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!this.testPermission(sender)) {
-            return true;
+            return false;
         }
         if (args.length == 0) {
             this.sendUsage(sender);

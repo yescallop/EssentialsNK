@@ -16,24 +16,24 @@ public class GetPosCommand extends CommandBase {
 
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!this.testPermission(sender)) {
-            return true;
+            return false;
         }
         Player player;
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
-                return true;
+                return false;
             }
             player = (Player) sender;
         } else if (args.length == 1) {
             if (!sender.hasPermission("essentialsnk.getpos.other")) {
                 sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
-                return true;
+                return false;
             }
             player = plugin.getServer().getPlayer(args[0]);
             if (player == null) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notFound", args[0]));
-                return true;
+                return false;
             }
         } else {
             this.sendUsage(sender);

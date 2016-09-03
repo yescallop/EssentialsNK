@@ -16,11 +16,11 @@ public class BackCommand extends CommandBase {
 
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!this.testPermission(sender)) {
-            return true;
+            return false;
         }
         if (!(sender instanceof Player)) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
-            return true;
+            return false;
         }
         if (args.length != 0) {
             this.sendUsage(sender);
@@ -30,7 +30,7 @@ public class BackCommand extends CommandBase {
         Location pos = plugin.getPlayerLastLocation(player);
         if (pos == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.back.notavalible"));
-            return true;
+            return false;
         }
         player.teleport(pos);
         sender.sendMessage(lang.translateString("commands.back.success"));

@@ -18,11 +18,11 @@ public class JumpCommand extends CommandBase {
 
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!this.testPermission(sender)) {
-            return true;
+            return false;
         }
         if (!(sender instanceof Player)) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
-            return true;
+            return false;
         }
         if (args.length != 0) {
             this.sendUsage(sender);
@@ -32,11 +32,11 @@ public class JumpCommand extends CommandBase {
         Block block = player.getTargetBlock(120, EssentialsNK.NON_SOLID_BLOCKS);
         if (block == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.jump.unreachable"));
-            return true;
+            return false;
         }
         if (!player.getLevel().getBlock(block.add(0, 2)).isSolid()) {
             player.teleport(block.add(0, 1));
-            return true;
+            return false;
         }
         int side;
         switch (player.getDirection()) {
@@ -53,7 +53,7 @@ public class JumpCommand extends CommandBase {
                 side = Vector3.SIDE_EAST;
                 break;
             default:
-                return true;
+                return false;
         }
         block = block.getSide(side);
         if (!player.getLevel().getBlock(block.add(0, 2)).isSolid()) {

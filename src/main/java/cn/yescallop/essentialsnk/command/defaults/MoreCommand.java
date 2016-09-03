@@ -15,11 +15,11 @@ public class MoreCommand extends CommandBase {
 
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!this.testPermission(sender)) {
-            return true;
+            return false;
         }
         if (!(sender instanceof Player)) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
-            return true;
+            return false;
         }
         if (args.length != 0) {
             this.sendUsage(sender);
@@ -28,12 +28,12 @@ public class MoreCommand extends CommandBase {
         Player player = (Player) sender;
         if (player.isCreative() || player.isSpectator()) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.more.notavalible"));
-            return true;
+            return false;
         }
         Item item = player.getInventory().getItemInHand();
         if (item.getId() == Item.AIR) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.more.air"));
-            return true;
+            return false;
         }
         item.setCount(item.getMaxStackSize());
         sender.sendMessage(lang.translateString("commands.more.success"));
