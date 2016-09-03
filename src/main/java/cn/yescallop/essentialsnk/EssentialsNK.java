@@ -19,9 +19,7 @@ import cn.nukkit.plugin.PluginBase;
 import cn.yescallop.essentialsnk.command.CommandManager;
 import cn.yescallop.essentialsnk.lang.BaseLang;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class EssentialsNK extends PluginBase {
@@ -31,7 +29,7 @@ public class EssentialsNK extends PluginBase {
     public static final Integer[] NON_SOLID_BLOCKS = new Integer[]{Block.AIR, Block.SAPLING, Block.WATER, Block.STILL_WATER, Block.LAVA, Block.STILL_LAVA, Block.COBWEB, Block.TALL_GRASS, Block.BUSH, Block.DANDELION,
         Block.POPPY, Block.BROWN_MUSHROOM, Block.RED_MUSHROOM, Block.TORCH, Block.FIRE, Block.WHEAT_BLOCK, Block.SIGN_POST, Block.WALL_SIGN, Block.SUGARCANE_BLOCK,
         Block.PUMPKIN_STEM, Block.MELON_STEM, Block.VINE, Block.CARROT_BLOCK, Block.POTATO_BLOCK, Block.DOUBLE_PLANT};
-    private List<TPRequest> tpRequests = new ArrayList<>();
+    private Map<Integer, TPRequest> tpRequests = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -98,14 +96,18 @@ public class EssentialsNK extends PluginBase {
         EntityLightning lightning = new EntityLightning(chunk, nbt);
         lightning.spawnToAll();
     }
+
+    private int getHashCode(Player from, Player to, boolean isTo) {
+        return from.hashCode() + to.hashCode() + Boolean.hashCode(isTo);
+    }
     
     public void requestTP(Player from, Player to, boolean isTo) {
-        this.tpRequests.add(new TPRequest(System.currentTimeMillis(), from, to, isTo));
+        this.tpRequests.put(this.getHashCode(from, to, isTo), new TPRequest(System.currentTimeMillis(), from, to, isTo));
     }
     
     public TPRequest getLatestTPRequestTo(Player player) {
         TPRequest latest = null;
-        for (TPRequest request : this.tpRequests) {
+        for (TPRequest request : this.tpRequests.values()) {
             if (request.getTo() == player && (latest == null || request.getStartTime() > latest.getStartTime())) {
                 latest = request;
             }
@@ -114,28 +116,19 @@ public class EssentialsNK extends PluginBase {
     }
     
     public TPRequest getTPRequestBetween(Player from, Player to) {
-        for (TPRequest request : this.tpRequests) {
-            if (request.getFrom() == from && request.getTo() == to) {
-                return request;
-            }
+        int key;
+        if (this.tpRequests.containsKey(key = this.getHashCode(from, to, true)) || this.tpRequests.containsKey(key = this.getHashCode(from, to, false))) {
+            return this.tpRequests.get(key);
         }
         return null;
     }
     
-    public TPRequest getTPRequestBetween(Player from, Player to, boolean isTo) {
-        for (TPRequest request : this.tpRequests) {
-            if (request.getFrom() == from && request.getTo() == to && request.isTo() == isTo) {
-                return request;
-            }
-        }
-        return null;
+    public boolean hasTPRequestBetween(Player from, Player to) {
+        return this.tpRequests.containsKey(this.getHashCode(from, to, true)) || this.tpRequests.containsKey(this.getHashCode(from, to, false));
     }
     
     public void removeTPRequestBetween(Player from, Player to) {
-        for (TPRequest request : this.tpRequests.stream().toArray(TPRequest[]::new)) {
-            if (request.getFrom() == from && request.getTo() == to) {
-                this.tpRequests.remove(request);
-            }
-        }
+        this.tpRequests.remove(this.getHashCode(from, to, true));
+        this.tpRequests.remove(this.getHashCode(from, to, false));
     }
 }

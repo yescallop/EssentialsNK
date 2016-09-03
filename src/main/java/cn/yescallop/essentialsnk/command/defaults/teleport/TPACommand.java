@@ -34,7 +34,7 @@ public class TPACommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpa.self"));
             return false;
         }
-        if (plugin.getTPRequestBetween((Player) sender, player, true) != null) {
+        if (plugin.hasTPRequestBetween((Player) sender, player)) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpa.exists"));
             return false;
         }

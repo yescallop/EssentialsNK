@@ -33,7 +33,7 @@ public class TPAHereCommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpahere.self"));
             return false;
         }
-        if (plugin.getTPRequestBetween((Player) sender, player, false) != null) {
+        if (plugin.hasTPRequestBetween((Player) sender, player)) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpahere.exists"));
             return false;
         }
