@@ -23,7 +23,7 @@ public abstract class CommandBase extends Command implements PluginIdentifiableC
     }
 
     @Override
-    protected EssentialsNK getPlugin() {
+    public EssentialsNK getPlugin() {
         return plugin;
     }
     
