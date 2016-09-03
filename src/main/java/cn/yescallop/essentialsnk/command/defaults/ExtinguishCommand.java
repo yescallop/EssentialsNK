@@ -28,7 +28,7 @@ public class ExtinguishCommand extends CommandBase {
         } else if (args.length == 1) {
             if (!sender.hasPermission("essentialsnk.extinguish.other")) {
                 sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
-                rreturn false;
+                return false;
             }
             player = plugin.getServer().getPlayer(args[0]);
             if (player == null) {

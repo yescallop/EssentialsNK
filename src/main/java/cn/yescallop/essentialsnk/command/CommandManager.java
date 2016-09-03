@@ -4,6 +4,7 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandMap;
 import cn.yescallop.essentialsnk.EssentialsNK;
 import cn.yescallop.essentialsnk.command.defaults.*;
+import cn.yescallop.essentialsnk.command.defaults.teleport.*;
 
 
 public class CommandManager {
@@ -30,5 +31,7 @@ public class CommandManager {
         map.register("essentialsnk", new RepairCommand(plugin));
         map.register("essentialsnk", new VanishCommand(plugin));
         map.register("essentialsnk", new WorldCommand(plugin));
+        
+        map.register("essentialsnk", new TPACommand(plugin));
     }
 }

@@ -29,6 +29,7 @@ public class EssentialsNK extends PluginBase {
     public static final Integer[] NON_SOLID_BLOCKS = new Integer[]{Block.AIR, Block.SAPLING, Block.WATER, Block.STILL_WATER, Block.LAVA, Block.STILL_LAVA, Block.COBWEB, Block.TALL_GRASS, Block.BUSH, Block.DANDELION,
         Block.POPPY, Block.BROWN_MUSHROOM, Block.RED_MUSHROOM, Block.TORCH, Block.FIRE, Block.WHEAT_BLOCK, Block.SIGN_POST, Block.WALL_SIGN, Block.SUGARCANE_BLOCK,
         Block.PUMPKIN_STEM, Block.MELON_STEM, Block.VINE, Block.CARROT_BLOCK, Block.POTATO_BLOCK, Block.DOUBLE_PLANT};
+    private Map<Integer, Player[]> TPARequests = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -52,10 +53,6 @@ public class EssentialsNK extends PluginBase {
             builder.append(args[i]);
         }
         return builder.toString();
-    }
-    
-    public void setPlayerLastLocation(Player player) {
-        this.setPlayerLastLocation(player, player.getLocation());
     }
     
     public void setPlayerLastLocation(Player player, Location pos) {
@@ -98,5 +95,10 @@ public class EssentialsNK extends PluginBase {
                         .add(new FloatTag("", 0)));
         EntityLightning lightning = new EntityLightning(chunk, nbt);
         lightning.spawnToAll();
+    }
+    
+    public void requestTPA(Player from, Player to) {
+        Player[] players = new Player[]{from, to};
+        this.TPARequests.put((int) (System.currentTimeMillis() / 1000), players);
     }
 }
