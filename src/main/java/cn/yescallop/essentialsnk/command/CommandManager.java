@@ -35,6 +35,7 @@ public class CommandManager {
         map.register("essentialsnk", new TPACommand(plugin));
         map.register("essentialsnk", new TPAcceptCommand(plugin));
         map.register("essentialsnk", new TPAHereCommand(plugin));
+        map.register("essentialsnk", new TPAllCommand(plugin));
         map.register("essentialsnk", new TPDenyCommand(plugin));
     }
 }

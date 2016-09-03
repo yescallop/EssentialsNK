@@ -62,6 +62,8 @@ permissions:
   default: true
  essentialsnk.tpahere:
   default: true
+ essentialsnk.tpall:
+  default: true
  essentialsnk.tpdeny:
   default: true
  essentialsnk.vanish:
