@@ -1,7 +1,9 @@
 package cn.yescallop.essentialsnk.command;
 
 import cn.nukkit.command.Command;
+import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.PluginIdentifiableCommand;
+import cn.nukkit.lang.TranslationContainer;
 import cn.yescallop.essentialsnk.EssentialsNK;
 import cn.yescallop.essentialsnk.lang.BaseLang;
 
@@ -21,7 +23,11 @@ public abstract class CommandBase extends Command implements PluginIdentifiableC
     }
 
     @Override
-    public EssentialsNK getPlugin() {
+    protected EssentialsNK getPlugin() {
         return plugin;
+    }
+    
+    protected void sendUsage(CommandSender sender) {
+        sender.sendMessage(new TranslationContainer("commands.generic.usage", this.usageMessage));
     }
 }

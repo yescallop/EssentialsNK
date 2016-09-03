@@ -36,6 +36,7 @@ public class HealCommand extends CommandBase {
                 return true;
             }
         } else {
+            this.sendUsage(sender);
             return false;
         }
         player.heal(player.getMaxHealth() - player.getHealth());

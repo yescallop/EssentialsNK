@@ -22,6 +22,7 @@ public class CompassCommand extends CommandBase {
             return true;
         }
         if (args.length != 0) {
+            this.sendUsage(sender);
             return false;
         }
         String direction;

@@ -35,6 +35,7 @@ public class VanishCommand extends CommandBase {
                 return true;
             }
         } else {
+            this.sendUsage(sender);
             return false;
         }
         boolean allow = plugin.switchVanish(player);

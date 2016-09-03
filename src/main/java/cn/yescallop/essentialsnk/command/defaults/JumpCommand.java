@@ -25,6 +25,7 @@ public class JumpCommand extends CommandBase {
             return true;
         }
         if (args.length != 0) {
+            this.sendUsage(sender);
             return false;
         }
         Player player = (Player) sender;

@@ -36,6 +36,7 @@ public class ExtinguishCommand extends CommandBase {
                 return true;
             }
         } else {
+            this.sendUsage(sender);
             return false;
         }
         player.extinguish();

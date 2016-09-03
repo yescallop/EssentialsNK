@@ -17,6 +17,7 @@ public class BroadcastCommand extends CommandBase {
             return true;
         }
         if (args.length == 0) {
+            this.sendUsage(sender);
             return false;
         }
         plugin.getServer().broadcastMessage(plugin.parseMessage(args));

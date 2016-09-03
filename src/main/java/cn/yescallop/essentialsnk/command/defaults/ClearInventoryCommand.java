@@ -36,6 +36,7 @@ public class ClearInventoryCommand extends CommandBase {
                 return true;
             }
         } else {
+            this.sendUsage(sender);
             return false;
         }
         player.getInventory().clearAll();

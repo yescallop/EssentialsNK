@@ -36,6 +36,7 @@ public class GetPosCommand extends CommandBase {
                 return true;
             }
         } else {
+            this.sendUsage(sender);
             return false;
         }
         sender.sendMessage(sender == player ? lang.translateString("commands.getpos.success", new String[]{player.getLevel().getName(), String.valueOf(player.getFloorX()), String.valueOf(player.getFloorY()), String.valueOf(player.getFloorZ())}) : lang.translateString("commands.getpos.success.other", new String[]{player.getName(), player.getLevel().getName(), String.valueOf(player.getFloorX()), String.valueOf(player.getFloorY()), String.valueOf(player.getFloorZ())}));

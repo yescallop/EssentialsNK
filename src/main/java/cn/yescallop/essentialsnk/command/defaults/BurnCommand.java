@@ -17,6 +17,7 @@ public class BurnCommand extends CommandBase {
             return true;
         }
         if (args.length != 2) {
+            this.sendUsage(sender);
             return false;
         }
         Player player = plugin.getServer().getPlayer(args[0]);

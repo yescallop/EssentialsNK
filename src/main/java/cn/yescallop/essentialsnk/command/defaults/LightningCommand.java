@@ -33,6 +33,7 @@ public class LightningCommand extends CommandBase {
                 return true;
             }
         } else {
+            this.sendUsage(sender);
             return false;
         }
         Position pos = args.length == 1 ? player : player.getTargetBlock(120);

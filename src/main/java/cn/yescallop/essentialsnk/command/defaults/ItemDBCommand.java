@@ -23,6 +23,7 @@ public class ItemDBCommand extends CommandBase {
             return true;
         }
         if (args.length > 1) {
+            this.sendUsage(sender);
             return false;
         }
         Item item = ((Player) sender).getInventory().getItemInHand();

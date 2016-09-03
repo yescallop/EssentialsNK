@@ -35,6 +35,7 @@ public class FlyCommand extends CommandBase {
                 return true;
             }
         } else {
+            this.sendUsage(sender);
             return false;
         }
         boolean allow = plugin.switchAllowFlight(player);

@@ -22,6 +22,7 @@ public class DepthCommand extends CommandBase {
             return true;
         }
         if (args.length != 0) {
+            this.sendUsage(sender);
             return false;
         }
         sender.sendMessage(lang.translateString("commands.depth.success", String.valueOf(((Player) sender).getFloorY() - 63)));

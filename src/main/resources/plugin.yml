@@ -50,7 +50,15 @@ permissions:
   default: op
  essentialsnk.ping:
   default: true
+ essentialsnk.repair:
+  default: op
+ essentialsnk.repair.all:
+  default: op
+ essentialsnk.repair.armor:
+  default: op
  essentialsnk.vanish:
   default: op
  essentialsnk.vanish.other:
   default: op
+ essentialsnk.world:
+  default: true
