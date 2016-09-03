@@ -20,6 +20,8 @@ permissions:
   default: op
  essentialsnk.compass:
   default: true
+ essentialsnk.delhome:
+  default: true
  essentialsnk.depth:
   default: true
  essentialsnk.extinguish:
@@ -38,6 +40,8 @@ permissions:
   default: op
  essentialsnk.heal.other:
   default: op
+ essentialsnk.home:
+  default: true
  essentialsnk.itemdb:
   default: true
  essentialsnk.jump:
@@ -56,6 +60,8 @@ permissions:
   default: op
  essentialsnk.repair.armor:
   default: op
+ essentialsnk.sethome:
+  default: true
  essentialsnk.tpa:
   default: true
  essentialsnk.tpaccept:

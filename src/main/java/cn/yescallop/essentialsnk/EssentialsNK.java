@@ -16,10 +16,15 @@ import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.plugin.PluginBase;
+import cn.nukkit.utils.Config;
 import cn.yescallop.essentialsnk.command.CommandManager;
 import cn.yescallop.essentialsnk.lang.BaseLang;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EssentialsNK extends PluginBase {
@@ -30,11 +35,15 @@ public class EssentialsNK extends PluginBase {
         Block.POPPY, Block.BROWN_MUSHROOM, Block.RED_MUSHROOM, Block.TORCH, Block.FIRE, Block.WHEAT_BLOCK, Block.SIGN_POST, Block.WALL_SIGN, Block.SUGARCANE_BLOCK,
         Block.PUMPKIN_STEM, Block.MELON_STEM, Block.VINE, Block.CARROT_BLOCK, Block.POTATO_BLOCK, Block.DOUBLE_PLANT};
     private Map<Integer, TPRequest> tpRequests = new HashMap<>();
+    private Config homeConfig;
+    private Config warpConfig;
 
     @Override
     public void onEnable() {
         this.getDataFolder().mkdirs();
-        lang = new BaseLang(this.getServer().getLanguage().getLang());
+        this.homeConfig = new Config(new File(this.getDataFolder(), "home.yml"), Config.YAML);
+        this.warpConfig = new Config(new File(this.getDataFolder(), "warp.yml"), Config.YAML);
+        this.lang = new BaseLang(this.getServer().getLanguage().getLang());
         this.getServer().getPluginManager().registerEvents(new EventListener(this), this);
         CommandManager.registerAll(this);
         this.getLogger().info(lang.translateString("essentialsnk.loaded"));
@@ -44,11 +53,11 @@ public class EssentialsNK extends PluginBase {
         return lang;
     }
     
-    public String parseMessage(String[] args) {
+    public String implode(String[] args, String glue) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < args.length; i++) {
             if (builder.length() != 0) {
-                builder.append(" ");
+                builder.append(glue);
             }
             builder.append(args[i]);
         }
@@ -130,5 +139,60 @@ public class EssentialsNK extends PluginBase {
     public void removeTPRequestBetween(Player from, Player to) {
         this.tpRequests.remove(this.getHashCode(from, to, true));
         this.tpRequests.remove(this.getHashCode(from, to, false));
+    }
+    
+    public boolean setHome(Player player, Location pos, String name) {
+        this.homeConfig.reload();
+        Map<String, Object[]> map = this.homeConfig.get(player.getName().toLowerCase(), new HashMap<>());
+        boolean replaced = map.containsKey(name);
+        Object[] home = new Object[]{pos.level.getName(), pos.x, pos.y, pos.z, pos.yaw, pos.pitch};
+        map.put(name, home);
+        this.homeConfig.set(player.getName().toLowerCase(), map);
+        this.homeConfig.save();
+        return replaced;
+    }
+    
+    public Location getHome(Player player, String name) {
+        this.homeConfig.reload();
+        Map<String, ArrayList<Object>> map = (HashMap<String, ArrayList<Object>>) this.homeConfig.get(player.getName().toLowerCase());
+        if (map == null) {
+            return null;
+        }
+        List<Object> home = map.get(name);
+        if (home == null || home.size() != 6) {
+            return null;
+        }
+        return new Location((double) home.get(1), (double) home.get(2), (double) home.get(3), (double) home.get(4), (double) home.get(5), this.getServer().getLevelByName((String) home.get(0)));
+    }
+    
+    public void removeHome(Player player, String name) {
+        this.homeConfig.reload();
+        Map<String, Object> map = (HashMap<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
+        if (map == null) {
+            return;
+        }
+        map.remove(name);
+        this.homeConfig.set(player.getName().toLowerCase(), map);
+        this.homeConfig.save();
+    }
+    
+    public String[] getHomesList(Player player) {
+        this.homeConfig.reload();
+        Map<String, Object> map = (HashMap<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
+        if (map == null) {
+            return new String[]{};
+        }
+        String[] list = map.keySet().stream().toArray(String[]::new);
+        Arrays.sort(list, String.CASE_INSENSITIVE_ORDER);
+        return list;
+    }
+    
+    public boolean isHomeExists(Player player, String name) {
+        this.homeConfig.reload();
+        Map<String, Object> map = (HashMap<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
+        if (map == null) {
+            return false;
+        }
+        return map.containsKey(name);
     }
 }
