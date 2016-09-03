@@ -22,14 +22,14 @@ public class BurnCommand extends CommandBase {
         }
         Player player = plugin.getServer().getPlayer(args[0]);
         if (player == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notFound", args[0]));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
             return false;
         }
         int time;
         try {
             time = Integer.parseInt(args[1]);
         } catch (NumberFormatException e) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.number.invalidInteger", args[1]));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.number.invalidinteger", args[1]));
             return false;
         }
         player.setOnFire(time);

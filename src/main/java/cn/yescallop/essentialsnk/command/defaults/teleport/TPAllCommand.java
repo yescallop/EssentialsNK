@@ -26,7 +26,7 @@ public class TPAllCommand extends CommandBase {
         } else if (args.length == 1) {
             player = plugin.getServer().getPlayer(args[0]);
             if (player == null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notFound", args[0]));
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
                 return false;
             }
         } else {

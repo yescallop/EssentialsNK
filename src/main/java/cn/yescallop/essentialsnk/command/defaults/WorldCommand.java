@@ -25,7 +25,7 @@ public class WorldCommand extends CommandBase {
             return false;
         }
         if (!plugin.getServer().isLevelGenerated(args[0])) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.world.notFound"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.world.notfound"));
             return false;
         } else if (!plugin.getServer().isLevelLoaded(args[0])) {
             sender.sendMessage(lang.translateString("commands.world.loading"));

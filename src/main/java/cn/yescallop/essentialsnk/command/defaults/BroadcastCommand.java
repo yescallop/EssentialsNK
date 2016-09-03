@@ -20,7 +20,7 @@ public class BroadcastCommand extends CommandBase {
             this.sendUsage(sender);
             return false;
         }
-        plugin.getServer().broadcastMessage(plugin.parseMessage(args));
+        plugin.getServer().broadcastMessage(plugin.implode(args, " "));
         return true;
     }
 }
