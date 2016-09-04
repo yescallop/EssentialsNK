@@ -6,13 +6,13 @@ import cn.nukkit.block.BlockAir;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class JumpCommand extends CommandBase {
 
-    public JumpCommand(EssentialsNK plugin) {
-        super("jump", plugin);
+    public JumpCommand(EssentialsAPI api) {
+        super("jump", api);
         this.setAliases(new String[]{"j", "jumpto"});
     }
 
@@ -29,7 +29,7 @@ public class JumpCommand extends CommandBase {
             return false;
         }
         Player player = (Player) sender;
-        Block block = player.getTargetBlock(120, EssentialsNK.NON_SOLID_BLOCKS);
+        Block block = player.getTargetBlock(120, EssentialsAPI.NON_SOLID_BLOCKS);
         if (block == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.jump.unreachable"));
             return false;

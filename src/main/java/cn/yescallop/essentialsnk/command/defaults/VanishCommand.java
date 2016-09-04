@@ -4,13 +4,13 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class VanishCommand extends CommandBase {
 
-    public VanishCommand(EssentialsNK plugin) {
-        super("vanish", plugin);
+    public VanishCommand(EssentialsAPI api) {
+        super("vanish", api);
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {
@@ -29,7 +29,7 @@ public class VanishCommand extends CommandBase {
                 sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
                 return false;
             }
-            player = plugin.getServer().getPlayer(args[0]);
+            player = api.getServer().getPlayer(args[0]);
             if (player == null) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
                 return false;
@@ -38,7 +38,7 @@ public class VanishCommand extends CommandBase {
             this.sendUsage(sender);
             return false;
         }
-        boolean allow = plugin.switchVanish(player);
+        boolean allow = api.switchVanish(player);
         player.sendMessage(allow ? lang.translateString("commands.vanish.enabled") : lang.translateString("commands.vanish.disabled"));
         if (sender != player) {
             sender.sendMessage(allow ? lang.translateString("commands.vanish.enabled.other", player.getName()) : lang.translateString("commands.vanish.disabled.other", player.getName()));

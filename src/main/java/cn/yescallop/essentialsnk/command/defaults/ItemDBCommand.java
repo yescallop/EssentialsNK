@@ -4,13 +4,13 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.item.Item;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class ItemDBCommand extends CommandBase {
 
-    public ItemDBCommand(EssentialsNK plugin) {
-        super("itemdb", plugin);
+    public ItemDBCommand(EssentialsAPI api) {
+        super("itemdb", api);
         this.setAliases(new String[]{"itemno", "durability", "dura"});
     }
 
@@ -27,7 +27,7 @@ public class ItemDBCommand extends CommandBase {
             return false;
         }
         Item item = ((Player) sender).getInventory().getItemInHand();
-        String message = plugin.isRepairable(item) ? lang.translateString("commands.itemdb.damage", String.valueOf(item.getDamage())) : lang.translateString("commands.itemdb.meta", String.valueOf(item.getDamage()));
+        String message = api.isRepairable(item) ? lang.translateString("commands.itemdb.damage", String.valueOf(item.getDamage())) : lang.translateString("commands.itemdb.meta", String.valueOf(item.getDamage()));
         if (args.length == 1) {
             switch (args[0]) {
                 case "name":

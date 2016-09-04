@@ -5,13 +5,13 @@ import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockAir;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class BreakCommand extends CommandBase {
 
-    public BreakCommand(EssentialsNK plugin) {
-        super("break", plugin);
+    public BreakCommand(EssentialsAPI api) {
+        super("break", api);
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {

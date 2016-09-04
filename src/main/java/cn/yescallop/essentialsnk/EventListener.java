@@ -10,22 +10,22 @@ import cn.yescallop.essentialsnk.lang.BaseLang;
 
 public class EventListener implements Listener {
     
-    EssentialsNK plugin;
+    EssentialsAPI api;
     BaseLang lang;
     
-    public EventListener(EssentialsNK plugin) {
-        this.plugin = plugin;
-        lang = plugin.getLanguage();
+    public EventListener(EssentialsAPI api) {
+        this.api = api;
+        lang = api.getLanguage();
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        plugin.setPlayerLastLocation(event.getPlayer(), event.getFrom());
+        api.setPlayerLastLocation(event.getPlayer(), event.getFrom());
     }
     
     @EventHandler(ignoreCancelled = true)
     public void onPlayerBedEnter(PlayerBedEnterEvent event) {
         Block bed = event.getBed();
-        plugin.setHome(event.getPlayer(), "bed", Location.fromObject(bed, bed.level, 0, 0));
+        api.setHome(event.getPlayer(), "bed", Location.fromObject(bed, bed.level, 0, 0));
     }
 }

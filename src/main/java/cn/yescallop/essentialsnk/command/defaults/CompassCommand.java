@@ -3,13 +3,13 @@ package cn.yescallop.essentialsnk.command.defaults;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class CompassCommand extends CommandBase {
 
-    public CompassCommand(EssentialsNK plugin) {
-        super("compass", plugin);
+    public CompassCommand(EssentialsAPI api) {
+        super("compass", api);
         this.setAliases(new String[]{"direction"});
     }
 

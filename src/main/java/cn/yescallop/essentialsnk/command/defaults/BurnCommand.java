@@ -3,13 +3,13 @@ package cn.yescallop.essentialsnk.command.defaults;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class BurnCommand extends CommandBase {
 
-    public BurnCommand(EssentialsNK plugin) {
-        super("burn", plugin);
+    public BurnCommand(EssentialsAPI api) {
+        super("burn", api);
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {
@@ -20,7 +20,7 @@ public class BurnCommand extends CommandBase {
             this.sendUsage(sender);
             return false;
         }
-        Player player = plugin.getServer().getPlayer(args[0]);
+        Player player = api.getServer().getPlayer(args[0]);
         if (player == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
             return false;

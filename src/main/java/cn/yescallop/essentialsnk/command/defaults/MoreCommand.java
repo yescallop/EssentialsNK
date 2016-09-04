@@ -4,13 +4,13 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.item.Item;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class MoreCommand extends CommandBase {
 
-    public MoreCommand(EssentialsNK plugin) {
-        super("more", plugin);
+    public MoreCommand(EssentialsAPI api) {
+        super("more", api);
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {

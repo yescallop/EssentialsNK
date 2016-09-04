@@ -3,13 +3,13 @@ package cn.yescallop.essentialsnk.command.defaults.teleport;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class TPHereCommand extends CommandBase {
 
-    public TPHereCommand(EssentialsNK plugin) {
-        super("tphere", plugin);
+    public TPHereCommand(EssentialsAPI api) {
+        super("tphere", api);
         this.setAliases(new String[]{"s"});
     }
 
@@ -25,7 +25,7 @@ public class TPHereCommand extends CommandBase {
             this.sendUsage(sender);
             return false;
         }
-        Player player = plugin.getServer().getPlayer(args[0]);
+        Player player = api.getServer().getPlayer(args[0]);
         if (player == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
             return false;

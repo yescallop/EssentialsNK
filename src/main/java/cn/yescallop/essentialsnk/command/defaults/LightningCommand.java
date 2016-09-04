@@ -5,13 +5,13 @@ import cn.nukkit.command.CommandSender;
 import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.level.Position;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class LightningCommand extends CommandBase {
 
-    public LightningCommand(EssentialsNK plugin) {
-        super("lightning", plugin);
+    public LightningCommand(EssentialsAPI api) {
+        super("lightning", api);
         this.setAliases(new String[]{"strike", "smite", "thor", "shock"});
     }
 
@@ -27,7 +27,7 @@ public class LightningCommand extends CommandBase {
             }
             player = (Player) sender;
         } else if (args.length == 1) {
-            player = plugin.getServer().getPlayer(args[0]);
+            player = api.getServer().getPlayer(args[0]);
             if (player == null) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
                 return false;
@@ -41,7 +41,7 @@ public class LightningCommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.lightning.unreachable"));
             return false;
         }
-        plugin.strikeLighting(pos);
+        api.strikeLighting(pos);
         sender.sendMessage(lang.translateString("commands.lightning.success"));
         return true;
     }

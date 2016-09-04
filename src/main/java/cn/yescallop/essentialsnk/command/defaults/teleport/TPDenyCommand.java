@@ -3,14 +3,14 @@ package cn.yescallop.essentialsnk.command.defaults.teleport;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.TPRequest;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class TPDenyCommand extends CommandBase {
 
-    public TPDenyCommand(EssentialsNK plugin) {
-        super("tpdeny", plugin);
+    public TPDenyCommand(EssentialsAPI api) {
+        super("tpdeny", api);
         this.setAliases(new String[]{"tpno"});
     }
 
@@ -27,7 +27,7 @@ public class TPDenyCommand extends CommandBase {
             return false;
         }
         Player to = (Player) sender;
-        if (plugin.getLatestTPRequestTo(to) == null) {
+        if (api.getLatestTPRequestTo(to) == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpdeny.noRequest"));
             return false;
         }
@@ -35,19 +35,19 @@ public class TPDenyCommand extends CommandBase {
         Player from;
         switch (args.length) {
             case 0:
-                if((request = plugin.getLatestTPRequestTo(to)) == null) {
+                if((request = api.getLatestTPRequestTo(to)) == null) {
                     sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpdeny.unavailable"));
                     return false;
                 }
                 from = request.getFrom();
                 break;
             case 1:
-                from = plugin.getServer().getPlayer(args[0]);
+                from = api.getServer().getPlayer(args[0]);
                 if (from == null) {
                     sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
                     return false;
                 }
-                if ((request = plugin.getTPRequestBetween(from, to)) != null) {
+                if ((request = api.getTPRequestBetween(from, to)) != null) {
                     sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpdeny.noRequestFrom", from.getName()));
                     return false;
                 }
@@ -57,7 +57,7 @@ public class TPDenyCommand extends CommandBase {
         }
         from.sendMessage(lang.translateString("commands.tpdeny.denied"));
         sender.sendMessage(lang.translateString("commands.tpdeny.success"));
-        plugin.removeTPRequestBetween(from, to);
+        api.removeTPRequestBetween(from, to);
         return true;
     }
 }

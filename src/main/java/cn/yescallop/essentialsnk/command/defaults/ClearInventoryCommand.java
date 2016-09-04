@@ -4,13 +4,13 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class ClearInventoryCommand extends CommandBase {
 
-    public ClearInventoryCommand(EssentialsNK plugin) {
-        super("clearinventory", plugin);
+    public ClearInventoryCommand(EssentialsAPI api) {
+        super("clearinventory", api);
         this.setAliases(new String[]{"ci", "clean", "clearinvent"});
     }
 
@@ -30,7 +30,7 @@ public class ClearInventoryCommand extends CommandBase {
                 sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
                 return false;
             }
-            player = plugin.getServer().getPlayer(args[0]);
+            player = api.getServer().getPlayer(args[0]);
             if (player == null) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
                 return false;

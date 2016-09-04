@@ -4,13 +4,13 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class ExtinguishCommand extends CommandBase {
 
-    public ExtinguishCommand(EssentialsNK plugin) {
-        super("extinguish", plugin);
+    public ExtinguishCommand(EssentialsAPI api) {
+        super("extinguish", api);
         this.setAliases(new String[]{"ext"});
     }
 
@@ -30,7 +30,7 @@ public class ExtinguishCommand extends CommandBase {
                 sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
                 return false;
             }
-            player = plugin.getServer().getPlayer(args[0]);
+            player = api.getServer().getPlayer(args[0]);
             if (player == null) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
                 return false;

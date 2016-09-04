@@ -4,13 +4,13 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.level.Location;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class HomeCommand extends CommandBase {
 
-    public HomeCommand(EssentialsNK plugin) {
-        super("home", plugin);
+    public HomeCommand(EssentialsAPI api) {
+        super("home", api);
         this.setAliases(new String[]{"homes"});
     }
 
@@ -28,15 +28,15 @@ public class HomeCommand extends CommandBase {
         }
         Player player = (Player) sender;
         if (args.length == 0) {
-            String[] list = plugin.getHomesList(player);
+            String[] list = api.getHomesList(player);
             if (list.length == 0) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.home.nohome"));
                 return false;
             }
-            sender.sendMessage(lang.translateString("commands.home.list") + "\n" + plugin.implode(list, ", "));
+            sender.sendMessage(lang.translateString("commands.home.list") + "\n" + api.implode(list, ", "));
             return true;
         }
-        Location home = plugin.getHome(player, args[0].toLowerCase());
+        Location home = api.getHome(player, args[0].toLowerCase());
         if (home == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.home.notexists"));
             return false;

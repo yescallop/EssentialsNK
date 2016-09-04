@@ -3,13 +3,13 @@ package cn.yescallop.essentialsnk.command.defaults.warp;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class DelWarpCommand extends CommandBase {
 
-    public DelWarpCommand(EssentialsNK plugin) {
-        super("delwarp", plugin);
+    public DelWarpCommand(EssentialsAPI api) {
+        super("delwarp", api);
         this.setAliases(new String[]{"remwarp", "removewarp", "closewarp"});
     }
 
@@ -25,11 +25,11 @@ public class DelWarpCommand extends CommandBase {
             this.sendUsage(sender);
             return false;
         }
-        if (!plugin.isWarpExists(args[0].toLowerCase())) {
+        if (!api.isWarpExists(args[0].toLowerCase())) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.delwarp.notexists"));
             return false;
         }
-        plugin.removeWarp(args[0].toLowerCase());
+        api.removeWarp(args[0].toLowerCase());
         sender.sendMessage(lang.translateString("commands.delwarp.success"));
         return true;
     }

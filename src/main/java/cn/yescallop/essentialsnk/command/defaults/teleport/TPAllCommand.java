@@ -3,13 +3,13 @@ package cn.yescallop.essentialsnk.command.defaults.teleport;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class TPAllCommand extends CommandBase {
 
-    public TPAllCommand(EssentialsNK plugin) {
-        super("tpall", plugin);
+    public TPAllCommand(EssentialsAPI api) {
+        super("tpall", api);
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {
@@ -24,7 +24,7 @@ public class TPAllCommand extends CommandBase {
             }
             player = (Player) sender;
         } else if (args.length == 1) {
-            player = plugin.getServer().getPlayer(args[0]);
+            player = api.getServer().getPlayer(args[0]);
             if (player == null) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
                 return false;
@@ -33,7 +33,7 @@ public class TPAllCommand extends CommandBase {
             this.sendUsage(sender);
             return false;
         }
-        for (Player p : plugin.getServer().getOnlinePlayers().values()) {
+        for (Player p : api.getServer().getOnlinePlayers().values()) {
             if (p != player) {
                 p.teleport(player);
                 p.sendMessage(lang.translateString("commands.tpall.other"));

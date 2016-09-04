@@ -4,13 +4,13 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.level.Location;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class WarpCommand extends CommandBase {
 
-    public WarpCommand(EssentialsNK plugin) {
-        super("warp", plugin);
+    public WarpCommand(EssentialsAPI api) {
+        super("warp", api);
         this.setAliases(new String[]{"warps"});
     }
 
@@ -28,15 +28,15 @@ public class WarpCommand extends CommandBase {
         }
         Player player = (Player) sender;
         if (args.length == 0) {
-            String[] list = plugin.getWarpsList();
+            String[] list = api.getWarpsList();
             if (list.length == 0) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.warp.nowarp"));
                 return false;
             }
-            sender.sendMessage(lang.translateString("commands.warp.list") + "\n" + plugin.implode(list, ", "));
+            sender.sendMessage(lang.translateString("commands.warp.list") + "\n" + api.implode(list, ", "));
             return true;
         }
-        Location warp = plugin.getWarp(args[0].toLowerCase());
+        Location warp = api.getWarp(args[0].toLowerCase());
         if (warp == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.warp.notexists"));
             return false;

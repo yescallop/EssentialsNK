@@ -1,13 +1,13 @@
 package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.command.CommandSender;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class PingCommand extends CommandBase {
 
-    public PingCommand(EssentialsNK plugin) {
-        super("ping", plugin);
+    public PingCommand(EssentialsAPI api) {
+        super("ping", api);
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {

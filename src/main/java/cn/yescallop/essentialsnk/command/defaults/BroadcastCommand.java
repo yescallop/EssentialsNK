@@ -2,13 +2,13 @@ package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class BroadcastCommand extends CommandBase {
 
-    public BroadcastCommand(EssentialsNK plugin) {
-        super("broadcast", plugin);
+    public BroadcastCommand(EssentialsAPI api) {
+        super("broadcast", api);
         this.setAliases(new String[]{"bcast"});
     }
 
@@ -20,7 +20,7 @@ public class BroadcastCommand extends CommandBase {
             this.sendUsage(sender);
             return false;
         }
-        plugin.getServer().broadcastMessage(plugin.implode(args, " "));
+        api.getServer().broadcastMessage(api.implode(args, " "));
         return true;
     }
 }

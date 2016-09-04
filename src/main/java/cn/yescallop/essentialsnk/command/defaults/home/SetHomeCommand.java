@@ -3,13 +3,13 @@ package cn.yescallop.essentialsnk.command.defaults.home;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class SetHomeCommand extends CommandBase {
 
-    public SetHomeCommand(EssentialsNK plugin) {
-        super("sethome", plugin);
+    public SetHomeCommand(EssentialsAPI api) {
+        super("sethome", api);
         this.setAliases(new String[]{"createhome"});
     }
 
@@ -32,7 +32,7 @@ public class SetHomeCommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.sethome.empty"));
             return false;
         }
-        sender.sendMessage(plugin.setHome((Player) sender, args[0].toLowerCase(), (Player) sender) ? lang.translateString("commands.sethome.replaced") : lang.translateString("commands.sethome.success"));
+        sender.sendMessage(api.setHome((Player) sender, args[0].toLowerCase(), (Player) sender) ? lang.translateString("commands.sethome.replaced") : lang.translateString("commands.sethome.success"));
         return true;
     }
 }

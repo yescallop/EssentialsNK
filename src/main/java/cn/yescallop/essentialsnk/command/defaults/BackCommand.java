@@ -4,13 +4,13 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.level.Location;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class BackCommand extends CommandBase {
 
-    public BackCommand(EssentialsNK plugin) {
-        super("back", plugin);
+    public BackCommand(EssentialsAPI api) {
+        super("back", api);
         this.setAliases(new String[]{"return"});
     }
 
@@ -27,7 +27,7 @@ public class BackCommand extends CommandBase {
             return false;
         }
         Player player = (Player) sender;
-        Location pos = plugin.getPlayerLastLocation(player);
+        Location pos = api.getPlayerLastLocation(player);
         if (pos == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.back.notavalible"));
             return false;

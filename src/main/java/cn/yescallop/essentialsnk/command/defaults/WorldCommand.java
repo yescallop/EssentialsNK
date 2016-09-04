@@ -3,13 +3,13 @@ package cn.yescallop.essentialsnk.command.defaults;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class WorldCommand extends CommandBase {
 
-    public WorldCommand(EssentialsNK plugin) {
-        super("world", plugin);
+    public WorldCommand(EssentialsAPI api) {
+        super("world", api);
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {
@@ -24,17 +24,17 @@ public class WorldCommand extends CommandBase {
             this.sendUsage(sender);
             return false;
         }
-        if (!plugin.getServer().isLevelGenerated(args[0])) {
+        if (!api.getServer().isLevelGenerated(args[0])) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.world.notfound"));
             return false;
-        } else if (!plugin.getServer().isLevelLoaded(args[0])) {
+        } else if (!api.getServer().isLevelLoaded(args[0])) {
             sender.sendMessage(lang.translateString("commands.world.loading"));
-            if (!plugin.getServer().loadLevel(args[0])) {
+            if (!api.getServer().loadLevel(args[0])) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.world.unloadable"));
                 return false;
             }
         }
-        ((Player) sender).teleport(plugin.getServer().getLevelByName(args[0]).getSpawnLocation());
+        ((Player) sender).teleport(api.getServer().getLevelByName(args[0]).getSpawnLocation());
         sender.sendMessage(lang.translateString("commands.world.success"));
         return true;
     }

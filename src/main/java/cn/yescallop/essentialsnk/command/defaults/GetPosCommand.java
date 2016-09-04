@@ -4,13 +4,13 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class GetPosCommand extends CommandBase {
 
-    public GetPosCommand(EssentialsNK plugin) {
-        super("getpos", plugin);
+    public GetPosCommand(EssentialsAPI api) {
+        super("getpos", api);
         this.setAliases(new String[]{"coords", "position", "whereami", "getlocation", "getloc"});
     }
 
@@ -30,7 +30,7 @@ public class GetPosCommand extends CommandBase {
                 sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
                 return false;
             }
-            player = plugin.getServer().getPlayer(args[0]);
+            player = api.getServer().getPlayer(args[0]);
             if (player == null) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
                 return false;

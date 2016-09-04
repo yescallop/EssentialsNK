@@ -5,13 +5,13 @@ import cn.nukkit.command.CommandSender;
 import cn.nukkit.item.Item;
 import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class RepairCommand extends CommandBase {
 
-    public RepairCommand(EssentialsNK plugin) {
-        super("repair", plugin);
+    public RepairCommand(EssentialsAPI api) {
+        super("repair", api);
         this.setAliases(new String[]{"fix"});
     }
 
@@ -35,13 +35,13 @@ public class RepairCommand extends CommandBase {
                     return false;
                 }
                 for (Item item : player.getInventory().getContents().values()) {
-                    if (plugin.isRepairable(item)) {
+                    if (api.isRepairable(item)) {
                         item.setDamage(0);
                     }
                 }
                 if (sender.hasPermission("essentialsnk.repair.armor")) {
                     for (Item item : player.getInventory().getArmorContents()) {
-                        if (plugin.isRepairable(item)) {
+                        if (api.isRepairable(item)) {
                             item.setDamage(0);
                         }
                     }
@@ -52,7 +52,7 @@ public class RepairCommand extends CommandBase {
                 break;
             case "hand":
                 Item item = player.getInventory().getItemInHand();
-                if (!plugin.isRepairable(item)) {
+                if (!api.isRepairable(item)) {
                     sender.sendMessage(lang.translateString("commands.repair.unrepairable"));
                     return false;
                 }

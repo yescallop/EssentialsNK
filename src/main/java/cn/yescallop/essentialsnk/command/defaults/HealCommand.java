@@ -5,13 +5,13 @@ import cn.nukkit.command.CommandSender;
 import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.level.particle.HeartParticle;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class HealCommand extends CommandBase {
 
-    public HealCommand(EssentialsNK plugin) {
-        super("heal", plugin);
+    public HealCommand(EssentialsAPI api) {
+        super("heal", api);
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {
@@ -30,7 +30,7 @@ public class HealCommand extends CommandBase {
                 sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
                 return false;
             }
-            player = plugin.getServer().getPlayer(args[0]);
+            player = api.getServer().getPlayer(args[0]);
             if (player == null) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
                 return false;

@@ -3,14 +3,14 @@ package cn.yescallop.essentialsnk.command.defaults.teleport;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
-import cn.yescallop.essentialsnk.EssentialsNK;
+import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.TPRequest;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class TPAcceptCommand extends CommandBase {
 
-    public TPAcceptCommand(EssentialsNK plugin) {
-        super("tpaccept", plugin);
+    public TPAcceptCommand(EssentialsAPI api) {
+        super("tpaccept", api);
         this.setAliases(new String[]{"tpyes"});
     }
 
@@ -27,7 +27,7 @@ public class TPAcceptCommand extends CommandBase {
             return false;
         }
         Player to = (Player) sender;
-        if (plugin.getLatestTPRequestTo(to) == null) {
+        if (api.getLatestTPRequestTo(to) == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.noRequest"));
             return false;
         }
@@ -35,19 +35,19 @@ public class TPAcceptCommand extends CommandBase {
         Player from;
         switch (args.length) {
             case 0:
-                if((request = plugin.getLatestTPRequestTo(to)) == null) {
+                if((request = api.getLatestTPRequestTo(to)) == null) {
                     sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.unavailable"));
                     return false;
                 }
                 from = request.getFrom();
                 break;
             case 1:
-                from = plugin.getServer().getPlayer(args[0]);
+                from = api.getServer().getPlayer(args[0]);
                 if (from == null) {
                     sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
                     return false;
                 }
-                if ((request = plugin.getTPRequestBetween(from, to)) != null) {
+                if ((request = api.getTPRequestBetween(from, to)) != null) {
                     sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.noRequestFrom", from.getName()));
                     return false;
                 }
@@ -62,7 +62,7 @@ public class TPAcceptCommand extends CommandBase {
         } else {
             to.teleport(from);
         }
-        plugin.removeTPRequestBetween(from, to);
+        api.removeTPRequestBetween(from, to);
         return true;
     }
 }
