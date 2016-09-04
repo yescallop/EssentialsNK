@@ -224,8 +224,7 @@ public class EssentialsAPI {
     
     public String[] getWarpsList() {
         this.warpConfig.reload();
-        Map<String, Object> map = this.warpConfig.getAll();
-        String[] list = map.keySet().stream().toArray(String[]::new);
+        String[] list = this.warpConfig.getKeys().stream().toArray(String[]::new);
         Arrays.sort(list, String.CASE_INSENSITIVE_ORDER);
         return list;
     }

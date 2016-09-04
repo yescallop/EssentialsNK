@@ -33,27 +33,22 @@ public class TPAcceptCommand extends CommandBase {
         }
         TPRequest request;
         Player from;
-        switch (args.length) {
-            case 0:
-                if((request = api.getLatestTPRequestTo(to)) == null) {
-                    sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.unavailable"));
-                    return false;
-                }
-                from = request.getFrom();
-                break;
-            case 1:
-                from = api.getServer().getPlayer(args[0]);
-                if (from == null) {
-                    sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
-                    return false;
-                }
-                if ((request = api.getTPRequestBetween(from, to)) != null) {
-                    sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.noRequestFrom", from.getName()));
-                    return false;
-                }
-                break;
-            default:
+        if (args.length == 0) {
+            if ((request = api.getLatestTPRequestTo(to)) == null) {
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.unavailable"));
                 return false;
+            }
+            from = request.getFrom();
+        } else {
+            from = api.getServer().getPlayer(args[0]);
+            if (from == null) {
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
+                return false;
+            }
+            if ((request = api.getTPRequestBetween(from, to)) != null) {
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.noRequestFrom", from.getName()));
+                return false;
+            }
         }
         from.sendMessage(lang.translateString("commands.tpaccept.accepted"));
         sender.sendMessage(lang.translateString("commands.tpaccept.success"));

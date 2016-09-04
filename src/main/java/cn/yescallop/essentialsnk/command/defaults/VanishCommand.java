@@ -17,6 +17,10 @@ public class VanishCommand extends CommandBase {
         if (!this.testPermission(sender)) {
             return false;
         }
+        if (args.length > 1) {
+            this.sendUsage(sender);
+            return false;
+        }
         Player player;
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
@@ -24,7 +28,7 @@ public class VanishCommand extends CommandBase {
                 return false;
             }
             player = (Player) sender;
-        } else if (args.length == 1) {
+        } else {
             if (!sender.hasPermission("essentialsnk.vanish.other")) {
                 sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
                 return false;
@@ -34,9 +38,6 @@ public class VanishCommand extends CommandBase {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
                 return false;
             }
-        } else {
-            this.sendUsage(sender);
-            return false;
         }
         boolean allow = api.switchVanish(player);
         player.sendMessage(allow ? lang.translateString("commands.vanish.enabled") : lang.translateString("commands.vanish.disabled"));

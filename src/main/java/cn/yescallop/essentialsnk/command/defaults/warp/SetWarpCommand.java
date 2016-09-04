@@ -10,7 +10,7 @@ public class SetWarpCommand extends CommandBase {
 
     public SetWarpCommand(EssentialsAPI api) {
         super("setwarp", api);
-        this.setAliases(new String[]{"createwarp"});
+        this.setAliases(new String[]{"createwarp", "openwarp"});
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {

@@ -19,6 +19,10 @@ public class LightningCommand extends CommandBase {
         if (!this.testPermission(sender)) {
             return false;
         }
+        if (args.length > 1) {
+            this.sendUsage(sender);
+            return false;
+        }
         Player player;
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
@@ -26,15 +30,12 @@ public class LightningCommand extends CommandBase {
                 return false;
             }
             player = (Player) sender;
-        } else if (args.length == 1) {
+        } else {
             player = api.getServer().getPlayer(args[0]);
             if (player == null) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
                 return false;
             }
-        } else {
-            this.sendUsage(sender);
-            return false;
         }
         Position pos = args.length == 1 ? player : player.getTargetBlock(120);
         if (pos == null) {

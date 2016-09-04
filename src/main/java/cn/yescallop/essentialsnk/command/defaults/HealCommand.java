@@ -18,6 +18,10 @@ public class HealCommand extends CommandBase {
         if (!this.testPermission(sender)) {
             return false;
         }
+        if (args.length > 1) {
+            this.sendUsage(sender);
+            return false;
+        }
         Player player;
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
@@ -25,7 +29,7 @@ public class HealCommand extends CommandBase {
                 return false;
             }
             player = (Player) sender;
-        } else if (args.length == 1) {
+        } else {
             if (!sender.hasPermission("essentialsnk.heal.other")) {
                 sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
                 return false;
@@ -35,9 +39,6 @@ public class HealCommand extends CommandBase {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
                 return false;
             }
-        } else {
-            this.sendUsage(sender);
-            return false;
         }
         player.heal(player.getMaxHealth() - player.getHealth());
         player.getLevel().addParticle(new HeartParticle(player.add(0, 2), 4));
