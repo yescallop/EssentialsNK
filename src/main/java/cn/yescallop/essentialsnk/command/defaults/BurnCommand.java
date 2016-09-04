@@ -32,8 +32,12 @@ public class BurnCommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.number.invalidinteger", args[1]));
             return false;
         }
+        if (time <= 0) {
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.number.invalidinteger", args[1]));
+            return false;
+        }
         player.setOnFire(time);
-        sender.sendMessage(lang.translateString("commands.burn.success", player.getName()));
+        sender.sendMessage(lang.translateString("commands.burn.success", player.getDisplayName()));
         return true;
     }
 }

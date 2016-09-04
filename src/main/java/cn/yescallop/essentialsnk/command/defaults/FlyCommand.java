@@ -40,9 +40,9 @@ public class FlyCommand extends CommandBase {
             }
         }
         boolean allow = api.switchAllowFlight(player);
-        player.sendMessage(allow ? lang.translateString("commands.fly.enabled") : lang.translateString("commands.fly.disabled"));
+        player.sendMessage(lang.translateString("commands.fly.success", allow ? lang.translateString("commands.generic.enabled") : lang.translateString("commands.generic.disabled")));
         if (sender != player) {
-            sender.sendMessage(allow ? lang.translateString("commands.fly.enabled.other", player.getName()) : lang.translateString("commands.fly.disabled.other", player.getName()));
+            sender.sendMessage(lang.translateString("commands.fly.success.other", new String[]{player.getDisplayName(), allow ? lang.translateString("commands.generic.enabled") : lang.translateString("commands.generic.disabled")}));
         }
         return true;
     }

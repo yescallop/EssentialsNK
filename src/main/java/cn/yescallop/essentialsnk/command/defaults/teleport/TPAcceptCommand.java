@@ -46,12 +46,12 @@ public class TPAcceptCommand extends CommandBase {
                 return false;
             }
             if ((request = api.getTPRequestBetween(from, to)) != null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.noRequestFrom", from.getName()));
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.noRequestFrom", from.getDisplayName()));
                 return false;
             }
         }
-        from.sendMessage(lang.translateString("commands.tpaccept.accepted"));
-        sender.sendMessage(lang.translateString("commands.tpaccept.success"));
+        from.sendMessage(lang.translateString("commands.tpaccept.accepted", to.getDisplayName()));
+        sender.sendMessage(lang.translateString("commands.generic.teleporting"));
         if (request.isTo()) {
             from.teleport(to);
         } else {

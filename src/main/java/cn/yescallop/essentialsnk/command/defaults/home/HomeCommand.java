@@ -38,7 +38,7 @@ public class HomeCommand extends CommandBase {
         }
         Location home = api.getHome(player, args[0].toLowerCase());
         if (home == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.home.notexists"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.home.notexists", args[0]));
             return false;
         }
         player.teleport(home);

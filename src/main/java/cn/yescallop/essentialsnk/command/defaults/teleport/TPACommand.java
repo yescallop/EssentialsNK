@@ -30,12 +30,8 @@ public class TPACommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
             return false;
         }
-        if (player.getName().equals(((Player) sender).getName())) {
+        if (sender == player) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpa.self"));
-            return false;
-        }
-        if (api.hasTPRequestBetween((Player) sender, player)) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpa.exists"));
             return false;
         }
         api.requestTP((Player) sender, player, true);

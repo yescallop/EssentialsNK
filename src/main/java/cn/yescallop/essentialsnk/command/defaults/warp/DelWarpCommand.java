@@ -26,7 +26,7 @@ public class DelWarpCommand extends CommandBase {
             return false;
         }
         if (!api.isWarpExists(args[0].toLowerCase())) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.delwarp.notexists"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.warp.notexists"));
             return false;
         }
         api.removeWarp(args[0].toLowerCase());

@@ -41,7 +41,10 @@ public class ClearInventoryCommand extends CommandBase {
             }
         }
         player.getInventory().clearAll();
-        sender.sendMessage(sender == player ? lang.translateString("commands.clearinventory.success") : lang.translateString("commands.clearinventory.success.other", player.getName()));
+        player.sendMessage(lang.translateString("commands.clearinventory.success"));
+        if (sender != player) {
+            sender.sendMessage(lang.translateString("commands.clearinventory.success.other", player.getDisplayName()));
+        }
         return true;
     }
 }

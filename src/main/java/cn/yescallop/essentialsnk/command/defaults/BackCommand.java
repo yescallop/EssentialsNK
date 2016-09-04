@@ -33,7 +33,7 @@ public class BackCommand extends CommandBase {
             return false;
         }
         player.teleport(pos);
-        sender.sendMessage(lang.translateString("commands.back.success"));
+        sender.sendMessage(lang.translateString("commands.generic.teleporting"));
         return true;
     }
 }

@@ -58,7 +58,7 @@ public class WarpCommand extends CommandBase {
         player.teleport(warp);
         player.sendMessage(lang.translateString("commands.warp.success", args[0]));
         if (sender != player) {
-            player.sendMessage(lang.translateString("commands.warp.success.other", new String[]{player.getName(), args[0]}));
+            player.sendMessage(lang.translateString("commands.warp.success.other", new String[]{player.getDisplayName(), args[0]}));
         }
         return true;
     }

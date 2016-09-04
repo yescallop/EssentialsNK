@@ -35,7 +35,7 @@ public class WorldCommand extends CommandBase {
             }
         }
         ((Player) sender).teleport(api.getServer().getLevelByName(args[0]).getSpawnLocation());
-        sender.sendMessage(lang.translateString("commands.world.success"));
+        sender.sendMessage(lang.translateString("commands.generic.teleporting"));
         return true;
     }
 }

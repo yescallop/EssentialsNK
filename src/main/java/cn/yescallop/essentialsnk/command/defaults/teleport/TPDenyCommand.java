@@ -28,7 +28,7 @@ public class TPDenyCommand extends CommandBase {
         }
         Player to = (Player) sender;
         if (api.getLatestTPRequestTo(to) == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpdeny.noRequest"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.noRequest"));
             return false;
         }
         TPRequest request;
@@ -36,7 +36,7 @@ public class TPDenyCommand extends CommandBase {
         switch (args.length) {
             case 0:
                 if((request = api.getLatestTPRequestTo(to)) == null) {
-                    sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpdeny.unavailable"));
+                    sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.unavailable"));
                     return false;
                 }
                 from = request.getFrom();
@@ -48,15 +48,15 @@ public class TPDenyCommand extends CommandBase {
                     return false;
                 }
                 if ((request = api.getTPRequestBetween(from, to)) != null) {
-                    sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpdeny.noRequestFrom", from.getName()));
+                    sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.noRequestFrom", from.getDisplayName()));
                     return false;
                 }
                 break;
             default:
                 return false;
         }
-        from.sendMessage(lang.translateString("commands.tpdeny.denied"));
-        sender.sendMessage(lang.translateString("commands.tpdeny.success"));
+        from.sendMessage(lang.translateString("commands.tpdeny.denied", to.getDisplayName()));
+        sender.sendMessage(lang.translateString("commands.tpdeny.success", to.getDisplayName()));
         api.removeTPRequestBetween(from, to);
         return true;
     }

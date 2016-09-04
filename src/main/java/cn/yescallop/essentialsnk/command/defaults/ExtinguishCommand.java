@@ -41,7 +41,7 @@ public class ExtinguishCommand extends CommandBase {
             }
         }
         player.extinguish();
-        sender.sendMessage(sender == player ? lang.translateString("commands.extinguish.success") : lang.translateString("commands.extinguish.success.other", player.getName()));
+        sender.sendMessage(sender == player ? lang.translateString("commands.extinguish.success") : lang.translateString("commands.extinguish.success.other", player.getDisplayName()));
         return true;
     }
 }

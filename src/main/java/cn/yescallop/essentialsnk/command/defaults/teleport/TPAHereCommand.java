@@ -29,17 +29,13 @@ public class TPAHereCommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
             return false;
         }
-        if (player.getName().equals(((Player) sender).getName())) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpahere.self"));
-            return false;
-        }
-        if (api.hasTPRequestBetween((Player) sender, player)) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpahere.exists"));
+        if (sender == player) {
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpa.self"));
             return false;
         }
         api.requestTP((Player) sender, player, false);
         player.sendMessage(lang.translateString("commands.tpahere.invite"));
-        sender.sendMessage(lang.translateString("commands.tpahere.sent"));
+        sender.sendMessage(lang.translateString("commands.tpa.sent"));
         return true;
     }
 }

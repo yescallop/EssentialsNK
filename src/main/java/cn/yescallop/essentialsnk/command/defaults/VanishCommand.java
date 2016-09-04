@@ -40,9 +40,9 @@ public class VanishCommand extends CommandBase {
             }
         }
         boolean allow = api.switchVanish(player);
-        player.sendMessage(allow ? lang.translateString("commands.vanish.enabled") : lang.translateString("commands.vanish.disabled"));
+        player.sendMessage(lang.translateString("commands.vanish.success", allow ? lang.translateString("commands.generic.enabled") : lang.translateString("commands.generic.disabled")));
         if (sender != player) {
-            sender.sendMessage(allow ? lang.translateString("commands.vanish.enabled.other", player.getName()) : lang.translateString("commands.vanish.disabled.other", player.getName()));
+            sender.sendMessage(lang.translateString("commands.vanish.success.other", new String[]{player.getDisplayName(), allow ? lang.translateString("commands.generic.enabled") : lang.translateString("commands.generic.disabled")}));
         }
         return true;
     }

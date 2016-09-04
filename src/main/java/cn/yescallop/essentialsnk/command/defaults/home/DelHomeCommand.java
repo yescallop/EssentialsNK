@@ -26,11 +26,11 @@ public class DelHomeCommand extends CommandBase {
             return false;
         }
         if (!api.isHomeExists((Player) sender, args[0].toLowerCase())) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.delhome.notexists"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.home.notexists", args[0]));
             return false;
         }
         api.removeHome((Player) sender, args[0].toLowerCase());
-        sender.sendMessage(lang.translateString("commands.delhome.success"));
+        sender.sendMessage(lang.translateString("commands.delhome.success", args[0]));
         return true;
     }
 }

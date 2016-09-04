@@ -32,7 +32,7 @@ public class SetHomeCommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.sethome.empty"));
             return false;
         }
-        sender.sendMessage(api.setHome((Player) sender, args[0].toLowerCase(), (Player) sender) ? lang.translateString("commands.sethome.replaced") : lang.translateString("commands.sethome.success"));
+        sender.sendMessage(api.setHome((Player) sender, args[0].toLowerCase(), (Player) sender) ? lang.translateString("commands.sethome.updated") : lang.translateString("commands.sethome.success"));
         return true;
     }
 }
