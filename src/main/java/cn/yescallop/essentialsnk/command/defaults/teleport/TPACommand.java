@@ -35,8 +35,8 @@ public class TPACommand extends CommandBase {
             return false;
         }
         api.requestTP((Player) sender, player, true);
-        player.sendMessage(lang.translateString("commands.tpa.invite"));
-        sender.sendMessage(lang.translateString("commands.tpa.sent"));
+        player.sendMessage(lang.translateString("commands.tpa.invite", ((Player) sender).getName()));
+        sender.sendMessage(lang.translateString("commands.tpa.sent", player.getDisplayName()));
         return true;
     }
 }
