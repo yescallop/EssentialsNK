@@ -8,6 +8,8 @@ import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
+import java.util.Map;
+
 public class RepairCommand extends CommandBase {
 
     public RepairCommand(EssentialsAPI api) {
@@ -34,17 +36,21 @@ public class RepairCommand extends CommandBase {
                     sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
                     return false;
                 }
-                for (Item item : player.getInventory().getContents().values()) {
+                Map<Integer, Item> contents = player.getInventory().getContents();
+                for (Item item : contents.values()) {
                     if (api.isRepairable(item)) {
                         item.setDamage(0);
                     }
                 }
+                player.getInventory().setContents(contents);
                 if (sender.hasPermission("essentialsnk.repair.armor")) {
-                    for (Item item : player.getInventory().getArmorContents()) {
+                    Item[] armors = player.getInventory().getArmorContents();
+                    for (Item item : armors) {
                         if (api.isRepairable(item)) {
                             item.setDamage(0);
                         }
                     }
+                    player.getInventory().setArmorContents(armors);
                     sender.sendMessage(lang.translateString("commands.repair.armor"));
                 } else {
                     sender.sendMessage(lang.translateString("commands.repair.all"));
@@ -57,6 +63,7 @@ public class RepairCommand extends CommandBase {
                     return false;
                 }
                 item.setDamage(0);
+                player.getInventory().setItemInHand(item);
                 sender.sendMessage(lang.translateString("commands.repair.success"));
                 break;
             default:

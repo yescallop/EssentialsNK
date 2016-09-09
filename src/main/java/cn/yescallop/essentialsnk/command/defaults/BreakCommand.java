@@ -27,7 +27,7 @@ public class BreakCommand extends CommandBase {
             return false;
         }
         Player player = (Player) sender;
-        Block block = player.getTargetBlock(120);
+        Block block = player.getTargetBlock(120, new Integer[]{Block.AIR});
         if (block == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.break.unreachable"));
             return false;

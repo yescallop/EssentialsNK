@@ -36,6 +36,7 @@ public class MoreCommand extends CommandBase {
             return false;
         }
         item.setCount(item.getMaxStackSize());
+        player.getInventory().setItemInHand(item);
         sender.sendMessage(lang.translateString("commands.more.success"));
         return true;
     }
