@@ -14,7 +14,7 @@ public class EssentialsNK extends PluginBase {
         this.getDataFolder().mkdirs();
         this.lang = new BaseLang(this.getServer().getLanguage().getLang());
         this.api = new EssentialsAPI(this);
-        CommandManager.registerAll(this.getServer().getCommandMap(), this.api);
+        CommandManager.registerAll(this.api);
         this.getServer().getPluginManager().registerEvents(new EventListener(this.api), this);
         this.getLogger().info(lang.translateString("essentialsnk.loaded"));
     }

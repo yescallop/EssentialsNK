@@ -10,41 +10,42 @@ import cn.yescallop.essentialsnk.command.defaults.warp.*;
 
 public class CommandManager {
 
-    public static void registerAll(CommandMap map, EssentialsAPI api) {
-        map.register("essentialsnk", new BackCommand(api));
-        map.register("essentialsnk", new BreakCommand(api));
-        map.register("essentialsnk", new BroadcastCommand(api));
-        map.register("essentialsnk", new BurnCommand(api));
-        map.register("essentialsnk", new ClearInventoryCommand(api));
-        map.register("essentialsnk", new CompassCommand(api));
-        map.register("essentialsnk", new DepthCommand(api));
-        map.register("essentialsnk", new ExtinguishCommand(api));
-        map.register("essentialsnk", new FlyCommand(api));
-        map.register("essentialsnk", new GetPosCommand(api));
-        map.register("essentialsnk", new HealCommand(api));
-        map.register("essentialsnk", new ItemDBCommand(api));
-        map.register("essentialsnk", new JumpCommand(api));
-        map.register("essentialsnk", new KickAllCommand(api));
-        map.register("essentialsnk", new LightningCommand(api));
-        map.register("essentialsnk", new MoreCommand(api));
-        map.register("essentialsnk", new PingCommand(api));
-        map.register("essentialsnk", new RepairCommand(api));
-        map.register("essentialsnk", new VanishCommand(api));
-        map.register("essentialsnk", new WorldCommand(api));
+    public static void registerAll(EssentialsAPI api) {
+        CommandMap map = api.getServer().getCommandMap();
+        map.register("EssentialsNK", new BackCommand(api));
+        map.register("EssentialsNK", new BreakCommand(api));
+        map.register("EssentialsNK", new BroadcastCommand(api));
+        map.register("EssentialsNK", new BurnCommand(api));
+        map.register("EssentialsNK", new ClearInventoryCommand(api));
+        map.register("EssentialsNK", new CompassCommand(api));
+        map.register("EssentialsNK", new DepthCommand(api));
+        map.register("EssentialsNK", new ExtinguishCommand(api));
+        map.register("EssentialsNK", new FlyCommand(api));
+        map.register("EssentialsNK", new GetPosCommand(api));
+        map.register("EssentialsNK", new HealCommand(api));
+        map.register("EssentialsNK", new ItemDBCommand(api));
+        map.register("EssentialsNK", new JumpCommand(api));
+        map.register("EssentialsNK", new KickAllCommand(api));
+        map.register("EssentialsNK", new LightningCommand(api));
+        map.register("EssentialsNK", new MoreCommand(api));
+        map.register("EssentialsNK", new PingCommand(api));
+        map.register("EssentialsNK", new RepairCommand(api));
+        map.register("EssentialsNK", new VanishCommand(api));
+        map.register("EssentialsNK", new WorldCommand(api));
         
-        map.register("essentialsnk", new DelHomeCommand(api));
-        map.register("essentialsnk", new HomeCommand(api));
-        map.register("essentialsnk", new SetHomeCommand(api));
+        map.register("EssentialsNK", new DelHomeCommand(api));
+        map.register("EssentialsNK", new HomeCommand(api));
+        map.register("EssentialsNK", new SetHomeCommand(api));
         
-        map.register("essentialsnk", new TPACommand(api));
-        map.register("essentialsnk", new TPAcceptCommand(api));
-        map.register("essentialsnk", new TPAHereCommand(api));
-        map.register("essentialsnk", new TPAllCommand(api));
-        map.register("essentialsnk", new TPDenyCommand(api));
-        map.register("essentialsnk", new TPHereCommand(api));
+        map.register("EssentialsNK", new TPACommand(api));
+        map.register("EssentialsNK", new TPAcceptCommand(api));
+        map.register("EssentialsNK", new TPAHereCommand(api));
+        map.register("EssentialsNK", new TPAllCommand(api));
+        map.register("EssentialsNK", new TPDenyCommand(api));
+        map.register("EssentialsNK", new TPHereCommand(api));
         
-        map.register("essentialsnk", new DelWarpCommand(api));
-        map.register("essentialsnk", new WarpCommand(api));
-        map.register("essentialsnk", new SetWarpCommand(api));
+        map.register("EssentialsNK", new DelWarpCommand(api));
+        map.register("EssentialsNK", new WarpCommand(api));
+        map.register("EssentialsNK", new SetWarpCommand(api));
     }
 }
