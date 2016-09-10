@@ -34,6 +34,8 @@ permissions:
   default: op
  essentialsnk.fly.other:
   default: op
+ essentialsnk.gamemode:
+  default: op
  essentialsnk.getpos:
   default: true
  essentialsnk.getpos.other:
