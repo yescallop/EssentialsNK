@@ -143,6 +143,15 @@ public class EssentialsAPI {
         this.tpRequests.remove(this.getHashCode(from, to, false));
     }
     
+    public void removeTPRequest(Player player) {
+        for (Map.Entry<Integer, TPRequest> entry : this.tpRequests.entrySet()) {
+            TPRequest request = entry.getValue();
+            if (request.getFrom() == player || request.getTo() == player) {
+                this.tpRequests.remove(entry.getKey());
+            }
+        }
+    }
+    
     public boolean setHome(Player player, String name, Location pos) {
         this.homeConfig.reload();
         Map<String, Object[]> map = this.homeConfig.get(player.getName().toLowerCase(), new HashMap<>());
