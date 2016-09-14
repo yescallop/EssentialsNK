@@ -34,8 +34,8 @@ public class TPAHereCommand extends CommandBase {
             return false;
         }
         api.requestTP((Player) sender, player, false);
-        player.sendMessage(lang.translateString("commands.tpahere.invite"));
-        sender.sendMessage(lang.translateString("commands.tpa.sent"));
+        player.sendMessage(lang.translateString("commands.tpahere.invite", ((Player) sender).getName()));
+        sender.sendMessage(lang.translateString("commands.tpa.sent", player.getDisplayName()));
         return true;
     }
 }
