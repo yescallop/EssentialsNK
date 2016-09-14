@@ -47,6 +47,10 @@ public class EssentialsAPI {
         this.warpConfig = new Config(new File(plugin.getDataFolder(), "warp.yml"), Config.YAML);
     }
     
+    public static EssentialsAPI getInstance() {
+        return instance;
+    }
+    
     public Server getServer() {
         return plugin.getServer();
     }
