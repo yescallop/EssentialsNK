@@ -1,7 +1,7 @@
 package cn.yescallop.essentialsnk.command.defaults;
 
-import cn.nukkit.Server;
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.TextFormat;
@@ -27,8 +27,7 @@ public class GamemodeCommand extends CommandBase {
                 return false;
             }
             if (args.length == 1) {
-                if (!(sender instanceof Player)) {
-                    sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
+                if (!this.testIngame(sender)) {
                     return false;
                 }
                 player = (Player) sender;
@@ -50,8 +49,7 @@ public class GamemodeCommand extends CommandBase {
                 return false;
             }
             if (args.length == 0) {
-                if (!(sender instanceof Player)) {
-                    sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
+                if (!this.testIngame(sender)) {
                     return false;
                 }
                 player = (Player) sender;
@@ -88,11 +86,11 @@ public class GamemodeCommand extends CommandBase {
         String gamemodeStr = Server.getGamemodeString(gamemode);
         player.sendMessage(lang.translateString("commands.gamemode.success", gamemodeStr));
         if (sender != player) {
-            sender.sendMessage(lang.translateString("commands.gamemode.success.other", new String[]{player.getDisplayName(), gamemodeStr}));
+            sender.sendMessage(lang.translateString("commands.gamemode.success.other", player.getDisplayName(), gamemodeStr));
         }
         return true;
     }
-    
+
     private void sendUsage(CommandSender sender, String label) {
         String usage;
         if (label.toLowerCase().equals("gamemode") || label.toLowerCase().equals("gm")) {

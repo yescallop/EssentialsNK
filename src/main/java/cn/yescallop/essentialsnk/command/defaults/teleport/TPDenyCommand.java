@@ -18,8 +18,7 @@ public class TPDenyCommand extends CommandBase {
         if (!this.testPermission(sender)) {
             return false;
         }
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
+        if (!this.testIngame(sender)) {
             return false;
         }
         if (args.length > 1) {
@@ -35,7 +34,7 @@ public class TPDenyCommand extends CommandBase {
         Player from;
         switch (args.length) {
             case 0:
-                if((request = api.getLatestTPRequestTo(to)) == null) {
+                if ((request = api.getLatestTPRequestTo(to)) == null) {
                     sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.unavailable"));
                     return false;
                 }

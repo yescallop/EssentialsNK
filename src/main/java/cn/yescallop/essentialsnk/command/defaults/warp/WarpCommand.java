@@ -2,7 +2,6 @@ package cn.yescallop.essentialsnk.command.defaults.warp;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.level.Location;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
@@ -34,19 +33,18 @@ public class WarpCommand extends CommandBase {
         }
         Location warp = api.getWarp(args[0].toLowerCase());
         if (warp == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.warp.notexists"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.warp.notexists", args[0]));
             return false;
         }
         Player player;
         if (args.length == 1) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
+            if (!this.testIngame(sender)) {
                 return false;
             }
             player = (Player) sender;
         } else {
             if (!sender.hasPermission("essentialsnk.warp.other")) {
-                sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
+                this.sendPermissionMessage(sender);
                 return false;
             }
             player = api.getServer().getPlayer(args[0]);

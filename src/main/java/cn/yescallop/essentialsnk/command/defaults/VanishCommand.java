@@ -2,7 +2,6 @@ package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
@@ -23,14 +22,13 @@ public class VanishCommand extends CommandBase {
         }
         Player player;
         if (args.length == 0) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
+            if (!this.testIngame(sender)) {
                 return false;
             }
             player = (Player) sender;
         } else {
             if (!sender.hasPermission("essentialsnk.vanish.other")) {
-                sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
+                this.sendPermissionMessage(sender);
                 return false;
             }
             player = api.getServer().getPlayer(args[0]);
@@ -39,10 +37,10 @@ public class VanishCommand extends CommandBase {
                 return false;
             }
         }
-        boolean allow = api.switchVanish(player);
-        player.sendMessage(lang.translateString("commands.vanish.success", allow ? lang.translateString("commands.generic.enabled") : lang.translateString("commands.generic.disabled")));
+        String enabled = lang.translateString(api.switchVanish(player) ? "commands.generic.enabled" : "commands.generic.disabled");
+        player.sendMessage(lang.translateString("commands.vanish.success", enabled));
         if (sender != player) {
-            sender.sendMessage(lang.translateString("commands.vanish.success.other", new String[]{player.getDisplayName(), allow ? lang.translateString("commands.generic.enabled") : lang.translateString("commands.generic.disabled")}));
+            sender.sendMessage(lang.translateString("commands.vanish.success.other", player.getDisplayName(), enabled));
         }
         return true;
     }

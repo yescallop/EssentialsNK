@@ -18,8 +18,7 @@ public class TPAllCommand extends CommandBase {
         }
         Player player;
         if (args.length == 0) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
+            if (!this.testIngame(sender)) {
                 return false;
             }
             player = (Player) sender;

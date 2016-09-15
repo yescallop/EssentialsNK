@@ -16,8 +16,7 @@ public class WorldCommand extends CommandBase {
         if (!this.testPermission(sender)) {
             return false;
         }
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
+        if (!this.testIngame(sender)) {
             return false;
         }
         if (args.length != 1) {

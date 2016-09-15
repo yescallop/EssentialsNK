@@ -2,7 +2,6 @@ package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.level.particle.HeartParticle;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
@@ -24,14 +23,13 @@ public class HealCommand extends CommandBase {
         }
         Player player;
         if (args.length == 0) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
+            if (!this.testIngame(sender)) {
                 return false;
             }
             player = (Player) sender;
         } else {
             if (!sender.hasPermission("essentialsnk.heal.other")) {
-                sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
+                this.sendPermissionMessage(sender);
                 return false;
             }
             player = api.getServer().getPlayer(args[0]);
@@ -44,7 +42,7 @@ public class HealCommand extends CommandBase {
         player.getLevel().addParticle(new HeartParticle(player.add(0, 2), 4));
         player.sendMessage(lang.translateString("commands.heal.success"));
         if (sender != player) {
-            sender.sendMessage(lang.translateString("commands.heal.success.other"));
+            sender.sendMessage(lang.translateString("commands.heal.success.other", player.getDisplayName()));
         }
         return true;
     }

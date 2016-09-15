@@ -1,8 +1,6 @@
 package cn.yescallop.essentialsnk.lang;
 
 import cn.nukkit.Server;
-import cn.nukkit.lang.TextContainer;
-import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.Utils;
 
 import java.io.IOException;
@@ -13,10 +11,10 @@ import java.util.Map;
 public class BaseLang {
     public static final String FALLBACK_LANGUAGE = "eng";
 
-    protected String langName;
+    private String langName;
 
-    protected Map<String, String> lang = new HashMap<>();
-    protected Map<String, String> fallbackLang = new HashMap<>();
+    private Map<String, String> lang = new HashMap<>();
+    private Map<String, String> fallbackLang = new HashMap<>();
 
 
     public BaseLang(String lang) {
@@ -50,15 +48,11 @@ public class BaseLang {
 
     }
 
-    public String getName() {
-        return this.get("language.name");
-    }
-
     public String getLang() {
         return langName;
     }
 
-    protected Map<String, String> loadLang(String path) {
+    private Map<String, String> loadLang(String path) {
         try {
             String content = Utils.readFile(path);
             Map<String, String> d = new HashMap<>();
@@ -89,7 +83,7 @@ public class BaseLang {
         }
     }
 
-    protected Map<String, String> loadLang(InputStream stream) {
+    private Map<String, String> loadLang(InputStream stream) {
         try {
             String content = Utils.readFile(stream);
             Map<String, String> d = new HashMap<>();
@@ -120,25 +114,9 @@ public class BaseLang {
         }
     }
 
-    public String translateString(String str) {
-        return this.translateString(str, new String[]{}, null);
-    }
-
-    public String translateString(String str, String param) {
-        return this.translateString(str, new String[]{param});
-    }
-
-    public String translateString(String str, String[] params) {
-        return this.translateString(str, params, null);
-    }
-
-    public String translateString(String str, String param, String onlyPrefix) {
-        return this.translateString(str, new String[]{param}, onlyPrefix);
-    }
-
-    public String translateString(String str, String[] params, String onlyPrefix) {
+    public String translateString(String str, String... params) {
         String baseText = this.get(str);
-        baseText = this.parseTranslation((baseText != null && (onlyPrefix == null || str.indexOf(onlyPrefix) == 0)) ? baseText : str, onlyPrefix);
+        baseText = this.parseTranslation((baseText != null) ? baseText : str);
         for (int i = 0; i < params.length; i++) {
             baseText = baseText.replace("{%" + i + "}", this.parseTranslation(params[i]));
         }
@@ -146,19 +124,7 @@ public class BaseLang {
         return baseText;
     }
 
-    public String translate(TextContainer c) {
-        String baseText = this.parseTranslation(c.getText());
-        if (c instanceof TranslationContainer) {
-            baseText = this.internalGet(c.getText());
-            baseText = this.parseTranslation(baseText != null ? baseText : c.getText());
-            for (int i = 0; i < ((TranslationContainer) c).getParameters().length; i++) {
-                baseText = baseText.replace("{%" + i + "}", this.parseTranslation(((TranslationContainer) c).getParameters()[i]));
-            }
-        }
-        return baseText;
-    }
-
-    public String internalGet(String id) {
+    private String internalGet(String id) {
         if (this.lang.containsKey(id)) {
             return this.lang.get(id);
         } else if (this.fallbackLang.containsKey(id)) {
@@ -167,7 +133,7 @@ public class BaseLang {
         return null;
     }
 
-    public String get(String id) {
+    private String get(String id) {
         if (this.lang.containsKey(id)) {
             return this.lang.get(id);
         } else if (this.fallbackLang.containsKey(id)) {
@@ -176,11 +142,7 @@ public class BaseLang {
         return id;
     }
 
-    protected String parseTranslation(String text) {
-        return this.parseTranslation(text, null);
-    }
-
-    protected String parseTranslation(String text, String onlyPrefix) {
+    private String parseTranslation(String text) {
         String newString = "";
 
         String replaceString = null;
@@ -193,12 +155,7 @@ public class BaseLang {
                 if (((int) c >= 0x30 && (int) c <= 0x39) || ((int) c >= 0x41 && (int) c <= 0x5a) || ((int) c >= 0x61 && (int) c <= 0x7a) || c == '.') {
                     replaceString += String.valueOf(c);
                 } else {
-                    String t = this.internalGet(replaceString.substring(1));
-                    if (t != null && (onlyPrefix == null || replaceString.indexOf(onlyPrefix) == 1)) {
-                        newString += t;
-                    } else {
-                        newString += replaceString;
-                    }
+                    newString += replaceString;
                     replaceString = null;
                     if (c == '%') {
                         replaceString = String.valueOf(c);
@@ -215,11 +172,7 @@ public class BaseLang {
 
         if (replaceString != null) {
             String t = this.internalGet(replaceString.substring(1));
-            if (t != null && (onlyPrefix == null || replaceString.indexOf(onlyPrefix) == 1)) {
-                newString += t;
-            } else {
-                newString += replaceString;
-            }
+            newString += replaceString;
         }
         return newString;
     }

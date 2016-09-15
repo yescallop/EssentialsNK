@@ -2,7 +2,6 @@ package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
@@ -24,14 +23,13 @@ public class ClearInventoryCommand extends CommandBase {
         }
         Player player;
         if (args.length == 0) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
+            if (!this.testIngame(sender)) {
                 return false;
             }
             player = (Player) sender;
         } else {
             if (!sender.hasPermission("essentialsnk.clearinventory.other")) {
-                sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
+                this.sendPermissionMessage(sender);
                 return false;
             }
             player = api.getServer().getPlayer(args[0]);

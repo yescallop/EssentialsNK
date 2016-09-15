@@ -1,16 +1,16 @@
 package cn.yescallop.essentialsnk;
 
-import cn.nukkit.Server;
+import cn.nukkit.AdventureSettings;
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.block.Block;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.weather.EntityLightning;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemArmor;
 import cn.nukkit.item.ItemTool;
-import cn.nukkit.level.Position;
-import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
+import cn.nukkit.level.Position;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
@@ -20,25 +20,21 @@ import cn.nukkit.utils.Config;
 import cn.yescallop.essentialsnk.lang.BaseLang;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class EssentialsAPI {
-    
+
+    public static final Integer[] NON_SOLID_BLOCKS = new Integer[]{Block.AIR, Block.SAPLING, Block.WATER, Block.STILL_WATER, Block.LAVA, Block.STILL_LAVA, Block.COBWEB, Block.TALL_GRASS, Block.BUSH, Block.DANDELION,
+            Block.POPPY, Block.BROWN_MUSHROOM, Block.RED_MUSHROOM, Block.TORCH, Block.FIRE, Block.WHEAT_BLOCK, Block.SIGN_POST, Block.WALL_SIGN, Block.SUGARCANE_BLOCK,
+            Block.PUMPKIN_STEM, Block.MELON_STEM, Block.VINE, Block.CARROT_BLOCK, Block.POTATO_BLOCK, Block.DOUBLE_PLANT};
     private static EssentialsAPI instance = null;
     private EssentialsNK plugin;
     private BaseLang lang;
     private Map<Player, Location> playerLastLocation = new HashMap<>();
-    public static final Integer[] NON_SOLID_BLOCKS = new Integer[]{Block.AIR, Block.SAPLING, Block.WATER, Block.STILL_WATER, Block.LAVA, Block.STILL_LAVA, Block.COBWEB, Block.TALL_GRASS, Block.BUSH, Block.DANDELION,
-        Block.POPPY, Block.BROWN_MUSHROOM, Block.RED_MUSHROOM, Block.TORCH, Block.FIRE, Block.WHEAT_BLOCK, Block.SIGN_POST, Block.WALL_SIGN, Block.SUGARCANE_BLOCK,
-        Block.PUMPKIN_STEM, Block.MELON_STEM, Block.VINE, Block.CARROT_BLOCK, Block.POTATO_BLOCK, Block.DOUBLE_PLANT};
     private Map<Integer, TPRequest> tpRequests = new HashMap<>();
     private Config homeConfig;
     private Config warpConfig;
-    
+
     public EssentialsAPI(EssentialsNK plugin) {
         instance = this;
         this.plugin = plugin;
@@ -46,19 +42,19 @@ public class EssentialsAPI {
         this.homeConfig = new Config(new File(plugin.getDataFolder(), "home.yml"), Config.YAML);
         this.warpConfig = new Config(new File(plugin.getDataFolder(), "warp.yml"), Config.YAML);
     }
-    
+
     public static EssentialsAPI getInstance() {
         return instance;
     }
-    
+
     public Server getServer() {
         return plugin.getServer();
     }
-    
+
     public BaseLang getLanguage() {
         return lang;
     }
-    
+
     public String implode(String[] args, String glue) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < args.length; i++) {
@@ -69,31 +65,33 @@ public class EssentialsAPI {
         }
         return builder.toString();
     }
-    
+
     public void setPlayerLastLocation(Player player, Location pos) {
         this.playerLastLocation.put(player, pos);
     }
-    
+
     public Location getPlayerLastLocation(Player player) {
         return this.playerLastLocation.get(player);
     }
-    
+
     public boolean switchAllowFlight(Player player) {
-        boolean b;
-        player.setAllowFlight(b = !player.getAllowFlight());
+        AdventureSettings settings = player.getAdventureSettings();
+        boolean b = !settings.canFly();
+        settings.setCanFly(b);
+        settings.update();
         return b;
     }
-    
+
     public boolean switchVanish(Player player) {
-        boolean b;
-        player.setDataFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_INVISIBLE, b = !player.getDataFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_INVISIBLE));
+        boolean b = !player.getDataFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_INVISIBLE);
+        player.setDataFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_INVISIBLE, b);
         return b;
     }
-    
+
     public boolean isRepairable(Item item) {
         return item instanceof ItemTool || item instanceof ItemArmor;
     }
-    
+
     public void strikeLighting(Position pos) {
         FullChunk chunk = pos.getLevel().getChunk((int) pos.getX() >> 4, (int) pos.getZ() >> 4);
         CompoundTag nbt = new CompoundTag()
@@ -115,11 +113,11 @@ public class EssentialsAPI {
     private int getHashCode(Player from, Player to, boolean isTo) {
         return from.hashCode() + to.hashCode() + Boolean.hashCode(isTo);
     }
-    
+
     public void requestTP(Player from, Player to, boolean isTo) {
         this.tpRequests.put(this.getHashCode(from, to, isTo), new TPRequest(System.currentTimeMillis(), from, to, isTo));
     }
-    
+
     public TPRequest getLatestTPRequestTo(Player player) {
         TPRequest latest = null;
         for (TPRequest request : this.tpRequests.values()) {
@@ -129,7 +127,7 @@ public class EssentialsAPI {
         }
         return latest;
     }
-    
+
     public TPRequest getTPRequestBetween(Player from, Player to) {
         int key;
         if (this.tpRequests.containsKey(key = this.getHashCode(from, to, true)) || this.tpRequests.containsKey(key = this.getHashCode(from, to, false))) {
@@ -137,16 +135,16 @@ public class EssentialsAPI {
         }
         return null;
     }
-    
+
     public boolean hasTPRequestBetween(Player from, Player to) {
         return this.tpRequests.containsKey(this.getHashCode(from, to, true)) || this.tpRequests.containsKey(this.getHashCode(from, to, false));
     }
-    
+
     public void removeTPRequestBetween(Player from, Player to) {
         this.tpRequests.remove(this.getHashCode(from, to, true));
         this.tpRequests.remove(this.getHashCode(from, to, false));
     }
-    
+
     public void removeTPRequest(Player player) {
         for (Map.Entry<Integer, TPRequest> entry : this.tpRequests.entrySet()) {
             TPRequest request = entry.getValue();
@@ -155,7 +153,7 @@ public class EssentialsAPI {
             }
         }
     }
-    
+
     public boolean setHome(Player player, String name, Location pos) {
         this.homeConfig.reload();
         Map<String, Object[]> map = this.homeConfig.get(player.getName().toLowerCase(), new HashMap<>());
@@ -166,7 +164,7 @@ public class EssentialsAPI {
         this.homeConfig.save();
         return replaced;
     }
-    
+
     public Location getHome(Player player, String name) {
         this.homeConfig.reload();
         Map<String, ArrayList<Object>> map = (Map<String, ArrayList<Object>>) this.homeConfig.get(player.getName().toLowerCase());
@@ -179,7 +177,7 @@ public class EssentialsAPI {
         }
         return new Location((double) home.get(1), (double) home.get(2), (double) home.get(3), (double) home.get(4), (double) home.get(5), this.getServer().getLevelByName((String) home.get(0)));
     }
-    
+
     public void removeHome(Player player, String name) {
         this.homeConfig.reload();
         Map<String, Object> map = (Map<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
@@ -190,7 +188,7 @@ public class EssentialsAPI {
         this.homeConfig.set(player.getName().toLowerCase(), map);
         this.homeConfig.save();
     }
-    
+
     public String[] getHomesList(Player player) {
         this.homeConfig.reload();
         Map<String, Object> map = (Map<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
@@ -201,16 +199,13 @@ public class EssentialsAPI {
         Arrays.sort(list, String.CASE_INSENSITIVE_ORDER);
         return list;
     }
-    
+
     public boolean isHomeExists(Player player, String name) {
         this.homeConfig.reload();
         Map<String, Object> map = (Map<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
-        if (map == null) {
-            return false;
-        }
-        return map.containsKey(name);
+        return map != null && map.containsKey(name);
     }
-    
+
     public boolean setWarp(String name, Location pos) {
         this.warpConfig.reload();
         boolean replaced = warpConfig.exists(name);
@@ -219,29 +214,29 @@ public class EssentialsAPI {
         this.warpConfig.save();
         return replaced;
     }
-    
+
     public Location getWarp(String name) {
         this.warpConfig.reload();
-        List<Object> warp = this.warpConfig.getList(name);
+        List warp = this.warpConfig.getList(name);
         if (warp == null || warp.size() != 6) {
             return null;
         }
         return new Location((double) warp.get(1), (double) warp.get(2), (double) warp.get(3), (double) warp.get(4), (double) warp.get(5), this.getServer().getLevelByName((String) warp.get(0)));
     }
-    
+
     public void removeWarp(String name) {
         this.warpConfig.reload();
         this.warpConfig.remove(name);
         this.warpConfig.save();
     }
-    
+
     public String[] getWarpsList() {
         this.warpConfig.reload();
         String[] list = this.warpConfig.getKeys().stream().toArray(String[]::new);
         Arrays.sort(list, String.CASE_INSENSITIVE_ORDER);
         return list;
     }
-    
+
     public boolean isWarpExists(String name) {
         this.warpConfig.reload();
         return this.warpConfig.exists(name);

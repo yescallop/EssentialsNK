@@ -1,6 +1,5 @@
 package cn.yescallop.essentialsnk.command.defaults.warp;
 
-import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
@@ -15,10 +14,6 @@ public class DelWarpCommand extends CommandBase {
 
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!this.testPermission(sender)) {
-            return false;
-        }
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
             return false;
         }
         if (args.length != 1) {

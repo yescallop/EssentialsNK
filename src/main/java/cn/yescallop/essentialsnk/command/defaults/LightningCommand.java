@@ -2,7 +2,6 @@ package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.level.Position;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
@@ -25,8 +24,7 @@ public class LightningCommand extends CommandBase {
         }
         Player player;
         if (args.length == 0) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
+            if (!this.testIngame(sender)) {
                 return false;
             }
             player = (Player) sender;

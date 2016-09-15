@@ -2,7 +2,6 @@ package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
 import cn.nukkit.block.Block;
-import cn.nukkit.block.BlockAir;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.utils.TextFormat;
@@ -20,8 +19,7 @@ public class JumpCommand extends CommandBase {
         if (!this.testPermission(sender)) {
             return false;
         }
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
+        if (!this.testIngame(sender)) {
             return false;
         }
         if (args.length != 0) {

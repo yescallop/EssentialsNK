@@ -18,11 +18,11 @@ public class EssentialsNK extends PluginBase {
         this.getServer().getPluginManager().registerEvents(new EventListener(this.api), this);
         this.getLogger().info(lang.translateString("essentialsnk.loaded"));
     }
-    
+
     public BaseLang getLanguage() {
         return lang;
     }
-    
+
     public EssentialsAPI getAPI() {
         return api;
     }

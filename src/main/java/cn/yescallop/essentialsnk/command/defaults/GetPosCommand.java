@@ -2,7 +2,6 @@ package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
@@ -24,14 +23,13 @@ public class GetPosCommand extends CommandBase {
         }
         Player player;
         if (args.length == 0) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
+            if (!this.testIngame(sender)) {
                 return false;
             }
             player = (Player) sender;
         } else {
             if (!sender.hasPermission("essentialsnk.getpos.other")) {
-                sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
+                this.sendPermissionMessage(sender);
                 return false;
             }
             player = api.getServer().getPlayer(args[0]);
@@ -40,7 +38,7 @@ public class GetPosCommand extends CommandBase {
                 return false;
             }
         }
-        sender.sendMessage(sender == player ? lang.translateString("commands.getpos.success", new String[]{player.getLevel().getName(), String.valueOf(player.getFloorX()), String.valueOf(player.getFloorY()), String.valueOf(player.getFloorZ())}) : lang.translateString("commands.getpos.success.other", new String[]{player.getDisplayName(), player.getLevel().getName(), String.valueOf(player.getFloorX()), String.valueOf(player.getFloorY()), String.valueOf(player.getFloorZ())}));
+        sender.sendMessage(sender == player ? lang.translateString("commands.getpos.success", player.getLevel().getName(), String.valueOf(player.getFloorX()), String.valueOf(player.getFloorY()), String.valueOf(player.getFloorZ())) : lang.translateString("commands.getpos.success.other", player.getDisplayName(), player.getLevel().getName(), String.valueOf(player.getFloorX()), String.valueOf(player.getFloorY()), String.valueOf(player.getFloorZ())));
         return true;
     }
 }
