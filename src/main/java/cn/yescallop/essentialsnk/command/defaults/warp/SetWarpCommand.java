@@ -28,7 +28,7 @@ public class SetWarpCommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.setwarp.empty"));
             return false;
         }
-        sender.sendMessage(api.setWarp(args[0].toLowerCase(), (Player) sender) ? lang.translateString("commands.setwarp.replaced") : lang.translateString("commands.setwarp.success"));
+        sender.sendMessage(api.setWarp(args[0].toLowerCase(), (Player) sender) ? lang.translateString("commands.setwarp.replaced", args[0]) : lang.translateString("commands.setwarp.success", args[0]));
         return true;
     }
 }
