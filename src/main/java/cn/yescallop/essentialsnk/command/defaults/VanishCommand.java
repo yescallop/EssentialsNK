@@ -10,6 +10,7 @@ public class VanishCommand extends CommandBase {
 
     public VanishCommand(EssentialsAPI api) {
         super("vanish", api);
+        this.setAliases(new String[]{"v"});
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {
