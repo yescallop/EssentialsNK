@@ -85,6 +85,7 @@ public class EssentialsAPI {
     public boolean switchVanish(Player player) {
         boolean b = !player.getDataFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_INVISIBLE);
         player.setDataFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_INVISIBLE, b);
+        player.setNameTagVisible(!b);
         return b;
     }
 
