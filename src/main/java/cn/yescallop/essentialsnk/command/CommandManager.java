@@ -24,6 +24,7 @@ public class CommandManager {
         map.register("EssentialsNK", new CompassCommand(api));
         map.register("EssentialsNK", new DepthCommand(api));
         map.register("EssentialsNK", new ExtinguishCommand(api));
+        map.register("EssentialsNK", new FeedCommand(api));
         map.register("EssentialsNK", new FlyCommand(api));
         map.register("EssentialsNK", new GamemodeCommand(api));
         map.register("EssentialsNK", new GetPosCommand(api));

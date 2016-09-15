@@ -30,6 +30,10 @@ permissions:
   default: op
  essentialsnk.extinguish.other:
   default: op
+ essentialsnk.feed:
+  default: op
+ essentialsnk.feed.other:
+  default: op
  essentialsnk.fly:
   default: op
  essentialsnk.fly.other:
