@@ -37,7 +37,7 @@ public class FlyCommand extends CommandBase {
                 return false;
             }
         }
-        String enabled = lang.translateString(api.switchAllowFlight(player) ? "commands.generic.enabled" : "commands.generic.disabled");
+        String enabled = lang.translateString(api.switchCanFly(player) ? "commands.generic.enabled" : "commands.generic.disabled");
         player.sendMessage(lang.translateString("commands.fly.success", enabled));
         if (sender != player) {
             sender.sendMessage(lang.translateString("commands.fly.success.other", player.getDisplayName(), enabled));

@@ -32,6 +32,7 @@ public class EssentialsAPI {
     private BaseLang lang;
     private Map<Player, Location> playerLastLocation = new HashMap<>();
     private Map<Integer, TPRequest> tpRequests = new HashMap<>();
+    private List<Player> vanishedPlayers = new ArrayList<>();
     private Config homeConfig;
     private Config warpConfig;
 
@@ -74,19 +75,47 @@ public class EssentialsAPI {
         return this.playerLastLocation.get(player);
     }
 
-    public boolean switchAllowFlight(Player player) {
-        AdventureSettings settings = player.getAdventureSettings();
-        boolean b = !settings.canFly();
-        settings.setCanFly(b);
-        settings.update();
-        return b;
+    public boolean switchCanFly(Player player) {
+        boolean canFly = !this.canFly(player);
+        this.setCanFly(player, canFly);
+        return canFly;
+    }
+
+    public boolean canFly(Player player) {
+        return player.getAdventureSettings().canFly();
+    }
+
+    public void setCanFly(Player player, boolean canFly) {
+        player.getAdventureSettings().setCanFly(canFly);
+        player.getAdventureSettings().update();
     }
 
     public boolean switchVanish(Player player) {
-        boolean b = !player.getDataFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_INVISIBLE);
-        player.setDataFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_INVISIBLE, b);
-        player.setNameTagVisible(!b);
-        return b;
+        boolean vanished = this.isVanished(player);
+        for (Player p : this.getServer().getInstance().getOnlinePlayers().values()) {
+            if (vanished) {
+                this.setVanished(player, false);
+                vanishedPlayers.remove(player);
+            } else {
+                this.setVanished(player, true);
+                vanishedPlayers.add(player);
+            }
+        }
+        return !vanished;
+    }
+
+    public boolean isVanished(Player player) {
+        return vanishedPlayers.contains(player);
+    }
+
+    public void setVanished(Player player, boolean vanished) {
+        for (Player p : this.getServer().getInstance().getOnlinePlayers().values()) {
+            if (vanished) {
+                p.hidePlayer(player);
+            } else {
+                p.showPlayer(player);
+            }
+        }
     }
 
     public boolean isRepairable(Item item) {
