@@ -74,6 +74,8 @@ permissions:
   default: op
  essentialsnk.tpa:
   default: true
+ essentialsnk.tpaall:
+  default: op
  essentialsnk.tpaccept:
   default: true
  essentialsnk.tpahere:

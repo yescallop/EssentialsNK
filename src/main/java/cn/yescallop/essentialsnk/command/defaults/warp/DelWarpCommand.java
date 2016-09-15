@@ -9,7 +9,7 @@ public class DelWarpCommand extends CommandBase {
 
     public DelWarpCommand(EssentialsAPI api) {
         super("delwarp", api);
-        this.setAliases(new String[]{"remwarp", "removewarp", "closewarp"});
+        this.setAliases(new String[]{"remwarp", "rmwarp"});
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {
