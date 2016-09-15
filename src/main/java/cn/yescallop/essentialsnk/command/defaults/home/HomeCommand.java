@@ -32,7 +32,7 @@ public class HomeCommand extends CommandBase {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.home.nohome"));
                 return false;
             }
-            sender.sendMessage(lang.translateString("commands.home.list") + "\n" + api.implode(list, ", "));
+            sender.sendMessage(lang.translateString("commands.home.list") + "\n" + api.implode(", ", list));
             return true;
         }
         Location home = api.getHome(player, args[0].toLowerCase());

@@ -58,7 +58,7 @@ public class EssentialsAPI {
         return lang;
     }
 
-    public String implode(String[] args, String glue) {
+    public String implode(String glue, String[] args) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < args.length; i++) {
             if (builder.length() != 0) {

@@ -28,7 +28,7 @@ public class WarpCommand extends CommandBase {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.warp.nowarp"));
                 return false;
             }
-            sender.sendMessage(lang.translateString("commands.warp.list") + "\n" + api.implode(list, ", "));
+            sender.sendMessage(lang.translateString("commands.warp.list") + "\n" + api.implode(", ", list));
             return true;
         }
         Location warp = api.getWarp(args[0].toLowerCase());

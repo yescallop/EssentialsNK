@@ -72,6 +72,8 @@ permissions:
   default: true
  essentialsnk.setwarp:
   default: op
+ essentialsnk.sudo:
+  default: op
  essentialsnk.tpa:
   default: true
  essentialsnk.tpaall:
