@@ -3,6 +3,7 @@ package cn.yescallop.essentialsnk.command.defaults;
 import cn.nukkit.Player;
 import cn.nukkit.block.Block;
 import cn.nukkit.command.CommandSender;
+import cn.nukkit.level.Position;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
@@ -31,7 +32,12 @@ public class JumpCommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.jump.unreachable"));
             return false;
         }
-        player.teleport(api.getStandablePosition(block));
+        Position pos = api.getStandablePosition(block);
+        if (pos == null) {
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.jump.unstandable"));
+            return false;
+        }
+        player.teleport(pos);
         return true;
     }
 }
