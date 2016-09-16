@@ -18,14 +18,14 @@ import java.util.regex.Pattern;
     //Copyleft: Lin Mulan(林木兰). Zhejiang, China
 class LMLDP$Lang$Chinese implements LMLDP$Lang{
 
-    private static String timePattern = "^((.*)月)?((.*)周)?((.*)日)?((.*)时)?((.*)分)?((.*)秒)?((.*)半)?$";
+    private static String timePattern = "^((.*)纪)?((.*)年)?((.*)月)?((.*)周)?((.*)日)?((.*)时)?((.*)分)?((.*)秒)?((.*)半)?$";
     private static Pattern time = Pattern.compile(timePattern);
 
     /*
     * 中文日期时间格式说明
     * 数码可以是汉字或阿拉伯数字，整数或分数，“一百三十五”“1234”“半/一半”，后面可以带“个”比如“一个钟头”。
     *                   这样的数字下面简称N
-    * 日期格式：（N月）（N星期/周）（N天/日）（N小时/时/钟头）（N分钟/分）（N秒）
+    * 日期格式：（N世纪）（N年）（N月）（N星期/周）（N天/日）（N小时/时/钟头）（N分钟/分）（N秒）
     * 合法的：“三个星期零三天”“半个月”“2天零6分30秒”
     * */
     @Override
@@ -38,7 +38,7 @@ class LMLDP$Lang$Chinese implements LMLDP$Lang{
     @Override
     public Duration convert(String s) {
         s = replaceLikeThis(s);
-        String match = "(((.*)月)|((.*)周)|((.*)日)|((.*)时)|((.*)分)|((.*)秒))";
+        String match = "(((.*)纪)|((.*)年)|((.*)月)|((.*)周)|((.*)日)|((.*)时)|((.*)分)|((.*)秒))";
         Pattern p = Pattern.compile(match);
         Matcher m = p.matcher(s);
         ArrayList<String> cut = new ArrayList<>();
@@ -50,6 +50,8 @@ class LMLDP$Lang$Chinese implements LMLDP$Lang{
             char c2 = a.charAt(a.length()-2);
             Duration unit = Duration.ZERO,part = Duration.ZERO;
             switch (c1) {
+                case '纪':unit = unit.plusDays(36500);break;
+                case '年':unit = unit.plusDays(365);break;
                 case '月':unit = unit.plusDays(30);break;
                 case '周':unit = unit.plusDays(7);break;
                 case '日':unit = unit.plusDays(1);break;
@@ -73,10 +75,10 @@ class LMLDP$Lang$Chinese implements LMLDP$Lang{
         return p.matcher(a).find();
     }
     private static String replaceLikeThis(String s) {
-        s = s.replace("小时", "时").replace("分钟", "分").replace("秒钟", "秒")
+        s = s.replace("世纪","纪").replace("小时", "时").replace("分钟", "分").replace("秒钟", "秒")
                 .replace("星期", "周").replace("钟头","时").replace("天", "日"); //双音节判断不容易，先替换再说
-        s = s.replaceAll("^(.*)月半$", "$1半月").replaceAll("^(.*)日半$","$1半日").replaceAll("^(.*)周半$","$1半周")
-                .replaceAll("^(.*)时半$","$1半时").replaceAll("^(.*)分半$","$1半分");
+        s = s.replaceAll("^(.*)年半$", "$1半年").replaceAll("^(.*)月半$", "$1半月").replaceAll("^(.*)日半$","$1半日")
+                .replaceAll("^(.*)周半$","$1半周").replaceAll("^(.*)时半$","$1半时").replaceAll("^(.*)分半$","$1半分");
         s = s.replace("个","").replace("两","二"); //汉语博大精深
         return s;
     }
