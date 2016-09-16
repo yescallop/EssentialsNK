@@ -31,6 +31,7 @@ public class CommandManager {
         map.register("EssentialsNK", new LightningCommand(api));
         map.register("EssentialsNK", new MoreCommand(api));
         map.register("EssentialsNK", new PingCommand(api));
+        map.register("EssentialsNK", new RealNameCommand(api));
         map.register("EssentialsNK", new RepairCommand(api));
         map.register("EssentialsNK", new SudoCommand(api));
         map.register("EssentialsNK", new TopCommand(api));

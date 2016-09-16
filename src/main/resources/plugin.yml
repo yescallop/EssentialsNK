@@ -62,6 +62,8 @@ permissions:
   default: op
  essentialsnk.ping:
   default: true
+ essentialsnk.realname:
+  default: op
  essentialsnk.repair:
   default: op
  essentialsnk.repair.all:
