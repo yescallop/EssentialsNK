@@ -312,8 +312,12 @@ public class EssentialsAPI {
         return true;
     }
 
+    private static Duration THIRTY_DAYS = Duration.ZERO.plusDays(30);
     //for peace too -- lmlstarqaq
     public boolean mute(Player player, Duration t) {
+        if (t.isNegative() || t.isZero()) return false;
+        // t>30 => (t!=30 && t>=30) => (t!=30 && t-30>=0) => (t!=30 && !(t-30<0))
+        if (t.toDays() != 30 && !(t.minus(THIRTY_DAYS).isNegative())) return false; // t>30
         this.muteConfig.set(player.getName().toLowerCase(), LocalDate.now().plus(t)); // Use server local timezone, not UTC
         this.muteConfig.save();
         return true;
