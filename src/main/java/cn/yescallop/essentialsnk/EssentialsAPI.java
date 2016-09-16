@@ -21,6 +21,9 @@ import cn.nukkit.utils.Config;
 import cn.yescallop.essentialsnk.lang.BaseLang;
 
 import java.io.File;
+import java.time.Clock;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.*;
 
 public class EssentialsAPI {
@@ -309,6 +312,17 @@ public class EssentialsAPI {
         return true;
     }
 
+    private static Duration THIRTY_DAYS = Duration.ZERO.plusDays(30);
+    //for peace too -- lmlstarqaq
+    public boolean mute(Player player, Duration t) {
+        if (t.isNegative() || t.isZero()) return false;
+        // t>30 => (t!=30 && t>=30) => (t!=30 && t-30>=0) => (t!=30 && !(t-30<0))
+        if (t.toDays() != 30 && !(t.minus(THIRTY_DAYS).isNegative())) return false; // t>30
+        this.muteConfig.set(player.getName().toLowerCase(), LocalDate.now().plus(t)); // Use server local timezone, not UTC
+        this.muteConfig.save();
+        return true;
+    }
+
     public Integer getRemainingTimeToUnmute(Player player) {
         this.muteConfig.reload();
         Integer time = (Integer) this.muteConfig.get(player.getName().toLowerCase());
@@ -326,33 +340,37 @@ public class EssentialsAPI {
     }
 
     public String getMuteTimeMessage(int d, int h, int m) {
-        List<String> message = new ArrayList<>();
-        if (d != 0) {
-            message.add(d + " " + lang.translateString("commands.generic.day"));
-        }
-        if (h != 0) {
-            message.add(h + " " + lang.translateString("commands.generic.hour"));
-        }
-        if (m != 0) {
-            message.add(m + " " + lang.translateString("commands.generic.minute"));
-        }
-        return this.implode(" ", message.stream().toArray(String[]::new));
+        return getDurationString(Duration.ZERO.plusDays(d).plusHours(h).plusMinutes(m));
     }
 
     public String getUnmuteTimeMessage(Player player) {
         Integer time = this.getRemainingTimeToUnmute(player);
-        if (time == null) return null;
-        if (time / 86400d > 1) {
-            return (int) Math.ceil(time / 86400d) + " " + lang.translateString("commands.generic.day");
-        }
-        if (time / 3600d > 1) {
-            return (int) Math.ceil(time / 3600d) + " " + lang.translateString("commands.generic.hour");
-        }
-        return (int) Math.ceil(time / 60d) + " " + lang.translateString("commands.generic.minute");
+        return getDurationString(Duration.ofSeconds(time));
     }
 
     public void unmute(Player player) {
         this.muteConfig.remove(player.getName().toLowerCase());
         this.muteConfig.save();
+    }
+
+    // %0 days %1 hours %2 minutes %3 seconds, language localized.
+    public String getDurationString(Duration duration) {
+        if (duration == null) return "null";
+        long d = duration.toDays();
+        long h = duration.toHours() % 24;
+        long m = duration.toMinutes() % 60;
+        long s = duration.getSeconds() % 60;
+        String d1="",h1="",m1="",s1="";
+        //Singulars and plurals. Maybe necessary for English or other languages. 虽然中文似乎没有名词的单复数 -- lmlstarqaq
+        if (d > 1) d1=lang.translateString("commands.generic.days", d);
+        else if (d > 0) d1=lang.translateString("commands.generic.day", d);
+        if (h > 1) h1=lang.translateString("commands.generic.hours", d);
+        else if (h > 0) h1=lang.translateString("commands.generic.hour", d);
+        if (m > 1) m1=lang.translateString("commands.generic.minutes", d);
+        else if (m > 0) m1=lang.translateString("commands.generic.minute", d);
+        if (s > 1) s1=lang.translateString("commands.generic.seconds", d);
+        else if (s > 0) s1=lang.translateString("commands.generic.second", d);
+        //In some languages, times are read from SECONDS to HOURS, which should be noticed.
+        return lang.translateString("commands.generic.time.format", d1, h1, m1, s1);
     }
 }

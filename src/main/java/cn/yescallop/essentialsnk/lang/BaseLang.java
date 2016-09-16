@@ -114,6 +114,12 @@ public class BaseLang {
         }
     }
 
+    public String translateString(String str, Object... params) {
+        String[] res = new String[params.length];
+        for (int i = 0; i < params.length; ++i) res[i] = String.valueOf(params[i]);
+        return translateString(str, res);
+    }
+
     public String translateString(String str, String... params) {
         String baseText = this.get(str);
         baseText = this.parseTranslation((baseText != null) ? baseText : str);
