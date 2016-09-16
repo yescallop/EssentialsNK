@@ -1,6 +1,7 @@
 package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
@@ -45,19 +46,11 @@ public class MuteCommand extends CommandBase {
                             .plusDays(Integer.parseInt(args[1]))
                             .plusHours(Integer.parseInt(args[2]))
                             .plusMinutes(Integer.parseInt(args[3]));
-                /*
-                    /mute lmlstarqaq 04:00:00
-                    /mute lmlstarqaq 4 seconds
-                    /mute lmlstarqaq one day
-                    /mute lmlstarqaq three hours and a half
-                    /mute lmlstarqaq 六个半小时
-                    /mute lmlstarqaq восемь минут
-
-                    Thanks to powerful java!
-                */
                 else {
                     String arg = "";
-                    for (int i = 1/* player name */; i < args.length; i++) arg += args[i];
+                    for (int i = 1/* player name */; i < args.length; i++) arg += args[i]+" ";
+                    arg = arg.trim();
+                    //todo. leave here for further edits
                     duration = Duration.ofSeconds(DatatypeFactory.newInstance().newDuration(arg).getTimeInMillis(Calendar.getInstance()));
                 }
             } catch (Exception e) {
