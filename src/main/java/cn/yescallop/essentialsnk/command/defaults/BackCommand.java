@@ -26,7 +26,7 @@ public class BackCommand extends CommandBase {
             return false;
         }
         Player player = (Player) sender;
-        Location pos = api.getPlayerLastLocation(player);
+        Location pos = api.getLastLocation(player);
         if (pos == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.back.notavalible"));
             return false;

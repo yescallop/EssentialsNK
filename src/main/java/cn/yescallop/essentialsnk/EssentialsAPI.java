@@ -37,6 +37,7 @@ public class EssentialsAPI {
     public Vector3 temporalVector = new Vector3();
     private Config homeConfig;
     private Config warpConfig;
+    private Config muteConfig;
 
     public EssentialsAPI(EssentialsNK plugin) {
         instance = this;
@@ -44,6 +45,7 @@ public class EssentialsAPI {
         this.lang = plugin.getLanguage();
         this.homeConfig = new Config(new File(plugin.getDataFolder(), "home.yml"), Config.YAML);
         this.warpConfig = new Config(new File(plugin.getDataFolder(), "warp.yml"), Config.YAML);
+        this.muteConfig = new Config(new File(plugin.getDataFolder(), "mute.yml"), Config.YAML);
     }
 
     public static EssentialsAPI getInstance() {
@@ -69,11 +71,11 @@ public class EssentialsAPI {
         return builder.toString();
     }
 
-    public void setPlayerLastLocation(Player player, Location pos) {
+    public void setLastLocation(Player player, Location pos) {
         this.playerLastLocation.put(player, pos);
     }
 
-    public Location getPlayerLastLocation(Player player) {
+    public Location getLastLocation(Player player) {
         return this.playerLastLocation.get(player);
     }
 
@@ -93,7 +95,8 @@ public class EssentialsAPI {
     }
 
     public boolean switchVanish(Player player) {
-        if (this.isVanished(player)) {
+        boolean vanished = this.isVanished(player);
+        if (vanished) {
             this.setVanished(player, false);
             vanishedPlayers.remove(player);
         } else {
@@ -185,7 +188,10 @@ public class EssentialsAPI {
 
     public boolean setHome(Player player, String name, Location pos) {
         this.homeConfig.reload();
-        Map<String, Object[]> map = this.homeConfig.get(player.getName().toLowerCase(), new HashMap<>());
+        Map<String, Object[]> map = (Map<String, Object[]>) this.homeConfig.get(player.getName().toLowerCase());
+        if (map == null) {
+            map = new HashMap<>();
+        }
         boolean replaced = map.containsKey(name);
         Object[] home = new Object[]{pos.level.getName(), pos.x, pos.y, pos.z, pos.yaw, pos.pitch};
         map.put(name, home);
@@ -292,5 +298,61 @@ public class EssentialsAPI {
             }
         }
         return null;
+    }
+
+    //for peace
+    public boolean mute(Player player, int d, int h, int m) {
+        if (d < 0 || d > 30 || h < 0 || h >= 24 || m < 0 || m >= 60) return false;
+        if (d == 30 && (h != 0 || m != 0)) return false;
+        this.muteConfig.set(player.getName().toLowerCase(), System.currentTimeMillis() / 1000 + d * 86400 + h * 3600 + m * 60);
+        this.muteConfig.save();
+        return true;
+    }
+
+    public Integer getRemainingTimeToUnmute(Player player) {
+        this.muteConfig.reload();
+        Integer time = (Integer) this.muteConfig.get(player.getName().toLowerCase());
+        return time == null ? null : (int) (time - System.currentTimeMillis() / 1000);
+    }
+
+    public boolean isMuted(Player player) {
+        Integer time = this.getRemainingTimeToUnmute(player);
+        if (time == null) return false;
+        if (time <= 0) {
+            this.unmute(player);
+            return false;
+        }
+        return true;
+    }
+
+    public String getMuteTimeMessage(int d, int h, int m) {
+        List<String> message = new ArrayList<>();
+        if (d != 0) {
+            message.add(d + " " + lang.translateString("commands.generic.day"));
+        }
+        if (h != 0) {
+            message.add(h + " " + lang.translateString("commands.generic.hour"));
+        }
+        if (m != 0) {
+            message.add(m + " " + lang.translateString("commands.generic.minute"));
+        }
+        return this.implode(" ", message.stream().toArray(String[]::new));
+    }
+
+    public String getUnmuteTimeMessage(Player player) {
+        Integer time = this.getRemainingTimeToUnmute(player);
+        if (time == null) return null;
+        if (time / 86400d > 1) {
+            return (int) Math.ceil(time / 86400d) + " " + lang.translateString("commands.generic.day");
+        }
+        if (time / 3600d > 1) {
+            return (int) Math.ceil(time / 3600d) + " " + lang.translateString("commands.generic.hour");
+        }
+        return (int) Math.ceil(time / 60d) + " " + lang.translateString("commands.generic.minute");
+    }
+
+    public void unmute(Player player) {
+        this.muteConfig.remove(player.getName().toLowerCase());
+        this.muteConfig.save();
     }
 }

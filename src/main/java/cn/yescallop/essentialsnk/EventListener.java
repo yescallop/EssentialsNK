@@ -5,6 +5,8 @@ import cn.nukkit.block.Block;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerBedEnterEvent;
+import cn.nukkit.event.player.PlayerChatEvent;
+import cn.nukkit.event.player.PlayerCommandPreprocessEvent;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.event.player.PlayerQuitEvent;
 import cn.nukkit.event.player.PlayerTeleportEvent;
@@ -23,7 +25,7 @@ public class EventListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        api.setPlayerLastLocation(event.getPlayer(), event.getFrom());
+        api.setLastLocation(event.getPlayer(), event.getFrom());
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -48,5 +50,23 @@ public class EventListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         api.removeTPRequest(event.getPlayer());
+    }
+
+    @EventHandler
+    public void onPlayerChat(PlayerChatEvent event) {
+        Player player = event.getPlayer();
+        if (api.isMuted(player)) {
+            event.setCancelled();
+            player.sendMessage(lang.translateString("commands.generic.muted", api.getUnmuteTimeMessage(player)));
+        }
+    }
+
+    @EventHandler
+    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
+        Player player = event.getPlayer();
+        if (api.isMuted(player)) {
+            event.setCancelled();
+            player.sendMessage(lang.translateString("commands.generic.muted", api.getUnmuteTimeMessage(player)));
+        }
     }
 }
