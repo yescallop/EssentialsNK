@@ -364,12 +364,12 @@ public class EssentialsAPI {
         //Singulars and plurals. Maybe necessary for English or other languages. 虽然中文似乎没有名词的单复数 -- lmlstarqaq
         if (d > 1) d1=lang.translateString("commands.generic.days", d);
         else if (d > 0) d1=lang.translateString("commands.generic.day", d);
-        if (h > 1) h1=lang.translateString("commands.generic.hours", d);
-        else if (h > 0) h1=lang.translateString("commands.generic.hour", d);
-        if (m > 1) m1=lang.translateString("commands.generic.minutes", d);
-        else if (m > 0) m1=lang.translateString("commands.generic.minute", d);
-        if (s > 1) s1=lang.translateString("commands.generic.seconds", d);
-        else if (s > 0) s1=lang.translateString("commands.generic.second", d);
+        if (h > 1) h1=lang.translateString("commands.generic.hours", h);
+        else if (h > 0) h1=lang.translateString("commands.generic.hour", h);
+        if (m > 1) m1=lang.translateString("commands.generic.minutes", m);
+        else if (m > 0) m1=lang.translateString("commands.generic.minute", m);
+        if (s > 1) s1=lang.translateString("commands.generic.seconds", s);
+        else if (s > 0) s1=lang.translateString("commands.generic.second", s);
         //In some languages, times are read from SECONDS to HOURS, which should be noticed.
         return lang.translateString("commands.generic.time.format", d1, h1, m1, s1);
     }

@@ -6,11 +6,9 @@ import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
+import cn.yescallop.essentialsnk.util.duration.LMLDurationParser;
 
-import javax.xml.datatype.DatatypeFactory;
 import java.time.Duration;
-import java.util.Calendar;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MuteCommand extends CommandBase {
@@ -50,8 +48,8 @@ public class MuteCommand extends CommandBase {
                     String arg = "";
                     for (int i = 1/* player name */; i < args.length; i++) arg += args[i]+" ";
                     arg = arg.trim();
-                    //todo. leave here for further edits
-                    duration = Duration.ofSeconds(DatatypeFactory.newInstance().newDuration(arg).getTimeInMillis(Calendar.getInstance()));
+                    duration = LMLDurationParser.parse(arg);
+//                    Server.getInstance().getLogger().info(api.getDurationString(duration));
                 }
             } catch (Exception e) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.number.invalid"));
