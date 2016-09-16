@@ -74,6 +74,8 @@ permissions:
   default: op
  essentialsnk.sudo:
   default: op
+ essentialsnk.top:
+  default: op
  essentialsnk.tpa:
   default: true
  essentialsnk.tpaall:

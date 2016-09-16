@@ -12,6 +12,7 @@ import cn.nukkit.item.ItemTool;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.format.FullChunk;
+import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
@@ -34,7 +35,7 @@ public class EssentialsAPI {
     private Map<Player, Location> playerLastLocation = new HashMap<>();
     private Map<Integer, TPRequest> tpRequests = new HashMap<>();
     private List<Player> vanishedPlayers = new ArrayList<>();
-    public Vector3 temporalVector;
+    public Vector3 temporalVector = new Vector3();
     private Config homeConfig;
     private Config warpConfig;
 
@@ -274,14 +275,24 @@ public class EssentialsAPI {
         return this.warpConfig.exists(name);
     }
 
-    public Position getStandablePosition(Position pos) {
-        if (this.temporalVector == null) this.temporalVector = new Vector3();
+    public Position getStandablePositionAt(Position pos) {
         int x = pos.getFloorX();
         int y = pos.getFloorY() + 1;
         int z = pos.getFloorZ();
-        for (; y < 127; y++) {
+        for (; y <= 128; y++) {
             if (!pos.level.getBlock(this.temporalVector.setComponents(x, y, z)).isSolid() && !pos.level.getBlock(this.temporalVector.setComponents(x, y + 1, z)).isSolid()) {
                 return new Position(x + 0.5, pos.level.getBlock(this.temporalVector.setComponents(x, y - 1, z)).getBoundingBox().maxY, z + 0.5, pos.level);
+            }
+        }
+        return null;
+    }
+
+    public Position getHighestStandablePositionAt(Position pos) {
+        int x = pos.getFloorX();
+        int z = pos.getFloorZ();
+        for (int y = 127; y >= 0; y--) {
+            if (pos.level.getBlock(this.temporalVector.setComponents(x, y, z)).isSolid()) {
+                return new Position(x + 0.5, pos.level.getBlock(this.temporalVector.setComponents(x, y, z)).getBoundingBox().maxY, z + 0.5, pos.level);
             }
         }
         return null;
