@@ -322,7 +322,7 @@ public class EssentialsAPI {
     public Integer getRemainingTimeToUnmute(Player player) {
         this.muteConfig.reload();
         Integer time = (Integer) this.muteConfig.get(player.getName().toLowerCase());
-        return time == null ? null : (int) (time - Timestamp. valueOf(LocalDateTime.now()).getTime() / 1000);
+        return time == null ? null : (int) (time - Timestamp.valueOf(LocalDateTime.now()).getTime() / 1000);
     }
 
     public boolean isMuted(Player player) {
@@ -359,14 +359,14 @@ public class EssentialsAPI {
         long s = duration.getSeconds() % 60;
         String d1="", h1="", m1="", s1="";
         //Singulars and plurals. Maybe necessary for English or other languages. 虽然中文似乎没有名词的单复数 -- lmlstarqaq
-        if (d > 1) d1=lang.translateString("commands.generic.days", d);
-        else if (d > 0) d1=lang.translateString("commands.generic.day", d);
-        if (h > 1) h1=lang.translateString("commands.generic.hours", h);
-        else if (h > 0) h1=lang.translateString("commands.generic.hour", h);
-        if (m > 1) m1=lang.translateString("commands.generic.minutes", m);
-        else if (m > 0) m1=lang.translateString("commands.generic.minute", m);
-        if (s > 1) s1=lang.translateString("commands.generic.seconds", s);
-        else if (s > 0) s1=lang.translateString("commands.generic.second", s);
+        if (d > 1) d1 = lang.translateString("commands.generic.days", d);
+        else if (d > 0) d1 = lang.translateString("commands.generic.day", d);
+        if (h > 1) h1 = lang.translateString("commands.generic.hours", h);
+        else if (h > 0) h1 = lang.translateString("commands.generic.hour", h);
+        if (m > 1) m1 = lang.translateString("commands.generic.minutes", m);
+        else if (m > 0) m1 = lang.translateString("commands.generic.minute", m);
+        if (s > 1) s1 = lang.translateString("commands.generic.seconds", s);
+        else if (s > 0) s1 = lang.translateString("commands.generic.second", s);
         //In some languages, times are read from SECONDS to HOURS, which should be noticed.
         return lang.translateString("commands.generic.time.format", d1, h1, m1, s1).trim().replace(" +", " ");
     }
