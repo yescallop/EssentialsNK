@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 import javax.xml.datatype.DatatypeFactory;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,24 +42,26 @@ public class MuteCommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.mute.self"));
             return false;
         }
-        if (args.length >= 2) {
+        if (args.length > 1) {
             Duration duration;
             try {
                 /*  /mute lmlstarqaq 0 0 1   */
-                if (args.length == 4 && isPositiveInteger(args[1]) && isPositiveInteger(args[2]) && isPositiveInteger(args[3]))
+                if (args.length == 5 && isPositiveInteger(args[1]) && isPositiveInteger(args[2]) && isPositiveInteger(args[3]) && isPositiveInteger(args[4]))
                     duration = Duration.ZERO
-                            .plusDays(Integer.parseInt(args[1]))
-                            .plusHours(Integer.parseInt(args[2]))
-                            .plusMinutes(Integer.parseInt(args[3]));
+                        .plusDays(Integer.parseInt(args[1]))
+                        .plusHours(Integer.parseInt(args[2]))
+                        .plusMinutes(Integer.parseInt(args[3]))
+                        .plusSeconds(Integer.parseInt(args[4]));
                 else {
-                    String arg = "";
-                    for (int i = 1/* player name */; i < args.length; i++) arg += args[i]+" ";
-                    arg = arg.trim();
+                    String arg = api.implode(" ", Arrays.copyOfRange(args, 1, args.length)).trim();
                     duration = LMLDurationParser.parse(arg);
-//                    Server.getInstance().getLogger().info(api.getDurationString(duration));
                 }
             } catch (Exception e) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.number.invalid"));
+                return false;
+            }
+            if (duration == null) {
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.time.invalidtext"));
                 return false;
             }
             if (duration.isZero()) {
@@ -72,8 +75,7 @@ public class MuteCommand extends CommandBase {
             }
             sender.sendMessage(lang.translateString("commands.mute.success", player.getDisplayName(), message));
             player.sendMessage(lang.translateString("commands.mute.other", message));
-        }
-        else { // args.length == 1
+        } else { // args.length == 1
             api.unmute(player);
             sender.sendMessage(lang.translateString("commands.mute.unmute.success", player.getDisplayName()));
             player.sendMessage(lang.translateString("commands.mute.unmute.other"));

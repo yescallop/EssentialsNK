@@ -21,9 +21,9 @@ import cn.nukkit.utils.Config;
 import cn.yescallop.essentialsnk.lang.BaseLang;
 
 import java.io.File;
-import java.time.Clock;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.util.*;
 
 public class EssentialsAPI {
@@ -304,12 +304,8 @@ public class EssentialsAPI {
     }
 
     //for peace
-    public boolean mute(Player player, int d, int h, int m) {
-        if (d < 0 || d > 30 || h < 0 || h >= 24 || m < 0 || m >= 60) return false;
-        if (d == 30 && (h != 0 || m != 0)) return false;
-        this.muteConfig.set(player.getName().toLowerCase(), System.currentTimeMillis() / 1000 + d * 86400 + h * 3600 + m * 60);
-        this.muteConfig.save();
-        return true;
+    public boolean mute(Player player, int d, int h, int m, int s) {
+        return this.mute(player, Duration.ZERO.plusDays(d).plusHours(h).plusMinutes(m).plusSeconds(s));
     }
 
     private static Duration THIRTY_DAYS = Duration.ZERO.plusDays(30);
@@ -318,7 +314,7 @@ public class EssentialsAPI {
         if (t.isNegative() || t.isZero()) return false;
         // t>30 => (t!=30 && t>=30) => (t!=30 && t-30>=0) => (t!=30 && !(t-30<0))
         if (t.toDays() != 30 && !(t.minus(THIRTY_DAYS).isNegative())) return false; // t>30
-        this.muteConfig.set(player.getName().toLowerCase(), LocalDate.now().plus(t)); // Use server local timezone, not UTC
+        this.muteConfig.set(player.getName().toLowerCase(), Timestamp.valueOf(LocalDateTime.now().plus(t)).getTime() / 1000);
         this.muteConfig.save();
         return true;
     }
@@ -326,7 +322,7 @@ public class EssentialsAPI {
     public Integer getRemainingTimeToUnmute(Player player) {
         this.muteConfig.reload();
         Integer time = (Integer) this.muteConfig.get(player.getName().toLowerCase());
-        return time == null ? null : (int) (time - System.currentTimeMillis() / 1000);
+        return time == null ? null : (int) (time - Timestamp. valueOf(LocalDateTime.now()).getTime() / 1000);
     }
 
     public boolean isMuted(Player player) {
@@ -339,8 +335,8 @@ public class EssentialsAPI {
         return true;
     }
 
-    public String getMuteTimeMessage(int d, int h, int m) {
-        return getDurationString(Duration.ZERO.plusDays(d).plusHours(h).plusMinutes(m));
+    public String getMuteTimeMessage(int d, int h, int m, int s) {
+        return getDurationString(Duration.ZERO.plusDays(d).plusHours(h).plusMinutes(m).plusSeconds(s));
     }
 
     public String getUnmuteTimeMessage(Player player) {
@@ -353,6 +349,7 @@ public class EssentialsAPI {
         this.muteConfig.save();
     }
 
+    // Scallop: Thanks lmlstarqaq
     // %0 days %1 hours %2 minutes %3 seconds, language localized.
     public String getDurationString(Duration duration) {
         if (duration == null) return "null";
@@ -360,7 +357,7 @@ public class EssentialsAPI {
         long h = duration.toHours() % 24;
         long m = duration.toMinutes() % 60;
         long s = duration.getSeconds() % 60;
-        String d1="",h1="",m1="",s1="";
+        String d1="", h1="", m1="", s1="";
         //Singulars and plurals. Maybe necessary for English or other languages. 虽然中文似乎没有名词的单复数 -- lmlstarqaq
         if (d > 1) d1=lang.translateString("commands.generic.days", d);
         else if (d > 0) d1=lang.translateString("commands.generic.day", d);
@@ -371,6 +368,6 @@ public class EssentialsAPI {
         if (s > 1) s1=lang.translateString("commands.generic.seconds", s);
         else if (s > 0) s1=lang.translateString("commands.generic.second", s);
         //In some languages, times are read from SECONDS to HOURS, which should be noticed.
-        return lang.translateString("commands.generic.time.format", d1, h1, m1, s1);
+        return lang.translateString("commands.generic.time.format", d1, h1, m1, s1).trim().replace(" +", " ");
     }
 }
