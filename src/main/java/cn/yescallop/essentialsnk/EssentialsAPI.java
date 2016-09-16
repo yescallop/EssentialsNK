@@ -93,15 +93,12 @@ public class EssentialsAPI {
     }
 
     public boolean switchVanish(Player player) {
-        boolean vanished = this.isVanished(player);
-        for (Player p : this.getServer().getInstance().getOnlinePlayers().values()) {
-            if (vanished) {
-                this.setVanished(player, false);
-                vanishedPlayers.remove(player);
-            } else {
-                this.setVanished(player, true);
-                vanishedPlayers.add(player);
-            }
+        if (this.isVanished(player)) {
+            this.setVanished(player, false);
+            vanishedPlayers.remove(player);
+        } else {
+            this.setVanished(player, true);
+            vanishedPlayers.add(player);
         }
         return !vanished;
     }
