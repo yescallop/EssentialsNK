@@ -12,7 +12,6 @@ import cn.nukkit.item.ItemTool;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.format.FullChunk;
-import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
