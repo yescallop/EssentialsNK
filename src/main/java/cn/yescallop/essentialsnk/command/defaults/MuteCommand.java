@@ -1,10 +1,15 @@
 package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
+import cn.yescallop.essentialsnk.util.duration.LMLDurationParser;
+
+import java.time.Duration;
+import java.util.regex.Pattern;
 
 import javax.xml.datatype.DatatypeFactory;
 import java.time.Duration;
@@ -45,20 +50,12 @@ public class MuteCommand extends CommandBase {
                             .plusDays(Integer.parseInt(args[1]))
                             .plusHours(Integer.parseInt(args[2]))
                             .plusMinutes(Integer.parseInt(args[3]));
-                /*
-                    /mute lmlstarqaq 04:00:00
-                    /mute lmlstarqaq 4 seconds
-                    /mute lmlstarqaq one day
-                    /mute lmlstarqaq three hours and a half
-                    /mute lmlstarqaq 六个半小时
-                    /mute lmlstarqaq восемь минут
-
-                    Thanks to powerful java!
-                */
                 else {
                     String arg = "";
-                    for (int i = 1/* player name */; i < args.length; i++) arg += args[i];
-                    duration = Duration.ofSeconds(DatatypeFactory.newInstance().newDuration(arg).getTimeInMillis(Calendar.getInstance()));
+                    for (int i = 1/* player name */; i < args.length; i++) arg += args[i]+" ";
+                    arg = arg.trim();
+                    duration = LMLDurationParser.parse(arg);
+//                    Server.getInstance().getLogger().info(api.getDurationString(duration));
                 }
             } catch (Exception e) {
                 sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.number.invalid"));
