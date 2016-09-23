@@ -6,6 +6,58 @@ description: EssentialsNK
 main: cn.yescallop.essentialsnk.EssentialsNK
 
 permissions:
+  essentialsnk.*
+    description: Access to all commands.
+    children:
+    - essentialsnk.back: true
+    - essentialsnk.break: true
+    - essentialsnk.broadcast: true
+    - essentialsnk.burn: true
+    - essentialsnk.clearinventory: true
+    - essentialsnk.clearinventory.other: true
+    - essentialsnk.compass: true
+    - essentialsnk.delhome: true
+    - essentialsnk.delwarp: true
+    - essentialsnk.depth: true
+    - essentialsnk.extinguish: true
+    - essentialsnk.extinguish.other: true
+    - essentialsnk.feed: true
+    - essentialsnk.feed.other: true
+    - essentialsnk.fly: true
+    - essentialsnk.fly.other: true
+    - essentialsnk.gamemode: true
+    - essentialsnk.getpos: true
+    - essentialsnk.getpos.other: true
+    - essentialsnk.heal: true
+    - essentialsnk.heal.other: true
+    - essentialsnk.home: true
+    - essentialsnk.itemdb: true
+    - essentialsnk.jump: true
+    - essentialsnk.kickall: true
+    - essentialsnk.lightning: true
+    - essentialsnk.more: true
+    - essentialsnk.mute: true
+    - essentialsnk.ping: true
+    - essentialsnk.realname: true
+    - essentialsnk.repair: true
+    - essentialsnk.repair.all: true
+    - essentialsnk.repair.armor: true
+    - essentialsnk.sethome: true
+    - essentialsnk.setwarp: true
+    - essentialsnk.sudo: true
+    - essentialsnk.top: true
+    - essentialsnk.tpa: true
+    - essentialsnk.tpaall: true
+    - essentialsnk.tpaccept: true
+    - essentialsnk.tpahere: true
+    - essentialsnk.tpall: true
+    - essentialsnk.tpdeny: true
+    - essentialsnk.tphere: true
+    - essentialsnk.vanish: true
+    - essentialsnk.vanish.other: true
+    - essentialsnk.warp: true
+    - essentialsnk.warp.other: true
+    - essentialsnk.world: true
  essentialsnk.back:
   default: true
  essentialsnk.break:
