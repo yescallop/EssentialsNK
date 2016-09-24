@@ -4,12 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.block.Block;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
-import cn.nukkit.event.player.PlayerBedEnterEvent;
-import cn.nukkit.event.player.PlayerChatEvent;
-import cn.nukkit.event.player.PlayerCommandPreprocessEvent;
-import cn.nukkit.event.player.PlayerJoinEvent;
-import cn.nukkit.event.player.PlayerQuitEvent;
-import cn.nukkit.event.player.PlayerTeleportEvent;
+import cn.nukkit.event.player.*;
 import cn.nukkit.level.Location;
 import cn.yescallop.essentialsnk.lang.BaseLang;
 

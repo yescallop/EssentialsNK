@@ -1,10 +1,8 @@
 package cn.yescallop.essentialsnk;
 
-import cn.nukkit.AdventureSettings;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.block.Block;
-import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.weather.EntityLightning;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemArmor;
@@ -22,8 +20,8 @@ import cn.yescallop.essentialsnk.lang.BaseLang;
 
 import java.io.File;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class EssentialsAPI {
@@ -32,12 +30,13 @@ public class EssentialsAPI {
             Block.POPPY, Block.BROWN_MUSHROOM, Block.RED_MUSHROOM, Block.TORCH, Block.FIRE, Block.WHEAT_BLOCK, Block.SIGN_POST, Block.WALL_SIGN, Block.SUGARCANE_BLOCK,
             Block.PUMPKIN_STEM, Block.MELON_STEM, Block.VINE, Block.CARROT_BLOCK, Block.POTATO_BLOCK, Block.DOUBLE_PLANT};
     private static EssentialsAPI instance = null;
+    private static Duration THIRTY_DAYS = Duration.ZERO.plusDays(30);
+    public Vector3 temporalVector = new Vector3();
     private EssentialsNK plugin;
     private BaseLang lang;
     private Map<Player, Location> playerLastLocation = new HashMap<>();
     private Map<Integer, TPRequest> tpRequests = new HashMap<>();
     private List<Player> vanishedPlayers = new ArrayList<>();
-    public Vector3 temporalVector = new Vector3();
     private Config homeConfig;
     private Config warpConfig;
     private Config muteConfig;
@@ -308,7 +307,6 @@ public class EssentialsAPI {
         return this.mute(player, Duration.ZERO.plusDays(d).plusHours(h).plusMinutes(m).plusSeconds(s));
     }
 
-    private static Duration THIRTY_DAYS = Duration.ZERO.plusDays(30);
     //for peace too -- lmlstarqaq
     public boolean mute(Player player, Duration t) {
         if (t.isNegative() || t.isZero()) return false;
@@ -357,7 +355,7 @@ public class EssentialsAPI {
         long h = duration.toHours() % 24;
         long m = duration.toMinutes() % 60;
         long s = duration.getSeconds() % 60;
-        String d1="", h1="", m1="", s1="";
+        String d1 = "", h1 = "", m1 = "", s1 = "";
         //Singulars and plurals. Maybe necessary for English or other languages. 虽然中文似乎没有名词的单复数 -- lmlstarqaq
         if (d > 1) d1 = lang.translateString("commands.generic.days", d);
         else if (d > 0) d1 = lang.translateString("commands.generic.day", d);

@@ -1,7 +1,6 @@
 package cn.yescallop.essentialsnk.util.duration;
 
 import java.time.Duration;
-import java.util.IntSummaryStatistics;
 import java.util.regex.Pattern;
 
 /**
@@ -11,9 +10,11 @@ import java.util.regex.Pattern;
 class LMLDP$Lang$Natural implements LMLDP$Lang {
     private static Pattern time = Pattern.compile("^[0-9]*:([0-5]?[0-9])(:([0-5]?[0-9]))?$");
     private static Pattern positiveInteger = Pattern.compile("^[0-9]+$");
+
     private boolean isPositiveInteger(String a) {
         return positiveInteger.matcher(a).find();
     }
+
     @Override
     public boolean identify(String s) {
         s = s.replace("：", ":");

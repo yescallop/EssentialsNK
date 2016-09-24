@@ -1,7 +1,6 @@
 package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
@@ -9,16 +8,12 @@ import cn.yescallop.essentialsnk.command.CommandBase;
 import cn.yescallop.essentialsnk.util.duration.LMLDurationParser;
 
 import java.time.Duration;
-import java.util.regex.Pattern;
-
-import javax.xml.datatype.DatatypeFactory;
-import java.time.Duration;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MuteCommand extends CommandBase {
+
+    private static Pattern p = Pattern.compile("^[0-9]+$");
 
     public MuteCommand(EssentialsAPI api) {
         super("mute", api);
@@ -48,10 +43,10 @@ public class MuteCommand extends CommandBase {
                 /*  /mute lmlstarqaq 0 0 1   */
                 if (args.length == 5 && isPositiveInteger(args[1]) && isPositiveInteger(args[2]) && isPositiveInteger(args[3]) && isPositiveInteger(args[4]))
                     duration = Duration.ZERO
-                        .plusDays(Integer.parseInt(args[1]))
-                        .plusHours(Integer.parseInt(args[2]))
-                        .plusMinutes(Integer.parseInt(args[3]))
-                        .plusSeconds(Integer.parseInt(args[4]));
+                            .plusDays(Integer.parseInt(args[1]))
+                            .plusHours(Integer.parseInt(args[2]))
+                            .plusMinutes(Integer.parseInt(args[3]))
+                            .plusSeconds(Integer.parseInt(args[4]));
                 else {
                     String arg = api.implode(" ", Arrays.copyOfRange(args, 1, args.length)).trim();
                     duration = LMLDurationParser.parse(arg);
@@ -83,7 +78,6 @@ public class MuteCommand extends CommandBase {
         return true;
     }
 
-    private static Pattern p = Pattern.compile("^[0-9]+$");
     private boolean isPositiveInteger(String a) {
         return p.matcher(a).find();
     }
