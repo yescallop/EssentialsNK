@@ -86,7 +86,7 @@ public class EventListener implements Listener {
             event.setCancelled();
         }
     }
-    
+
     @EventHandler(ignoreCancelled = true)
     public void onEntityDeath(EntityDeathEvent event) {
         Entity entity = event.getEntity();
@@ -94,14 +94,14 @@ public class EventListener implements Listener {
             event.setDrops(new Item[]{});
         }
     }
-    
+
     @EventHandler(ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
         if (!api.isDoTileDroPS(event.getBlock().getLevel())) {
             event.setDrops(new Item[]{});
         }
     }
-    
+
     @EventHandler(ignoreCancelled = true)
     public void onEntityRegainHealth(EntityRegainHealthEvent event) {
         if (event.getRegainReason() == EntityRegainHealthEvent.CAUSE_REGEN) {

@@ -392,7 +392,7 @@ public class EssentialsAPI {
         Object obj = map.get(gamerule);
         return obj == null ? this.getGameruleDefaultValue(gamerule) : obj;
     }
-    
+
     public Object getGameruleDefaultValue(String gamerule) {
         switch (gamerule) {
             case "doFireTick":
@@ -413,15 +413,15 @@ public class EssentialsAPI {
     public boolean isDoFireTick(Level level) {
         return (boolean) this.getGamerule(level, "doFireTick");
     }
-    
+
     public boolean isDoMobLoot(Level level) {
         return (boolean) this.getGamerule(level, "doMobLoot");
     }
-    
+
     public boolean isDoTileDroPS(Level level) {
         return (boolean) this.getGamerule(level, "doTileDroPS");
     }
-    
+
     public boolean isNaturalRegeneration(Level level) {
         return (boolean) this.getGamerule(level, "naturalRegeneration");
     }

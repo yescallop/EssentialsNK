@@ -70,6 +70,4 @@ public class GameruleCommand extends CommandBase {
         sender.sendMessage(lang.translateString("commands.gamerule.success", new String[]{args[0], value.toString()}));
         return true;
     }
-    
-    
 }
