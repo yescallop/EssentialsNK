@@ -22,6 +22,7 @@ public class GameruleCommand extends CommandBase {
         }
         if (args.length == 0) {
             sender.sendMessage("doFileTick, doMobLoot, doTileDroPS, keepInventory, naturalRegeneration");
+            return true;
         }
         if (!this.testIngame(sender)) {
             return false;
@@ -69,4 +70,6 @@ public class GameruleCommand extends CommandBase {
         sender.sendMessage(lang.translateString("commands.gamerule.success", new String[]{args[0], value.toString()}));
         return true;
     }
+    
+    
 }

@@ -379,22 +379,50 @@ public class EssentialsAPI {
             map = new HashMap<>();
         }
         map.put(gamerule, value);
-        this.homeConfig.set(level.getName(), map);
-        this.homeConfig.save();
+        this.gameruleConfig.set(level.getName(), map);
+        this.gameruleConfig.save();
     }
 
     public Object getGamerule(Level level, String gamerule) {
         this.gameruleConfig.reload();
-        return ((Map<String, Object>) this.gameruleConfig.get(level.getName())).get(gamerule);
+        Map<String, Object> map = (Map<String, Object>) this.gameruleConfig.get(level.getName());
+        if (map == null) {
+            return this.getGameruleDefaultValue(gamerule);
+        }
+        Object obj = map.get(gamerule);
+        return obj == null ? this.getGameruleDefaultValue(gamerule) : obj;
+    }
+    
+    public Object getGameruleDefaultValue(String gamerule) {
+        switch (gamerule) {
+            case "doFireTick":
+            case "doMobLoot":
+            case "doTileDroPS":
+            case "naturalRegeneration":
+                return true;
+            case "keepInventory":
+                return false;
+        }
+        return null;
     }
 
     public boolean isKeepInventory(Level level) {
-        Object gamerule = this.getGamerule(level, "keepInventory");
-        return gamerule != null && (boolean) gamerule;
+        return (boolean) this.getGamerule(level, "keepInventory");
     }
 
     public boolean isDoFireTick(Level level) {
-        Object gamerule = this.getGamerule(level, "doFileTick");
-        return gamerule == null || (boolean) gamerule;
+        return (boolean) this.getGamerule(level, "doFireTick");
+    }
+    
+    public boolean isDoMobLoot(Level level) {
+        return (boolean) this.getGamerule(level, "doMobLoot");
+    }
+    
+    public boolean isDoTileDroPS(Level level) {
+        return (boolean) this.getGamerule(level, "doTileDroPS");
+    }
+    
+    public boolean isNaturalRegeneration(Level level) {
+        return (boolean) this.getGamerule(level, "naturalRegeneration");
     }
 }

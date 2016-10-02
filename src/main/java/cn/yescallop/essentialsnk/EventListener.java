@@ -2,10 +2,16 @@ package cn.yescallop.essentialsnk;
 
 import cn.nukkit.Player;
 import cn.nukkit.block.Block;
+import cn.nukkit.entity.Entity;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
-import cn.nukkit.event.block.BlockSpreadEvent;
+import cn.nukkit.event.block.BlockBreakEvent;
+import cn.nukkit.event.block.BlockIgniteEvent;
+import cn.nukkit.event.block.BlockIgniteEvent.BlockIgniteCause;
+import cn.nukkit.event.entity.EntityDeathEvent;
+import cn.nukkit.event.entity.EntityRegainHealthEvent;
 import cn.nukkit.event.player.*;
+import cn.nukkit.item.Item;
 import cn.nukkit.level.Location;
 import cn.yescallop.essentialsnk.lang.BaseLang;
 
@@ -75,10 +81,31 @@ public class EventListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onBlockSpread(BlockSpreadEvent event) {
-        Block newState = event.getNewState();
-        if (newState.getId() == Block.FIRE && !api.isDoFireTick(newState.getLevel())) {
+    public void onBlockIgnite(BlockIgniteEvent event) {
+        if (event.getCause() == BlockIgniteCause.SPREAD && !api.isDoFireTick(event.getBlock().getLevel())) {
             event.setCancelled();
+        }
+    }
+    
+    @EventHandler(ignoreCancelled = true)
+    public void onEntityDeath(EntityDeathEvent event) {
+        Entity entity = event.getEntity();
+        if (!(entity instanceof Player) && !api.isDoMobLoot(entity.getLevel())) {
+            event.setDrops(new Item[]{});
+        }
+    }
+    
+    @EventHandler(ignoreCancelled = true)
+    public void onBlockBreak(BlockBreakEvent event) {
+        if (!api.isDoTileDroPS(event.getBlock().getLevel())) {
+            event.setDrops(new Item[]{});
+        }
+    }
+    
+    @EventHandler(ignoreCancelled = true)
+    public void onEntityRegainHealth(EntityRegainHealthEvent event) {
+        if (event.getRegainReason() == EntityRegainHealthEvent.CAUSE_REGEN) {
+            event.setCancelled(!api.isNaturalRegeneration(event.getEntity().getLevel()));
         }
     }
 }
