@@ -7,6 +7,7 @@ import cn.nukkit.entity.weather.EntityLightning;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemArmor;
 import cn.nukkit.item.ItemTool;
+import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.format.FullChunk;
@@ -31,7 +32,7 @@ public class EssentialsAPI {
             Block.PUMPKIN_STEM, Block.MELON_STEM, Block.VINE, Block.CARROT_BLOCK, Block.POTATO_BLOCK, Block.DOUBLE_PLANT};
     private static EssentialsAPI instance = null;
     private static Duration THIRTY_DAYS = Duration.ZERO.plusDays(30);
-    public Vector3 temporalVector = new Vector3();
+    private Vector3 temporalVector = new Vector3();
     private EssentialsNK plugin;
     private BaseLang lang;
     private Map<Player, Location> playerLastLocation = new HashMap<>();
@@ -40,6 +41,7 @@ public class EssentialsAPI {
     private Config homeConfig;
     private Config warpConfig;
     private Config muteConfig;
+    private Config gameruleConfig;
 
     public EssentialsAPI(EssentialsNK plugin) {
         instance = this;
@@ -48,6 +50,7 @@ public class EssentialsAPI {
         this.homeConfig = new Config(new File(plugin.getDataFolder(), "home.yml"), Config.YAML);
         this.warpConfig = new Config(new File(plugin.getDataFolder(), "warp.yml"), Config.YAML);
         this.muteConfig = new Config(new File(plugin.getDataFolder(), "mute.yml"), Config.YAML);
+        this.gameruleConfig = new Config(new File(plugin.getDataFolder(), "gamerule.yml"), Config.YAML);
     }
 
     public static EssentialsAPI getInstance() {
@@ -113,7 +116,7 @@ public class EssentialsAPI {
     }
 
     public void setVanished(Player player, boolean vanished) {
-        for (Player p : this.getServer().getInstance().getOnlinePlayers().values()) {
+        for (Player p : this.getServer().getOnlinePlayers().values()) {
             if (vanished) {
                 p.hidePlayer(player);
             } else {
@@ -190,7 +193,7 @@ public class EssentialsAPI {
 
     public boolean setHome(Player player, String name, Location pos) {
         this.homeConfig.reload();
-        Map<String, Object[]> map = (Map<String, Object[]>) this.homeConfig.get(player.getName().toLowerCase());
+        Map<String, Object> map = (Map<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
         if (map == null) {
             map = new HashMap<>();
         }
@@ -366,6 +369,32 @@ public class EssentialsAPI {
         if (s > 1) s1 = lang.translateString("commands.generic.seconds", s);
         else if (s > 0) s1 = lang.translateString("commands.generic.second", s);
         //In some languages, times are read from SECONDS to HOURS, which should be noticed.
-        return lang.translateString("commands.generic.time.format", d1, h1, m1, s1).trim().replace(" +", " ");
+        return lang.translateString("commands.generic.time.format", d1, h1, m1, s1).trim().replaceAll(" +", " ");
+    }
+
+    public void setGamerule(Level level, String gamerule, Object value) {
+        this.gameruleConfig.reload();
+        Map<String, Object> map = (Map<String, Object>) this.gameruleConfig.get(level.getName());
+        if (map == null) {
+            map = new HashMap<>();
+        }
+        map.put(gamerule, value);
+        this.homeConfig.set(level.getName(), map);
+        this.homeConfig.save();
+    }
+
+    public Object getGamerule(Level level, String gamerule) {
+        this.gameruleConfig.reload();
+        return ((Map<String, Object>) this.gameruleConfig.get(level.getName())).get(gamerule);
+    }
+
+    public boolean isKeepInventory(Level level) {
+        Object gamerule = this.getGamerule(level, "keepInventory");
+        return gamerule != null && (boolean) gamerule;
+    }
+
+    public boolean isDoFireTick(Level level) {
+        Object gamerule = this.getGamerule(level, "doFileTick");
+        return gamerule == null || (boolean) gamerule;
     }
 }

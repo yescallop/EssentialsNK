@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.block.Block;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
+import cn.nukkit.event.block.BlockSpreadEvent;
 import cn.nukkit.event.player.*;
 import cn.nukkit.level.Location;
 import cn.yescallop.essentialsnk.lang.BaseLang;
@@ -62,6 +63,22 @@ public class EventListener implements Listener {
         if (api.isMuted(player)) {
             event.setCancelled();
             player.sendMessage(lang.translateString("commands.generic.muted", api.getUnmuteTimeMessage(player)));
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        if (api.isKeepInventory(event.getEntity().getLevel())) {
+            event.setKeepInventory(true);
+            event.setKeepExperience(true);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onBlockSpread(BlockSpreadEvent event) {
+        Block newState = event.getNewState();
+        if (newState.getId() == Block.FIRE && !api.isDoFireTick(newState.getLevel())) {
+            event.setCancelled();
         }
     }
 }
