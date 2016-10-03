@@ -56,6 +56,8 @@ permissions:
   default: op
  essentialsnk.more:
   default: op
+ essentialsnk.speed:
+  default: op
  essentialsnk.ping:
   default: true
  essentialsnk.repair:
