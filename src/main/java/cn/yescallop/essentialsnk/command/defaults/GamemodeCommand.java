@@ -1,7 +1,7 @@
 package cn.yescallop.essentialsnk.command.defaults;
 
-import cn.nukkit.Server;
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.TextFormat;
@@ -92,7 +92,7 @@ public class GamemodeCommand extends CommandBase {
         }
         return true;
     }
-    
+
     private void sendUsage(CommandSender sender, String label) {
         String usage;
         if (label.toLowerCase().equals("gamemode") || label.toLowerCase().equals("gm")) {

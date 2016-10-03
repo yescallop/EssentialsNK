@@ -28,13 +28,18 @@ public class SpeedCommand extends CommandBase {
         try {
             speed = Integer.valueOf(args[0]);
         } catch (NumberFormatException e) {
-            sender.sendMessage(lang.translateString("commands.generic.number.invalidinteger"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.number.invalidinteger"));
             return false;
         }
 
         Player player;
 
         if (args.length == 2) {
+            if (!sender.hasPermission("essentialsnk.speed.others")) {
+                sender.sendMessage(getPermissionMessage());
+                return false;
+            }
+
             player = getAPI().getServer().getPlayer(args[1]);
         } else if (!(sender instanceof Player)) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
@@ -44,7 +49,7 @@ public class SpeedCommand extends CommandBase {
         }
 
         if (player == null || !player.isOnline()) {
-            sender.sendMessage(lang.translateString("commands.generic.player.notfound"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound"));
             return false;
         }
 

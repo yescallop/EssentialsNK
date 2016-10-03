@@ -40,6 +40,12 @@ permissions:
   default: true
  essentialsnk.getpos.other:
   default: op
+ essentialsnk.god:
+  default: op
+ essentialsnk.god.others:
+  default: op
+ essentialsnk.god.pvp:
+  default: op
  essentialsnk.heal:
   default: op
  essentialsnk.heal.other:
@@ -57,6 +63,8 @@ permissions:
  essentialsnk.more:
   default: op
  essentialsnk.speed:
+  default: op
+ essentialsnk.speed.others:
   default: op
  essentialsnk.ping:
   default: true

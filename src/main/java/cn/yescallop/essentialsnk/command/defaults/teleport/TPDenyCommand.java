@@ -35,7 +35,7 @@ public class TPDenyCommand extends CommandBase {
         Player from;
         switch (args.length) {
             case 0:
-                if((request = api.getLatestTPRequestTo(to)) == null) {
+                if ((request = api.getLatestTPRequestTo(to)) == null) {
                     sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.unavailable"));
                     return false;
                 }
