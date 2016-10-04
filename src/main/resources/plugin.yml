@@ -78,6 +78,10 @@ permissions:
   default: true
  essentialsnk.setwarp:
   default: op
+ essentialsnk.speed:
+  default: op
+ essentialsnk.speed.other:
+  default: op
  essentialsnk.sudo:
   default: op
  essentialsnk.top:
