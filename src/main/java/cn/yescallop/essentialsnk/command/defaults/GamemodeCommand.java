@@ -32,6 +32,10 @@ public class GamemodeCommand extends CommandBase {
                 }
                 player = (Player) sender;
             } else {
+                 if (!sender.hasPermission("essentialsnk.gamemode.other")) {
+                    this.sendPermissionMessage(sender);
+                    return false;
+                }
                 player = api.getServer().getPlayer(args[1]);
                 if (player == null) {
                     sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[1]));
