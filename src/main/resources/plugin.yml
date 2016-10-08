@@ -40,7 +40,7 @@ permissions:
   default: op
  essentialsnk.gamemode:
   default: op
- essentialsnk.gamemode.other
+ essentialsnk.gamemode.other:
   default: op
  essentialsnk.gamerule:
   default: op
