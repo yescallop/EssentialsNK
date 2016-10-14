@@ -97,7 +97,7 @@ permissions:
  essentialsnk.tpahere:
   default: true
  essentialsnk.tpall:
-  default: true
+  default: op
  essentialsnk.tpdeny:
   default: true
  essentialsnk.tphere:
