@@ -31,7 +31,7 @@ public class SpeedCommand extends CommandBase {
         }
         Player player;
         if (args.length == 2) {
-            if (!sender.hasPermission("essentialsnk.speed.other")) {
+            if (!sender.hasPermission("essentialsnk.speed.others")) {
                 this.sendPermissionMessage(sender);
                 return false;
             }

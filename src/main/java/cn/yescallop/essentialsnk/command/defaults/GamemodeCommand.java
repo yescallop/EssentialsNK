@@ -32,7 +32,7 @@ public class GamemodeCommand extends CommandBase {
                 }
                 player = (Player) sender;
             } else {
-                if (!sender.hasPermission("essentialsnk.gamemode.other")) {
+                if (!sender.hasPermission("essentialsnk.gamemode.others")) {
                     this.sendPermissionMessage(sender);
                     return false;
                 }

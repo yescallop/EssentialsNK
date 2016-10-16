@@ -28,7 +28,7 @@ public class HealCommand extends CommandBase {
             }
             player = (Player) sender;
         } else {
-            if (!sender.hasPermission("essentialsnk.heal.other")) {
+            if (!sender.hasPermission("essentialsnk.heal.others")) {
                 this.sendPermissionMessage(sender);
                 return false;
             }

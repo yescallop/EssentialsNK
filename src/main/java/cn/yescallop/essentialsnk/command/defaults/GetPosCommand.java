@@ -28,7 +28,7 @@ public class GetPosCommand extends CommandBase {
             }
             player = (Player) sender;
         } else {
-            if (!sender.hasPermission("essentialsnk.getpos.other")) {
+            if (!sender.hasPermission("essentialsnk.getpos.others")) {
                 this.sendPermissionMessage(sender);
                 return false;
             }

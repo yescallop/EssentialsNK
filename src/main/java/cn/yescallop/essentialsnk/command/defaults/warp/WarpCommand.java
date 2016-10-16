@@ -43,7 +43,7 @@ public class WarpCommand extends CommandBase {
             }
             player = (Player) sender;
         } else {
-            if (!sender.hasPermission("essentialsnk.warp.other")) {
+            if (!sender.hasPermission("essentialsnk.warp.others")) {
                 this.sendPermissionMessage(sender);
                 return false;
             }

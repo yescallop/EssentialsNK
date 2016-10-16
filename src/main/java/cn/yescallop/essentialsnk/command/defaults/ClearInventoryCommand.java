@@ -28,7 +28,7 @@ public class ClearInventoryCommand extends CommandBase {
             }
             player = (Player) sender;
         } else {
-            if (!sender.hasPermission("essentialsnk.clearinventory.other")) {
+            if (!sender.hasPermission("essentialsnk.clearinventory.others")) {
                 this.sendPermissionMessage(sender);
                 return false;
             }

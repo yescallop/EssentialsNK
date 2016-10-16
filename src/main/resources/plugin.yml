@@ -18,7 +18,7 @@ permissions:
   default: op
  essentialsnk.clearinventory:
   default: op
- essentialsnk.clearinventory.other:
+ essentialsnk.clearinventory.others:
   default: op
  essentialsnk.compass:
   default: true
@@ -30,29 +30,29 @@ permissions:
   default: true
  essentialsnk.extinguish:
   default: op
- essentialsnk.extinguish.other:
+ essentialsnk.extinguish.others:
   default: op
  essentialsnk.feed:
   default: op
- essentialsnk.feed.other:
+ essentialsnk.feed.others:
   default: op
  essentialsnk.fly:
   default: op
- essentialsnk.fly.other:
+ essentialsnk.fly.others:
   default: op
  essentialsnk.gamemode:
   default: op
- essentialsnk.gamemode.other:
+ essentialsnk.gamemode.others:
   default: op
  essentialsnk.gamerule:
   default: op
  essentialsnk.getpos:
   default: true
- essentialsnk.getpos.other:
+ essentialsnk.getpos.others:
   default: op
  essentialsnk.heal:
   default: op
- essentialsnk.heal.other:
+ essentialsnk.heal.others:
   default: op
  essentialsnk.home:
   default: true
@@ -84,7 +84,7 @@ permissions:
   default: op
  essentialsnk.speed:
   default: op
- essentialsnk.speed.other:
+ essentialsnk.speed.others:
   default: op
  essentialsnk.sudo:
   default: op
@@ -106,11 +106,11 @@ permissions:
   default: op
  essentialsnk.vanish:
   default: op
- essentialsnk.vanish.other:
+ essentialsnk.vanish.others:
   default: op
  essentialsnk.warp:
   default: true
- essentialsnk.warp.other:
+ essentialsnk.warp.others:
   default: op
  essentialsnk.world:
   default: true

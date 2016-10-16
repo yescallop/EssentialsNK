@@ -28,7 +28,7 @@ public class VanishCommand extends CommandBase {
             }
             player = (Player) sender;
         } else {
-            if (!sender.hasPermission("essentialsnk.vanish.other")) {
+            if (!sender.hasPermission("essentialsnk.vanish.others")) {
                 this.sendPermissionMessage(sender);
                 return false;
             }

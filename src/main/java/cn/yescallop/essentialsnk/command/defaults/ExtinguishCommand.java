@@ -28,7 +28,7 @@ public class ExtinguishCommand extends CommandBase {
             }
             player = (Player) sender;
         } else {
-            if (!sender.hasPermission("essentialsnk.extinguish.other")) {
+            if (!sender.hasPermission("essentialsnk.extinguish.others")) {
                 this.sendPermissionMessage(sender);
                 return false;
             }

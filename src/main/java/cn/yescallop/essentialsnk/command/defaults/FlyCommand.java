@@ -27,7 +27,7 @@ public class FlyCommand extends CommandBase {
             }
             player = (Player) sender;
         } else {
-            if (!sender.hasPermission("essentialsnk.fly.other")) {
+            if (!sender.hasPermission("essentialsnk.fly.others")) {
                 this.sendPermissionMessage(sender);
                 return false;
             }

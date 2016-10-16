@@ -29,7 +29,7 @@ public class FeedCommand extends CommandBase {
             }
             player = (Player) sender;
         } else {
-            if (!sender.hasPermission("essentialsnk.feed.other")) {
+            if (!sender.hasPermission("essentialsnk.feed.others")) {
                 this.sendPermissionMessage(sender);
                 return false;
             }
