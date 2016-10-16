@@ -31,6 +31,10 @@ public class BreakCommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.break.unreachable"));
             return false;
         }
+        if (block.getId() == Block.BEDROCK && !sender.hasPermission("essentialsnk.break.bedrock")) {
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.break.bedrock"));
+            return false;
+        }
         player.getLevel().setBlock(block, new BlockAir(), true, true);
         return true;
     }

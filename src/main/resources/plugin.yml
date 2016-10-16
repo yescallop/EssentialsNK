@@ -10,6 +10,8 @@ permissions:
   default: true
  essentialsnk.break:
   default: op
+ essentialsnk.break.bedrock:
+  default: op
  essentialsnk.broadcast:
   default: op
  essentialsnk.burn:
