@@ -62,7 +62,7 @@ public class EssentialsAPI {
         return plugin.getServer();
     }
 
-    public PluginLogger getLogger(){
+    public PluginLogger getLogger() {
         return this.plugin.getLogger();
     }
 

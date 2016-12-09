@@ -48,9 +48,9 @@ public class SpeedCommand extends CommandBase {
         player.removeEffect(Effect.SPEED);
         if (speed != 0) {
             player.addEffect(
-                Effect.getEffect(Effect.SPEED)
-                    .setAmplifier(speed)
-                    .setDuration(Integer.MAX_VALUE)
+                    Effect.getEffect(Effect.SPEED)
+                            .setAmplifier(speed)
+                            .setDuration(Integer.MAX_VALUE)
             );
         }
         if (sender == player) {

@@ -22,12 +22,12 @@ public class SpawnCommand extends CommandBase {
         }
 
         if (args.length == 0 && !this.testIngame(sender)) {
-            sender.sendMessage(TextFormat.RED+lang.translateString("commands.generic.ingame"));
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
             return false;
         }
 
-        if(args.length == 1 && !sender.hasPermission("essentialsnk.spawn.others")) {
-            sender.sendMessage(TextFormat.RED+lang.translateString("commands.spawn.permission"));
+        if (args.length == 1 && !sender.hasPermission("essentialsnk.spawn.others")) {
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.spawn.permission"));
             return false;
         }
 
@@ -38,19 +38,19 @@ public class SpawnCommand extends CommandBase {
 
         Player p;
 
-        if(args.length == 0) {
+        if (args.length == 0) {
             p = (Player) sender;
         } else {
             p = getAPI().getServer().getPlayer(args[0]);
         }
 
-        if(p == null || !p.isOnline()) {
-            sender.sendMessage(TextFormat.RED+lang.translateString("commands.generic.player.notfound", args[0]));
+        if (p == null || !p.isOnline()) {
+            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
             return false;
         }
 
         p.teleport(getAPI().getServer().getDefaultLevel().getSpawnLocation());
-        p.sendMessage(TextFormat.YELLOW+lang.translateString("commands.generic.teleporting"));
+        p.sendMessage(TextFormat.YELLOW + lang.translateString("commands.generic.teleporting"));
         return true;
     }
 }
