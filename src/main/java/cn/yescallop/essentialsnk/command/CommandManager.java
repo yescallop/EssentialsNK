@@ -56,5 +56,8 @@ public class CommandManager {
         map.register("EssentialsNK", new DelWarpCommand(api));
         map.register("EssentialsNK", new WarpCommand(api));
         map.register("EssentialsNK", new SetWarpCommand(api));
+
+        map.register("EssentialsNK", new SetSpawnCommand(api));
+        map.register("EssentialsNK", new SpawnCommand(api));
     }
 }
