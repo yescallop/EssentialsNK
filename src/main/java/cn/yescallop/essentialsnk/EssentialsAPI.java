@@ -16,6 +16,7 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
+import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
 import cn.yescallop.essentialsnk.lang.BaseLang;
 
@@ -59,6 +60,10 @@ public class EssentialsAPI {
 
     public Server getServer() {
         return plugin.getServer();
+    }
+
+    public PluginLogger getLogger() {
+        return this.plugin.getLogger();
     }
 
     public BaseLang getLanguage() {

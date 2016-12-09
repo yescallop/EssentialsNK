@@ -3,9 +3,13 @@ package cn.yescallop.essentialsnk.command;
 import cn.nukkit.command.CommandMap;
 import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.defaults.*;
-import cn.yescallop.essentialsnk.command.defaults.home.*;
+import cn.yescallop.essentialsnk.command.defaults.home.DelHomeCommand;
+import cn.yescallop.essentialsnk.command.defaults.home.HomeCommand;
+import cn.yescallop.essentialsnk.command.defaults.home.SetHomeCommand;
 import cn.yescallop.essentialsnk.command.defaults.teleport.*;
-import cn.yescallop.essentialsnk.command.defaults.warp.*;
+import cn.yescallop.essentialsnk.command.defaults.warp.DelWarpCommand;
+import cn.yescallop.essentialsnk.command.defaults.warp.SetWarpCommand;
+import cn.yescallop.essentialsnk.command.defaults.warp.WarpCommand;
 
 
 public class CommandManager {
@@ -56,5 +60,8 @@ public class CommandManager {
         map.register("EssentialsNK", new DelWarpCommand(api));
         map.register("EssentialsNK", new WarpCommand(api));
         map.register("EssentialsNK", new SetWarpCommand(api));
+
+        map.register("EssentialsNK", new SetSpawnCommand(api));
+        map.register("EssentialsNK", new SpawnCommand(api));
     }
 }
