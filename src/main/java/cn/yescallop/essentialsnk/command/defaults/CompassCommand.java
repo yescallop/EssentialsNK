@@ -25,16 +25,16 @@ public class CompassCommand extends CommandBase {
         }
         String direction;
         switch (((Player) sender).getDirection()) {
-            case 0:
+            case SOUTH:
                 direction = "south";
                 break;
-            case 1:
+            case WEST:
                 direction = "west";
                 break;
-            case 2:
+            case NORTH:
                 direction = "north";
                 break;
-            case 3:
+            case EAST:
                 direction = "east";
                 break;
             default:
