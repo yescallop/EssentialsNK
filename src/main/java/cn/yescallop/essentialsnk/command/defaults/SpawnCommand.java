@@ -27,7 +27,7 @@ public class SpawnCommand extends CommandBase {
         }
 
         if (args.length == 1 && !sender.hasPermission("essentialsnk.spawn.others")) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.spawn.permission"));
+            this.sendPermissionMessage(sender);
             return false;
         }
 
