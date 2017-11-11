@@ -19,7 +19,7 @@ public class BroadcastCommand extends CommandBase {
             this.sendUsage(sender);
             return false;
         }
-        api.getServer().broadcastMessage(api.implode(" ", args));
+        api.getServer().broadcastMessage(String.join(" ", args));
         return true;
     }
 }

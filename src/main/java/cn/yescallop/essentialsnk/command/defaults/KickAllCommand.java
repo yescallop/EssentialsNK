@@ -25,7 +25,7 @@ public class KickAllCommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.kickall.noplayer"));
             return false;
         }
-        String reason = api.implode(" ", args);
+        String reason = String.join(" ", args);
         for (Player player : api.getServer().getOnlinePlayers().values()) {
             if (player != sender) {
                 player.kick(reason);

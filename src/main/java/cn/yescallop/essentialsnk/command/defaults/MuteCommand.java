@@ -48,7 +48,7 @@ public class MuteCommand extends CommandBase {
                             .plusMinutes(Integer.parseInt(args[3]))
                             .plusSeconds(Integer.parseInt(args[4]));
                 else {
-                    String arg = api.implode(" ", Arrays.copyOfRange(args, 1, args.length)).trim();
+                    String arg = String.join(" ", Arrays.copyOfRange(args, 1, args.length)).trim();
                     duration = LMLDurationParser.parse(arg);
                 }
             } catch (Exception e) {

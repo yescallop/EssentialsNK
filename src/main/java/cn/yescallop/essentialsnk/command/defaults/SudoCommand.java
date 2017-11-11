@@ -28,7 +28,7 @@ public class SudoCommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
             return false;
         }
-        String msg = api.implode(" ", Arrays.copyOfRange(args, 1, args.length));
+        String msg = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
         if (msg.length() > 1 && msg.substring(0, 2).equals("c:")) {
             sender.sendMessage(lang.translateString("commands.sudo.message", player.getDisplayName()));
             PlayerChatEvent event = new PlayerChatEvent(player, msg.substring(2));

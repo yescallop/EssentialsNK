@@ -1,5 +1,6 @@
 package cn.yescallop.essentialsnk;
 
+import cn.nukkit.AdventureSettings;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.block.Block;
@@ -70,17 +71,6 @@ public class EssentialsAPI {
         return lang;
     }
 
-    public String implode(String glue, String[] args) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < args.length; i++) {
-            if (builder.length() != 0) {
-                builder.append(glue);
-            }
-            builder.append(args[i]);
-        }
-        return builder.toString();
-    }
-
     public void setLastLocation(Player player, Location pos) {
         this.playerLastLocation.put(player, pos);
     }
@@ -96,11 +86,11 @@ public class EssentialsAPI {
     }
 
     public boolean canFly(Player player) {
-        return player.getAdventureSettings().canFly();
+        return player.getAdventureSettings().get(AdventureSettings.Type.ALLOW_FLIGHT);
     }
 
     public void setCanFly(Player player, boolean canFly) {
-        player.getAdventureSettings().setCanFly(canFly);
+        player.getAdventureSettings().set(AdventureSettings.Type.ALLOW_FLIGHT, canFly);
         player.getAdventureSettings().update();
     }
 
