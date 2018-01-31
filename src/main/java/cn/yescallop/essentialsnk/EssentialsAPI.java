@@ -283,7 +283,7 @@ public class EssentialsAPI {
         int z = pos.getFloorZ();
         for (; y <= 128; y++) {
             if (!pos.level.getBlock(this.temporalVector.setComponents(x, y, z)).isSolid() && !pos.level.getBlock(this.temporalVector.setComponents(x, y + 1, z)).isSolid()) {
-                return new Position(x + 0.5, pos.level.getBlock(this.temporalVector.setComponents(x, y - 1, z)).getBoundingBox().maxY, z + 0.5, pos.level);
+                return new Position(x + 0.5, pos.level.getBlock(this.temporalVector.setComponents(x, y - 1, z)).getBoundingBox().getMaxY(), z + 0.5, pos.level);
             }
         }
         return null;
@@ -294,7 +294,7 @@ public class EssentialsAPI {
         int z = pos.getFloorZ();
         for (int y = 127; y >= 0; y--) {
             if (pos.level.getBlock(this.temporalVector.setComponents(x, y, z)).isSolid()) {
-                return new Position(x + 0.5, pos.level.getBlock(this.temporalVector.setComponents(x, y, z)).getBoundingBox().maxY, z + 0.5, pos.level);
+                return new Position(x + 0.5, pos.level.getBlock(this.temporalVector.setComponents(x, y, z)).getBoundingBox().getMaxY(), z + 0.5, pos.level);
             }
         }
         return null;
