@@ -44,8 +44,6 @@ permissions:
   default: op
  essentialsnk.gamemode.others:
   default: op
- essentialsnk.gamerule:
-  default: op
  essentialsnk.getpos:
   default: true
  essentialsnk.getpos.others:

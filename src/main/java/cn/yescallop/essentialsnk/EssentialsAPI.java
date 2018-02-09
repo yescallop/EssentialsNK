@@ -43,7 +43,6 @@ public class EssentialsAPI {
     private Config homeConfig;
     private Config warpConfig;
     private Config muteConfig;
-    private Config gameruleConfig;
 
     public EssentialsAPI(EssentialsNK plugin) {
         instance = this;
@@ -52,7 +51,6 @@ public class EssentialsAPI {
         this.homeConfig = new Config(new File(plugin.getDataFolder(), "home.yml"), Config.YAML);
         this.warpConfig = new Config(new File(plugin.getDataFolder(), "warp.yml"), Config.YAML);
         this.muteConfig = new Config(new File(plugin.getDataFolder(), "mute.yml"), Config.YAML);
-        this.gameruleConfig = new Config(new File(plugin.getDataFolder(), "gamerule.yml"), Config.YAML);
     }
 
     public static EssentialsAPI getInstance() {
@@ -365,59 +363,5 @@ public class EssentialsAPI {
         else if (s > 0) s1 = lang.translateString("commands.generic.second", s);
         //In some languages, times are read from SECONDS to HOURS, which should be noticed.
         return lang.translateString("commands.generic.time.format", d1, h1, m1, s1).trim().replaceAll(" +", " ");
-    }
-
-    public void setGamerule(Level level, String gamerule, Object value) {
-        this.gameruleConfig.reload();
-        Map<String, Object> map = (Map<String, Object>) this.gameruleConfig.get(level.getName());
-        if (map == null) {
-            map = new HashMap<>();
-        }
-        map.put(gamerule, value);
-        this.gameruleConfig.set(level.getName(), map);
-        this.gameruleConfig.save();
-    }
-
-    public Object getGamerule(Level level, String gamerule) {
-        this.gameruleConfig.reload();
-        Map<String, Object> map = (Map<String, Object>) this.gameruleConfig.get(level.getName());
-        if (map == null) {
-            return this.getGameruleDefaultValue(gamerule);
-        }
-        Object obj = map.get(gamerule);
-        return obj == null ? this.getGameruleDefaultValue(gamerule) : obj;
-    }
-
-    public Object getGameruleDefaultValue(String gamerule) {
-        switch (gamerule) {
-            case "doFireTick":
-            case "doMobLoot":
-            case "doTileDroPS":
-            case "naturalRegeneration":
-                return true;
-            case "keepInventory":
-                return false;
-        }
-        return null;
-    }
-
-    public boolean isKeepInventory(Level level) {
-        return (boolean) this.getGamerule(level, "keepInventory");
-    }
-
-    public boolean isDoFireTick(Level level) {
-        return (boolean) this.getGamerule(level, "doFireTick");
-    }
-
-    public boolean isDoMobLoot(Level level) {
-        return (boolean) this.getGamerule(level, "doMobLoot");
-    }
-
-    public boolean isDoTileDroPS(Level level) {
-        return (boolean) this.getGamerule(level, "doTileDroPS");
-    }
-
-    public boolean isNaturalRegeneration(Level level) {
-        return (boolean) this.getGamerule(level, "naturalRegeneration");
     }
 }

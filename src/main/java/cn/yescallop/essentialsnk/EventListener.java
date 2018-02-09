@@ -71,41 +71,4 @@ public class EventListener implements Listener {
             player.sendMessage(lang.translateString("commands.generic.muted", api.getUnmuteTimeMessage(player)));
         }
     }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onPlayerDeath(PlayerDeathEvent event) {
-        if (api.isKeepInventory(event.getEntity().getLevel())) {
-            event.setKeepInventory(true);
-            event.setKeepExperience(true);
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onBlockIgnite(BlockIgniteEvent event) {
-        if (event.getCause() == BlockIgniteCause.SPREAD && !api.isDoFireTick(event.getBlock().getLevel())) {
-            event.setCancelled();
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onEntityDeath(EntityDeathEvent event) {
-        Entity entity = event.getEntity();
-        if (!(entity instanceof Player) && !api.isDoMobLoot(entity.getLevel())) {
-            event.setDrops(new Item[]{});
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onBlockBreak(BlockBreakEvent event) {
-        if (!api.isDoTileDroPS(event.getBlock().getLevel())) {
-            event.setDrops(new Item[]{});
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onEntityRegainHealth(EntityRegainHealthEvent event) {
-        if (event.getRegainReason() == EntityRegainHealthEvent.CAUSE_REGEN) {
-            event.setCancelled(!api.isNaturalRegeneration(event.getEntity().getLevel()));
-        }
-    }
 }
