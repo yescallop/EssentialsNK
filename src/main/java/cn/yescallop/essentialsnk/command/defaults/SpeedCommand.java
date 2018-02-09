@@ -5,6 +5,7 @@ import cn.nukkit.command.CommandSender;
 import cn.nukkit.potion.Effect;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class SpeedCommand extends CommandBase {
@@ -26,7 +27,7 @@ public class SpeedCommand extends CommandBase {
         try {
             speed = Integer.valueOf(args[0]);
         } catch (NumberFormatException e) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.number.invalidinteger", args[0]));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.number.invalidinteger", args[0]));
             return false;
         }
         Player player;
@@ -42,7 +43,7 @@ public class SpeedCommand extends CommandBase {
             player = (Player) sender;
         }
         if (player == null) {
-            sender.sendMessage(lang.translateString("commands.generic.player.notfound", args[0]));
+            sender.sendMessage(Language.translate("commands.generic.player.notfound", args[0]));
             return false;
         }
         player.removeEffect(Effect.SPEED);
@@ -54,9 +55,9 @@ public class SpeedCommand extends CommandBase {
             );
         }
         if (sender == player) {
-            sender.sendMessage(lang.translateString("commands.speed.success", speed));
+            sender.sendMessage(Language.translate("commands.speed.success", speed));
         } else {
-            sender.sendMessage(lang.translateString("commands.speed.success.other", player.getDisplayName(), speed));
+            sender.sendMessage(Language.translate("commands.speed.success.other", player.getDisplayName(), speed));
         }
         return true;
     }

@@ -6,6 +6,7 @@ import cn.nukkit.block.BlockAir;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class BreakCommand extends CommandBase {
@@ -28,11 +29,11 @@ public class BreakCommand extends CommandBase {
         Player player = (Player) sender;
         Block block = player.getTargetBlock(120, new Integer[]{Block.AIR});
         if (block == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.break.unreachable"));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.break.unreachable"));
             return false;
         }
         if (block.getId() == Block.BEDROCK && !sender.hasPermission("essentialsnk.break.bedrock")) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.break.bedrock"));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.break.bedrock"));
             return false;
         }
         player.getLevel().setBlock(block, new BlockAir(), true, true);

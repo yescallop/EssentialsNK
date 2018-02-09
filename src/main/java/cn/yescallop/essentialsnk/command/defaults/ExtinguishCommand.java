@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class ExtinguishCommand extends CommandBase {
@@ -34,12 +35,12 @@ public class ExtinguishCommand extends CommandBase {
             }
             player = api.getServer().getPlayer(args[0]);
             if (player == null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
+                sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
                 return false;
             }
         }
         player.extinguish();
-        sender.sendMessage(sender == player ? lang.translateString("commands.extinguish.success") : lang.translateString("commands.extinguish.success.other", player.getDisplayName()));
+        sender.sendMessage(sender == player ? Language.translate("commands.extinguish.success") : Language.translate("commands.extinguish.success.other", player.getDisplayName()));
         return true;
     }
 }

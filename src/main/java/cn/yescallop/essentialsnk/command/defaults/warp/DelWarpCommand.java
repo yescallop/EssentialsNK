@@ -3,6 +3,7 @@ package cn.yescallop.essentialsnk.command.defaults.warp;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class DelWarpCommand extends CommandBase {
@@ -21,11 +22,11 @@ public class DelWarpCommand extends CommandBase {
             return false;
         }
         if (!api.isWarpExists(args[0].toLowerCase())) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.warp.notexists"));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.warp.notexists"));
             return false;
         }
         api.removeWarp(args[0].toLowerCase());
-        sender.sendMessage(lang.translateString("commands.delwarp.success"));
+        sender.sendMessage(Language.translate("commands.delwarp.success"));
         return true;
     }
 }

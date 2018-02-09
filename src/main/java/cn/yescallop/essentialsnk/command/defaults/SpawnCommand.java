@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 /**
@@ -22,7 +23,7 @@ public class SpawnCommand extends CommandBase {
         }
 
         if (args.length == 0 && !this.testIngame(sender)) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.ingame"));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.ingame"));
             return false;
         }
 
@@ -45,12 +46,12 @@ public class SpawnCommand extends CommandBase {
         }
 
         if (p == null || !p.isOnline()) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
             return false;
         }
 
         p.teleport(getAPI().getServer().getDefaultLevel().getSpawnLocation());
-        p.sendMessage(TextFormat.YELLOW + lang.translateString("commands.generic.teleporting"));
+        p.sendMessage(TextFormat.YELLOW + Language.translate("commands.generic.teleporting"));
         return true;
     }
 }

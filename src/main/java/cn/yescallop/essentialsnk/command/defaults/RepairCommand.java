@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.item.Item;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 import java.util.Map;
@@ -48,20 +49,20 @@ public class RepairCommand extends CommandBase {
                         }
                     }
                     player.getInventory().setArmorContents(armors);
-                    sender.sendMessage(lang.translateString("commands.repair.armor"));
+                    sender.sendMessage(Language.translate("commands.repair.armor"));
                 } else {
-                    sender.sendMessage(lang.translateString("commands.repair.all"));
+                    sender.sendMessage(Language.translate("commands.repair.all"));
                 }
                 break;
             case "hand":
                 Item item = player.getInventory().getItemInHand();
                 if (!api.isRepairable(item)) {
-                    sender.sendMessage(lang.translateString("commands.repair.unrepairable"));
+                    sender.sendMessage(Language.translate("commands.repair.unrepairable"));
                     return false;
                 }
                 item.setDamage(0);
                 player.getInventory().setItemInHand(item);
-                sender.sendMessage(lang.translateString("commands.repair.success"));
+                sender.sendMessage(Language.translate("commands.repair.success"));
                 break;
             default:
                 this.sendUsage(sender);

@@ -8,7 +8,6 @@ import cn.nukkit.entity.weather.EntityLightning;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemArmor;
 import cn.nukkit.item.ItemTool;
-import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.format.FullChunk;
@@ -19,7 +18,6 @@ import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
-import cn.yescallop.essentialsnk.lang.BaseLang;
 
 import java.io.File;
 import java.sql.Timestamp;
@@ -36,7 +34,6 @@ public class EssentialsAPI {
     private static Duration THIRTY_DAYS = Duration.ZERO.plusDays(30);
     private Vector3 temporalVector = new Vector3();
     private EssentialsNK plugin;
-    private BaseLang lang;
     private Map<Player, Location> playerLastLocation = new HashMap<>();
     private Map<Integer, TPRequest> tpRequests = new HashMap<>();
     private List<Player> vanishedPlayers = new ArrayList<>();
@@ -47,7 +44,6 @@ public class EssentialsAPI {
     public EssentialsAPI(EssentialsNK plugin) {
         instance = this;
         this.plugin = plugin;
-        this.lang = plugin.getLanguage();
         this.homeConfig = new Config(new File(plugin.getDataFolder(), "home.yml"), Config.YAML);
         this.warpConfig = new Config(new File(plugin.getDataFolder(), "warp.yml"), Config.YAML);
         this.muteConfig = new Config(new File(plugin.getDataFolder(), "mute.yml"), Config.YAML);
@@ -63,10 +59,6 @@ public class EssentialsAPI {
 
     public PluginLogger getLogger() {
         return this.plugin.getLogger();
-    }
-
-    public BaseLang getLanguage() {
-        return lang;
     }
 
     public void setLastLocation(Player player, Location pos) {
@@ -353,15 +345,15 @@ public class EssentialsAPI {
         long s = duration.getSeconds() % 60;
         String d1 = "", h1 = "", m1 = "", s1 = "";
         //Singulars and plurals. Maybe necessary for English or other languages. 虽然中文似乎没有名词的单复数 -- lmlstarqaq
-        if (d > 1) d1 = lang.translateString("commands.generic.days", d);
-        else if (d > 0) d1 = lang.translateString("commands.generic.day", d);
-        if (h > 1) h1 = lang.translateString("commands.generic.hours", h);
-        else if (h > 0) h1 = lang.translateString("commands.generic.hour", h);
-        if (m > 1) m1 = lang.translateString("commands.generic.minutes", m);
-        else if (m > 0) m1 = lang.translateString("commands.generic.minute", m);
-        if (s > 1) s1 = lang.translateString("commands.generic.seconds", s);
-        else if (s > 0) s1 = lang.translateString("commands.generic.second", s);
+        if (d > 1) d1 = Language.translate("commands.generic.days", d);
+        else if (d > 0) d1 = Language.translate("commands.generic.day", d);
+        if (h > 1) h1 = Language.translate("commands.generic.hours", h);
+        else if (h > 0) h1 = Language.translate("commands.generic.hour", h);
+        if (m > 1) m1 = Language.translate("commands.generic.minutes", m);
+        else if (m > 0) m1 = Language.translate("commands.generic.minute", m);
+        if (s > 1) s1 = Language.translate("commands.generic.seconds", s);
+        else if (s > 0) s1 = Language.translate("commands.generic.second", s);
         //In some languages, times are read from SECONDS to HOURS, which should be noticed.
-        return lang.translateString("commands.generic.time.format", d1, h1, m1, s1).trim().replaceAll(" +", " ");
+        return Language.translate("commands.generic.time.format", d1, h1, m1, s1).trim().replaceAll(" +", " ");
     }
 }

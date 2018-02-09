@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 import cn.yescallop.essentialsnk.util.duration.LMLDurationParser;
 
@@ -30,11 +31,11 @@ public class MuteCommand extends CommandBase {
         }
         Player player = api.getServer().getPlayer(args[0]);
         if (player == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
             return false;
         }
         if (sender == player) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.mute.self"));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.mute.self"));
             return false;
         }
         if (args.length > 1) {
@@ -52,28 +53,28 @@ public class MuteCommand extends CommandBase {
                     duration = LMLDurationParser.parse(arg);
                 }
             } catch (Exception e) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.number.invalid"));
+                sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.number.invalid"));
                 return false;
             }
             if (duration == null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.time.invalidtext"));
+                sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.time.invalidtext"));
                 return false;
             }
             if (duration.isZero()) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.mute.zero"));
+                sender.sendMessage(TextFormat.RED + Language.translate("commands.mute.zero"));
                 return false;
             }
             String message = api.getDurationString(duration);
             if (!api.mute(player, duration)) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.mute.range"));
+                sender.sendMessage(TextFormat.RED + Language.translate("commands.mute.range"));
                 return false;
             }
-            sender.sendMessage(lang.translateString("commands.mute.success", player.getDisplayName(), message));
-            player.sendMessage(lang.translateString("commands.mute.other", message));
+            sender.sendMessage(Language.translate("commands.mute.success", player.getDisplayName(), message));
+            player.sendMessage(Language.translate("commands.mute.other", message));
         } else { // args.length == 1
             api.unmute(player);
-            sender.sendMessage(lang.translateString("commands.mute.unmute.success", player.getDisplayName()));
-            player.sendMessage(lang.translateString("commands.mute.unmute.other"));
+            sender.sendMessage(Language.translate("commands.mute.unmute.success", player.getDisplayName()));
+            player.sendMessage(Language.translate("commands.mute.unmute.other"));
         }
         return true;
     }

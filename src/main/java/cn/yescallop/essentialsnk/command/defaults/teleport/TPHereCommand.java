@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class TPHereCommand extends CommandBase {
@@ -26,12 +27,12 @@ public class TPHereCommand extends CommandBase {
         }
         Player player = api.getServer().getPlayer(args[0]);
         if (player == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
             return false;
         }
         player.teleport((Player) sender);
-        player.sendMessage(lang.translateString("commands.tphere.other", ((Player) sender).getDisplayName()));
-        sender.sendMessage(lang.translateString("commands.tphere.success", player.getDisplayName()));
+        player.sendMessage(Language.translate("commands.tphere.other", ((Player) sender).getDisplayName()));
+        sender.sendMessage(Language.translate("commands.tphere.success", player.getDisplayName()));
         return true;
     }
 }

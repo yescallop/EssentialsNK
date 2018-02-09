@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class TPAHereCommand extends CommandBase {
@@ -25,16 +26,16 @@ public class TPAHereCommand extends CommandBase {
         }
         Player player = api.getServer().getPlayer(args[0]);
         if (player == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
             return false;
         }
         if (sender == player) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpa.self"));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.tpa.self"));
             return false;
         }
         api.requestTP((Player) sender, player, false);
-        player.sendMessage(lang.translateString("commands.tpahere.invite", ((Player) sender).getName()));
-        sender.sendMessage(lang.translateString("commands.tpa.success", player.getDisplayName()));
+        player.sendMessage(Language.translate("commands.tpahere.invite", ((Player) sender).getName()));
+        sender.sendMessage(Language.translate("commands.tpa.success", player.getDisplayName()));
         return true;
     }
 }

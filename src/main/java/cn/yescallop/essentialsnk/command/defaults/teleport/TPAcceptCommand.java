@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.TPRequest;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
@@ -27,30 +28,30 @@ public class TPAcceptCommand extends CommandBase {
         }
         Player to = (Player) sender;
         if (api.getLatestTPRequestTo(to) == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.noRequest"));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.tpaccept.noRequest"));
             return false;
         }
         TPRequest request;
         Player from;
         if (args.length == 0) {
             if ((request = api.getLatestTPRequestTo(to)) == null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.unavailable"));
+                sender.sendMessage(TextFormat.RED + Language.translate("commands.tpaccept.unavailable"));
                 return false;
             }
             from = request.getFrom();
         } else {
             from = api.getServer().getPlayer(args[0]);
             if (from == null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
+                sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
                 return false;
             }
             if ((request = api.getTPRequestBetween(from, to)) != null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.tpaccept.noRequestFrom", from.getDisplayName()));
+                sender.sendMessage(TextFormat.RED + Language.translate("commands.tpaccept.noRequestFrom", from.getDisplayName()));
                 return false;
             }
         }
-        from.sendMessage(lang.translateString("commands.tpaccept.accepted", to.getDisplayName()));
-        sender.sendMessage(lang.translateString("commands.generic.teleporting"));
+        from.sendMessage(Language.translate("commands.tpaccept.accepted", to.getDisplayName()));
+        sender.sendMessage(Language.translate("commands.generic.teleporting"));
         if (request.isTo()) {
             from.teleport(to);
         } else {

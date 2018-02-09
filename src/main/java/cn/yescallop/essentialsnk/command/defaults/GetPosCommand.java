@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class GetPosCommand extends CommandBase {
@@ -34,11 +35,11 @@ public class GetPosCommand extends CommandBase {
             }
             player = api.getServer().getPlayer(args[0]);
             if (player == null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
+                sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
                 return false;
             }
         }
-        sender.sendMessage(sender == player ? lang.translateString("commands.getpos.success", player.getLevel().getName(), String.valueOf(player.getFloorX()), String.valueOf(player.getFloorY()), String.valueOf(player.getFloorZ())) : lang.translateString("commands.getpos.success.other", player.getDisplayName(), player.getLevel().getName(), String.valueOf(player.getFloorX()), String.valueOf(player.getFloorY()), String.valueOf(player.getFloorZ())));
+        sender.sendMessage(sender == player ? Language.translate("commands.getpos.success", player.getLevel().getName(), String.valueOf(player.getFloorX()), String.valueOf(player.getFloorY()), String.valueOf(player.getFloorZ())) : Language.translate("commands.getpos.success.other", player.getDisplayName(), player.getLevel().getName(), String.valueOf(player.getFloorX()), String.valueOf(player.getFloorY()), String.valueOf(player.getFloorZ())));
         return true;
     }
 }
