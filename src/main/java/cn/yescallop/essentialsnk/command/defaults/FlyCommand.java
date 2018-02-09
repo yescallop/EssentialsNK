@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class FlyCommand extends CommandBase {
@@ -33,14 +34,14 @@ public class FlyCommand extends CommandBase {
             }
             player = api.getServer().getPlayer(args[0]);
             if (player == null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
+                sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
                 return false;
             }
         }
-        String enabled = lang.translateString(api.switchCanFly(player) ? "commands.generic.enabled" : "commands.generic.disabled");
-        player.sendMessage(lang.translateString("commands.fly.success", enabled));
+        String enabled = Language.translate(api.switchCanFly(player) ? "commands.generic.enabled" : "commands.generic.disabled");
+        player.sendMessage(Language.translate("commands.fly.success", enabled));
         if (sender != player) {
-            sender.sendMessage(lang.translateString("commands.fly.success.other", player.getDisplayName(), enabled));
+            sender.sendMessage(Language.translate("commands.fly.success.other", player.getDisplayName(), enabled));
         }
         return true;
     }

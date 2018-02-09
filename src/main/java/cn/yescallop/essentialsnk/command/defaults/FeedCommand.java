@@ -5,6 +5,7 @@ import cn.nukkit.PlayerFood;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class FeedCommand extends CommandBase {
@@ -35,16 +36,16 @@ public class FeedCommand extends CommandBase {
             }
             player = api.getServer().getPlayer(args[0]);
             if (player == null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
+                sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
                 return false;
             }
         }
         PlayerFood foodData = player.getFoodData();
         foodData.setLevel(foodData.getMaxLevel());
         foodData.sendFoodLevel();
-        player.sendMessage(lang.translateString("commands.feed.success"));
+        player.sendMessage(Language.translate("commands.feed.success"));
         if (sender != player) {
-            sender.sendMessage(lang.translateString("commands.feed.success.other", player.getDisplayName()));
+            sender.sendMessage(Language.translate("commands.feed.success.other", player.getDisplayName()));
         }
         return true;
     }

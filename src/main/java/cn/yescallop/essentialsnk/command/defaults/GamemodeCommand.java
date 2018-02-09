@@ -6,6 +6,7 @@ import cn.nukkit.command.CommandSender;
 import cn.nukkit.lang.TranslationContainer;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class GamemodeCommand extends CommandBase {
@@ -38,13 +39,13 @@ public class GamemodeCommand extends CommandBase {
                 }
                 player = api.getServer().getPlayer(args[1]);
                 if (player == null) {
-                    sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[1]));
+                    sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[1]));
                     return false;
                 }
             }
             gamemode = Server.getGamemodeFromString(args[0]);
             if (gamemode == -1) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.gamemode.invalid", args[0]));
+                sender.sendMessage(TextFormat.RED + Language.translate("commands.gamemode.invalid", args[0]));
                 return false;
             }
         } else {
@@ -60,7 +61,7 @@ public class GamemodeCommand extends CommandBase {
             } else {
                 player = api.getServer().getPlayer(args[0]);
                 if (player == null) {
-                    sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
+                    sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
                     return false;
                 }
             }
@@ -88,9 +89,9 @@ public class GamemodeCommand extends CommandBase {
         }
         player.setGamemode(gamemode);
         String gamemodeStr = Server.getGamemodeString(gamemode);
-        player.sendMessage(lang.translateString("commands.gamemode.success", gamemodeStr));
+        player.sendMessage(Language.translate("commands.gamemode.success", gamemodeStr));
         if (sender != player) {
-            sender.sendMessage(lang.translateString("commands.gamemode.success.other", player.getDisplayName(), gamemodeStr));
+            sender.sendMessage(Language.translate("commands.gamemode.success.other", player.getDisplayName(), gamemodeStr));
         }
         return true;
     }
@@ -98,9 +99,9 @@ public class GamemodeCommand extends CommandBase {
     private void sendUsage(CommandSender sender, String label) {
         String usage;
         if (label.toLowerCase().equals("gamemode") || label.toLowerCase().equals("gm")) {
-            usage = lang.translateString("commands.gamemode.usage1", new String[]{label.toLowerCase()});
+            usage = Language.translate("commands.gamemode.usage1", new String[]{label.toLowerCase()});
         } else {
-            usage = lang.translateString("commands.gamemode.usage2", new String[]{label.toLowerCase()});
+            usage = Language.translate("commands.gamemode.usage2", new String[]{label.toLowerCase()});
         }
         sender.sendMessage(new TranslationContainer("commands.generic.usage", usage));
     }

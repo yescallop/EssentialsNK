@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class DelHomeCommand extends CommandBase {
@@ -25,11 +26,11 @@ public class DelHomeCommand extends CommandBase {
             return false;
         }
         if (!api.isHomeExists((Player) sender, args[0].toLowerCase())) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.home.notexists", args[0]));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.home.notexists", args[0]));
             return false;
         }
         api.removeHome((Player) sender, args[0].toLowerCase());
-        sender.sendMessage(lang.translateString("commands.delhome.success", args[0]));
+        sender.sendMessage(Language.translate("commands.delhome.success", args[0]));
         return true;
     }
 }

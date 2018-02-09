@@ -3,6 +3,7 @@ package cn.yescallop.essentialsnk.command.defaults;
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class DepthCommand extends CommandBase {
@@ -23,7 +24,7 @@ public class DepthCommand extends CommandBase {
             this.sendUsage(sender);
             return false;
         }
-        sender.sendMessage(lang.translateString("commands.depth.success", String.valueOf(((Player) sender).getFloorY() - 63)));
+        sender.sendMessage(Language.translate("commands.depth.success", String.valueOf(((Player) sender).getFloorY() - 63)));
         return true;
     }
 }

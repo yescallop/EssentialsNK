@@ -5,6 +5,7 @@ import cn.nukkit.command.CommandSender;
 import cn.nukkit.level.particle.HeartParticle;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class HealCommand extends CommandBase {
@@ -34,15 +35,15 @@ public class HealCommand extends CommandBase {
             }
             player = api.getServer().getPlayer(args[0]);
             if (player == null) {
-                sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
+                sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
                 return false;
             }
         }
         player.heal(player.getMaxHealth() - player.getHealth());
         player.getLevel().addParticle(new HeartParticle(player.add(0, 2), 4));
-        player.sendMessage(lang.translateString("commands.heal.success"));
+        player.sendMessage(Language.translate("commands.heal.success"));
         if (sender != player) {
-            sender.sendMessage(lang.translateString("commands.heal.success.other", player.getDisplayName()));
+            sender.sendMessage(Language.translate("commands.heal.success.other", player.getDisplayName()));
         }
         return true;
     }

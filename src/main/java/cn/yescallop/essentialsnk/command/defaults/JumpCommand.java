@@ -5,6 +5,7 @@ import cn.nukkit.block.Block;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class JumpCommand extends CommandBase {
@@ -28,7 +29,7 @@ public class JumpCommand extends CommandBase {
         Player player = (Player) sender;
         Block block = player.getTargetBlock(120, EssentialsAPI.NON_SOLID_BLOCKS);
         if (block == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.jump.unreachable"));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.jump.unreachable"));
             return false;
         }
         player.teleport(api.getStandablePositionAt(block));

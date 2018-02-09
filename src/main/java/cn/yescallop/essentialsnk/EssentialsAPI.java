@@ -8,7 +8,6 @@ import cn.nukkit.entity.weather.EntityLightning;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemArmor;
 import cn.nukkit.item.ItemTool;
-import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.format.FullChunk;
@@ -19,7 +18,6 @@ import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
-import cn.yescallop.essentialsnk.lang.BaseLang;
 
 import java.io.File;
 import java.sql.Timestamp;
@@ -36,23 +34,19 @@ public class EssentialsAPI {
     private static Duration THIRTY_DAYS = Duration.ZERO.plusDays(30);
     private Vector3 temporalVector = new Vector3();
     private EssentialsNK plugin;
-    private BaseLang lang;
     private Map<Player, Location> playerLastLocation = new HashMap<>();
     private Map<Integer, TPRequest> tpRequests = new HashMap<>();
     private List<Player> vanishedPlayers = new ArrayList<>();
     private Config homeConfig;
     private Config warpConfig;
     private Config muteConfig;
-    private Config gameruleConfig;
 
     public EssentialsAPI(EssentialsNK plugin) {
         instance = this;
         this.plugin = plugin;
-        this.lang = plugin.getLanguage();
         this.homeConfig = new Config(new File(plugin.getDataFolder(), "home.yml"), Config.YAML);
         this.warpConfig = new Config(new File(plugin.getDataFolder(), "warp.yml"), Config.YAML);
         this.muteConfig = new Config(new File(plugin.getDataFolder(), "mute.yml"), Config.YAML);
-        this.gameruleConfig = new Config(new File(plugin.getDataFolder(), "gamerule.yml"), Config.YAML);
     }
 
     public static EssentialsAPI getInstance() {
@@ -65,10 +59,6 @@ public class EssentialsAPI {
 
     public PluginLogger getLogger() {
         return this.plugin.getLogger();
-    }
-
-    public BaseLang getLanguage() {
-        return lang;
     }
 
     public void setLastLocation(Player player, Location pos) {
@@ -283,7 +273,7 @@ public class EssentialsAPI {
         int z = pos.getFloorZ();
         for (; y <= 128; y++) {
             if (!pos.level.getBlock(this.temporalVector.setComponents(x, y, z)).isSolid() && !pos.level.getBlock(this.temporalVector.setComponents(x, y + 1, z)).isSolid()) {
-                return new Position(x + 0.5, pos.level.getBlock(this.temporalVector.setComponents(x, y - 1, z)).getBoundingBox().maxY, z + 0.5, pos.level);
+                return new Position(x + 0.5, pos.level.getBlock(this.temporalVector.setComponents(x, y - 1, z)).getBoundingBox().getMaxY(), z + 0.5, pos.level);
             }
         }
         return null;
@@ -294,7 +284,7 @@ public class EssentialsAPI {
         int z = pos.getFloorZ();
         for (int y = 127; y >= 0; y--) {
             if (pos.level.getBlock(this.temporalVector.setComponents(x, y, z)).isSolid()) {
-                return new Position(x + 0.5, pos.level.getBlock(this.temporalVector.setComponents(x, y, z)).getBoundingBox().maxY, z + 0.5, pos.level);
+                return new Position(x + 0.5, pos.level.getBlock(this.temporalVector.setComponents(x, y, z)).getBoundingBox().getMaxY(), z + 0.5, pos.level);
             }
         }
         return null;
@@ -355,69 +345,15 @@ public class EssentialsAPI {
         long s = duration.getSeconds() % 60;
         String d1 = "", h1 = "", m1 = "", s1 = "";
         //Singulars and plurals. Maybe necessary for English or other languages. 虽然中文似乎没有名词的单复数 -- lmlstarqaq
-        if (d > 1) d1 = lang.translateString("commands.generic.days", d);
-        else if (d > 0) d1 = lang.translateString("commands.generic.day", d);
-        if (h > 1) h1 = lang.translateString("commands.generic.hours", h);
-        else if (h > 0) h1 = lang.translateString("commands.generic.hour", h);
-        if (m > 1) m1 = lang.translateString("commands.generic.minutes", m);
-        else if (m > 0) m1 = lang.translateString("commands.generic.minute", m);
-        if (s > 1) s1 = lang.translateString("commands.generic.seconds", s);
-        else if (s > 0) s1 = lang.translateString("commands.generic.second", s);
+        if (d > 1) d1 = Language.translate("commands.generic.days", d);
+        else if (d > 0) d1 = Language.translate("commands.generic.day", d);
+        if (h > 1) h1 = Language.translate("commands.generic.hours", h);
+        else if (h > 0) h1 = Language.translate("commands.generic.hour", h);
+        if (m > 1) m1 = Language.translate("commands.generic.minutes", m);
+        else if (m > 0) m1 = Language.translate("commands.generic.minute", m);
+        if (s > 1) s1 = Language.translate("commands.generic.seconds", s);
+        else if (s > 0) s1 = Language.translate("commands.generic.second", s);
         //In some languages, times are read from SECONDS to HOURS, which should be noticed.
-        return lang.translateString("commands.generic.time.format", d1, h1, m1, s1).trim().replaceAll(" +", " ");
-    }
-
-    public void setGamerule(Level level, String gamerule, Object value) {
-        this.gameruleConfig.reload();
-        Map<String, Object> map = (Map<String, Object>) this.gameruleConfig.get(level.getName());
-        if (map == null) {
-            map = new HashMap<>();
-        }
-        map.put(gamerule, value);
-        this.gameruleConfig.set(level.getName(), map);
-        this.gameruleConfig.save();
-    }
-
-    public Object getGamerule(Level level, String gamerule) {
-        this.gameruleConfig.reload();
-        Map<String, Object> map = (Map<String, Object>) this.gameruleConfig.get(level.getName());
-        if (map == null) {
-            return this.getGameruleDefaultValue(gamerule);
-        }
-        Object obj = map.get(gamerule);
-        return obj == null ? this.getGameruleDefaultValue(gamerule) : obj;
-    }
-
-    public Object getGameruleDefaultValue(String gamerule) {
-        switch (gamerule) {
-            case "doFireTick":
-            case "doMobLoot":
-            case "doTileDroPS":
-            case "naturalRegeneration":
-                return true;
-            case "keepInventory":
-                return false;
-        }
-        return null;
-    }
-
-    public boolean isKeepInventory(Level level) {
-        return (boolean) this.getGamerule(level, "keepInventory");
-    }
-
-    public boolean isDoFireTick(Level level) {
-        return (boolean) this.getGamerule(level, "doFireTick");
-    }
-
-    public boolean isDoMobLoot(Level level) {
-        return (boolean) this.getGamerule(level, "doMobLoot");
-    }
-
-    public boolean isDoTileDroPS(Level level) {
-        return (boolean) this.getGamerule(level, "doTileDroPS");
-    }
-
-    public boolean isNaturalRegeneration(Level level) {
-        return (boolean) this.getGamerule(level, "naturalRegeneration");
+        return Language.translate("commands.generic.time.format", d1, h1, m1, s1).trim().replaceAll(" +", " ");
     }
 }

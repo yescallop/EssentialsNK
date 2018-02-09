@@ -5,6 +5,7 @@ import cn.nukkit.command.CommandSender;
 import cn.nukkit.level.Location;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class BackCommand extends CommandBase {
@@ -28,11 +29,11 @@ public class BackCommand extends CommandBase {
         Player player = (Player) sender;
         Location pos = api.getLastLocation(player);
         if (pos == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.back.notavalible"));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.back.notavalible"));
             return false;
         }
         player.teleport(pos);
-        sender.sendMessage(lang.translateString("commands.generic.teleporting"));
+        sender.sendMessage(Language.translate("commands.generic.teleporting"));
         return true;
     }
 }

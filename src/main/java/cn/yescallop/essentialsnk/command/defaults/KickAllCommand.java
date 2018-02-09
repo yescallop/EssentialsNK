@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class KickAllCommand extends CommandBase {
@@ -22,7 +23,7 @@ public class KickAllCommand extends CommandBase {
         }
         int count = api.getServer().getOnlinePlayers().size();
         if (count == 0 || (sender instanceof Player && count == 1)) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.kickall.noplayer"));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.kickall.noplayer"));
             return false;
         }
         String reason = String.join(" ", args);
@@ -31,7 +32,7 @@ public class KickAllCommand extends CommandBase {
                 player.kick(reason);
             }
         }
-        sender.sendMessage(lang.translateString("commands.kickall.success"));
+        sender.sendMessage(Language.translate("commands.kickall.success"));
         return true;
     }
 }

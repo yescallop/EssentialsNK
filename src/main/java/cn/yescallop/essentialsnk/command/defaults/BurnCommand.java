@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
+import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
 public class BurnCommand extends CommandBase {
@@ -22,22 +23,22 @@ public class BurnCommand extends CommandBase {
         }
         Player player = api.getServer().getPlayer(args[0]);
         if (player == null) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.player.notfound", args[0]));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
             return false;
         }
         int time;
         try {
             time = Integer.parseInt(args[1]);
         } catch (NumberFormatException e) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.number.invalidinteger", args[1]));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.number.invalidinteger", args[1]));
             return false;
         }
         if (time <= 0) {
-            sender.sendMessage(TextFormat.RED + lang.translateString("commands.generic.number.invalidinteger", args[1]));
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.number.invalidinteger", args[1]));
             return false;
         }
         player.setOnFire(time);
-        sender.sendMessage(lang.translateString("commands.burn.success", player.getDisplayName()));
+        sender.sendMessage(Language.translate("commands.burn.success", player.getDisplayName()));
         return true;
     }
 }
