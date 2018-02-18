@@ -104,7 +104,7 @@ public class EssentialsAPI {
         Object rawNick = this.nickConfig.get(player.getUniqueId().toString());
         String formattedNick = null;
         if (rawNick != null){
-            TextFormat.colorize('&',rawNick.toString());
+            formattedNick = TextFormat.colorize('&',rawNick.toString());
         }
         return  formattedNick;
     }
