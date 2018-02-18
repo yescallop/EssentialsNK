@@ -93,7 +93,7 @@ public class EssentialsAPI {
     }
 
     public void setNick(Player player, String nick){
-        String nickFormatted = TextFormat.colorize('&',nick);
+        String nickFormatted = TextFormat.colorize('&',nick+"&f&r");
         this.nickConfig.set(player.getUniqueId().toString(),nick);
         this.nickConfig.save();
         player.setDisplayName(nickFormatted);
@@ -104,7 +104,7 @@ public class EssentialsAPI {
         Object rawNick = this.nickConfig.get(player.getUniqueId().toString());
         String formattedNick = null;
         if (rawNick != null){
-            formattedNick = TextFormat.colorize('&',rawNick.toString());
+            formattedNick = TextFormat.colorize('&',rawNick.toString()+"&f&r");
         }
         return  formattedNick;
     }
