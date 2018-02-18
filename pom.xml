@@ -4,6 +4,14 @@
   <groupId>cn.yescallop.essentialsnk</groupId>
   <artifactId>EssentialsNK</artifactId>
   <version>1.1.0</version>
+
+  <repositories>
+    <repository>
+      <id>nukkit-repo</id>
+      <url>https://repo.potestas.xyz/main/</url>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>cn.nukkit</groupId>
@@ -12,6 +20,7 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
