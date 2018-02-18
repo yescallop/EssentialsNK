@@ -18,7 +18,9 @@ import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
+import cn.nukkit.utils.TextFormat;
 
+import javax.xml.soap.Text;
 import java.io.File;
 import java.sql.Timestamp;
 import java.time.Duration;
@@ -40,6 +42,7 @@ public class EssentialsAPI {
     private Config homeConfig;
     private Config warpConfig;
     private Config muteConfig;
+    private Config nickConfig;
 
     public EssentialsAPI(EssentialsNK plugin) {
         instance = this;
@@ -47,6 +50,7 @@ public class EssentialsAPI {
         this.homeConfig = new Config(new File(plugin.getDataFolder(), "home.yml"), Config.YAML);
         this.warpConfig = new Config(new File(plugin.getDataFolder(), "warp.yml"), Config.YAML);
         this.muteConfig = new Config(new File(plugin.getDataFolder(), "mute.yml"), Config.YAML);
+        this.nickConfig = new Config(new File(plugin.getDataFolder(), "nick.yml"), Config.YAML);
     }
 
     public static EssentialsAPI getInstance() {
@@ -67,6 +71,42 @@ public class EssentialsAPI {
 
     public Location getLastLocation(Player player) {
         return this.playerLastLocation.get(player);
+    }
+
+    public Player getPlayer(String name){
+        for(Player player:this.getServer().getOnlinePlayers().values()){
+            if (player.getName().equals(name)){
+                return player;
+            }
+        }
+        for(Player player:this.getServer().getOnlinePlayers().values()){
+            if (player.getName().contains(name)){
+                return player;
+            }
+        }
+        for(Player player:this.getServer().getOnlinePlayers().values()){
+            if (TextFormat.clean(player.getDisplayName()).contains(name)){
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public void setNick(Player player, String nick){
+        String nickFormatted = TextFormat.colorize('&',nick);
+        this.nickConfig.set(player.getUniqueId().toString(),nick);
+        this.nickConfig.save();
+        player.setDisplayName(nickFormatted);
+        player.setNameTag(nickFormatted);
+    }
+
+    public String getNick(Player player){
+        Object rawNick = this.nickConfig.get(player.getUniqueId().toString());
+        String formattedNick = null;
+        if (rawNick != null){
+            TextFormat.colorize('&',rawNick.toString());
+        }
+        return  formattedNick;
     }
 
     public boolean switchCanFly(Player player) {

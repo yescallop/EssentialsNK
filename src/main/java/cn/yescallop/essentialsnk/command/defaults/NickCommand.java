@@ -2,48 +2,47 @@ package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.level.particle.HeartParticle;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.Language;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
-public class HealCommand extends CommandBase {
+public class NickCommand extends CommandBase {
 
-    public HealCommand(EssentialsAPI api) {
-        super("heal", api);
+    public NickCommand(EssentialsAPI api) {
+        super("nick", api);
     }
 
     public boolean execute(CommandSender sender, String label, String[] args) {
         if (!this.testPermission(sender)) {
             return false;
         }
-        if (args.length > 1) {
+        if (args.length > 2) {
             this.sendUsage(sender);
             return false;
         }
         Player player;
-        if (args.length == 0) {
+        if (args.length == 1) {
             if (!this.testIngame(sender)) {
                 return false;
             }
             player = (Player) sender;
         } else {
-            if (!sender.hasPermission("essentialsnk.heal.others")) {
+            if (!sender.hasPermission("essentialsnk.nick.others")) {
                 this.sendPermissionMessage(sender);
                 return false;
             }
-            player = api.getPlayer(args[0]);
+            player = api.getServer().getPlayer(args[1]);
             if (player == null) {
                 sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
                 return false;
             }
         }
-        player.heal(player.getMaxHealth() - player.getHealth());
-        player.getLevel().addParticle(new HeartParticle(player.add(0, 2), 4));
-        player.sendMessage(Language.translate("commands.heal.success"));
+        String nick = TextFormat.colorize('&',args[0]);
+        api.setNick(player,nick);
+        player.sendMessage(Language.translate("commands.nick.success", nick));
         if (sender != player) {
-            sender.sendMessage(Language.translate("commands.heal.success.other", player.getDisplayName()));
+            sender.sendMessage(Language.translate("commands.nick.success.other", player.getDisplayName(), nick));
         }
         return true;
     }

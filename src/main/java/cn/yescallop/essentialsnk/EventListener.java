@@ -37,6 +37,11 @@ public class EventListener implements Listener {
                 p.hidePlayer(player);
             }
         }
+        String nick = api.getNick(player);
+        if (nick != null){
+            player.setDisplayName(nick);
+            player.setNameTag(nick);
+        }
     }
 
     @EventHandler
