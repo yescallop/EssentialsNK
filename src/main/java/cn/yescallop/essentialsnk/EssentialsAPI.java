@@ -16,11 +16,16 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
+import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginLogger;
+import cn.nukkit.plugin.service.RegisteredServiceProvider;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.TextFormat;
+import me.lucko.luckperms.api.Contexts;
+import me.lucko.luckperms.api.LuckPermsApi;
+import me.lucko.luckperms.api.User;
+import me.lucko.luckperms.api.caching.MetaData;
 
-import javax.xml.soap.Text;
 import java.io.File;
 import java.sql.Timestamp;
 import java.time.Duration;
@@ -39,6 +44,7 @@ public class EssentialsAPI {
     private Map<Player, Location> playerLastLocation = new HashMap<>();
     private Map<Integer, TPRequest> tpRequests = new HashMap<>();
     private List<Player> vanishedPlayers = new ArrayList<>();
+    private LuckPermsApi luckPermsApi;
     private Config homeConfig;
     private Config warpConfig;
     private Config muteConfig;
@@ -51,6 +57,16 @@ public class EssentialsAPI {
         this.warpConfig = new Config(new File(plugin.getDataFolder(), "warp.yml"), Config.YAML);
         this.muteConfig = new Config(new File(plugin.getDataFolder(), "mute.yml"), Config.YAML);
         this.nickConfig = new Config(new File(plugin.getDataFolder(), "nick.yml"), Config.YAML);
+
+        //Gets LuckPerms API
+        if (this.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
+            RegisteredServiceProvider<LuckPermsApi> provider = this.getServer().getServiceManager().getProvider(LuckPermsApi.class);
+            if (provider != null) {
+                this.luckPermsApi = provider.getProvider();
+                new LPListener(this,this.luckPermsApi);
+                //TODO:Disable listener on disable
+            }
+        }
     }
 
     public static EssentialsAPI getInstance() {
@@ -61,8 +77,18 @@ public class EssentialsAPI {
         return plugin.getServer();
     }
 
+    public Plugin getPlugin(){
+        return this.plugin;
+    }
+
     public PluginLogger getLogger() {
         return this.plugin.getLogger();
+    }
+
+    public LuckPermsApi getLuckPermsApi() {
+        if (this.getServer().getPluginManager().getPlugin("LuckPerms") != null)
+            return luckPermsApi;
+        return null;
     }
 
     public void setLastLocation(Player player, Location pos) {
@@ -74,6 +100,8 @@ public class EssentialsAPI {
     }
 
     public Player getPlayer(String name){
+        if (name.length() == 0)
+                return null;
         for(Player player:this.getServer().getOnlinePlayers().values()){
             if (player.getName().equals(name)){
                 return player;
@@ -93,20 +121,56 @@ public class EssentialsAPI {
     }
 
     public void setNick(Player player, String nick){
-        String nickFormatted = TextFormat.colorize('&',nick+"&f&r");
         this.nickConfig.set(player.getUniqueId().toString(),nick);
         this.nickConfig.save();
-        player.setDisplayName(nickFormatted);
-        player.setNameTag(nickFormatted);
+        this.updatePrefixSuffix(player);
     }
 
-    public String getNick(Player player){
-        Object rawNick = this.nickConfig.get(player.getUniqueId().toString());
-        String formattedNick = null;
-        if (rawNick != null){
-            formattedNick = TextFormat.colorize('&',rawNick.toString()+"&f&r");
+    public void setPrefixSuffixData(Player player, String prefix, String suffix){
+        if (prefix != null) {
+            prefix = TextFormat.colorize('&', prefix);
+        }else{
+            prefix = "";
         }
-        return  formattedNick;
+        if (suffix != null) {
+            suffix = TextFormat.colorize('&', suffix);
+        }else{
+            suffix = TextFormat.colorize('&',"&f&r");
+        }
+        Object nicko = this.nickConfig.get(player.getUniqueId().toString());
+        String nick;
+        if (nicko != null){
+            nick = TextFormat.colorize('&',nicko.toString());
+        }else{
+            nick = player.getDisplayName();
+        }
+        player.setDisplayName(prefix+nick+suffix);
+    }
+
+    public void updatePrefixSuffix(Player player){
+        if (this.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
+            this.setPrefixSuffixData(player, "", "&f&r");
+            return;
+        }
+        LuckPermsApi api = this.getLuckPermsApi();
+        if (api == null) {
+            this.setPrefixSuffixData(player, "", "&f&r");
+            return;
+        }
+        User user = api.getUserManager().getUser(player.getUniqueId());
+        if (user == null){
+            this.setPrefixSuffixData(player, "", "&f&r");
+            return;
+        }
+        Contexts contexts = api.getContextManager().getApplicableContexts(player);
+        MetaData metaData = user.getCachedData().getMetaData(contexts);
+        if (metaData.getPrefix() == null){
+            this.setPrefixSuffixData(player, "", "&f&r");
+            return;
+        }
+        String prefix = metaData.getPrefix();
+        String suffix = metaData.getSuffix();
+        this.setPrefixSuffixData(player,prefix,suffix);
     }
 
     public boolean switchCanFly(Player player) {

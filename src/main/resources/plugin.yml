@@ -4,6 +4,8 @@ api: ["1.0.5"]
 author: Scallop
 description: EssentialsNK
 main: cn.yescallop.essentialsnk.EssentialsNK
+softdepend: ["LuckPerms"]
+loadafter: ["LuckPerms"]
 
 permissions:
  essentialsnk.back:
