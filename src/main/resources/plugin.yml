@@ -6,115 +6,117 @@ description: EssentialsNK
 main: cn.yescallop.essentialsnk.EssentialsNK
 
 permissions:
- essentialsnk.back:
-  default: true
- essentialsnk.break:
-  default: op
- essentialsnk.break.bedrock:
-  default: op
- essentialsnk.broadcast:
-  default: op
- essentialsnk.burn:
-  default: op
- essentialsnk.clearinventory:
-  default: op
- essentialsnk.clearinventory.others:
-  default: op
- essentialsnk.compass:
-  default: true
- essentialsnk.delhome:
-  default: true
- essentialsnk.delwarp:
-  default: op
- essentialsnk.depth:
-  default: true
- essentialsnk.extinguish:
-  default: op
- essentialsnk.extinguish.others:
-  default: op
- essentialsnk.feed:
-  default: op
- essentialsnk.feed.others:
-  default: op
- essentialsnk.fly:
-  default: op
- essentialsnk.fly.others:
-  default: op
- essentialsnk.gamemode:
-  default: op
- essentialsnk.gamemode.others:
-  default: op
- essentialsnk.getpos:
-  default: true
- essentialsnk.getpos.others:
-  default: op
- essentialsnk.heal:
-  default: op
- essentialsnk.heal.others:
-  default: op
- essentialsnk.home:
-  default: true
- essentialsnk.itemdb:
-  default: true
- essentialsnk.jump:
-  default: op
- essentialsnk.kickall:
-  default: op
- essentialsnk.lightning:
-  default: op
- essentialsnk.more:
-  default: op
- essentialsnk.mute:
-  default: op
- essentialsnk.ping:
-  default: true
- essentialsnk.realname:
-  default: op
- essentialsnk.repair:
-  default: op
- essentialsnk.repair.all:
-  default: op
- essentialsnk.repair.armor:
-  default: op
- essentialsnk.sethome:
-  default: true
- essentialsnk.setwarp:
-  default: op
- essentialsnk.spawn:
-  default: true
- essentialsnk.spawn.others:
-  default: op
- essentialsnk.setspawn:
-  default: op
- essentialsnk.speed:
-  default: op
- essentialsnk.speed.others:
-  default: op
- essentialsnk.sudo:
-  default: op
- essentialsnk.top:
-  default: op
- essentialsnk.tpa:
-  default: true
- essentialsnk.tpaall:
-  default: op
- essentialsnk.tpaccept:
-  default: true
- essentialsnk.tpahere:
-  default: true
- essentialsnk.tpall:
-  default: op
- essentialsnk.tpdeny:
-  default: true
- essentialsnk.tphere:
-  default: op
- essentialsnk.vanish:
-  default: op
- essentialsnk.vanish.others:
-  default: op
- essentialsnk.warp:
-  default: true
- essentialsnk.warp.others:
-  default: op
- essentialsnk.world:
-  default: true
+  essentialsnk.back:
+    default: true
+  essentialsnk.break:
+    default: op
+  essentialsnk.break.bedrock:
+    default: op
+  essentialsnk.broadcast:
+    default: op
+  essentialsnk.burn:
+    default: op
+  essentialsnk.clearinventory:
+    default: op
+  essentialsnk.clearinventory.others:
+    default: op
+  essentialsnk.compass:
+    default: true
+  essentialsnk.delhome:
+    default: true
+  essentialsnk.delwarp:
+    default: op
+  essentialsnk.depth:
+    default: true
+  essentialsnk.extinguish:
+    default: op
+  essentialsnk.extinguish.others:
+    default: op
+  essentialsnk.feed:
+    default: op
+  essentialsnk.feed.others:
+    default: op
+  essentialsnk.fly:
+    default: op
+  essentialsnk.fly.others:
+    default: op
+  essentialsnk.gamemode:
+    default: op
+  essentialsnk.gamemode.others:
+    default: op
+  essentialsnk.getpos:
+    default: true
+  essentialsnk.getpos.others:
+    default: op
+  essentialsnk.heal:
+    default: op
+  essentialsnk.heal.others:
+    default: op
+  essentialsnk.home:
+    default: true
+  essentialsnk.ignore:
+    default: true
+  essentialsnk.itemdb:
+    default: true
+  essentialsnk.jump:
+    default: op
+  essentialsnk.kickall:
+    default: op
+  essentialsnk.lightning:
+    default: op
+  essentialsnk.more:
+    default: op
+  essentialsnk.mute:
+    default: op
+  essentialsnk.ping:
+    default: true
+  essentialsnk.realname:
+    default: op
+  essentialsnk.repair:
+    default: op
+  essentialsnk.repair.all:
+    default: op
+  essentialsnk.repair.armor:
+    default: op
+  essentialsnk.sethome:
+    default: true
+  essentialsnk.setwarp:
+    default: op
+  essentialsnk.spawn:
+    default: true
+  essentialsnk.spawn.others:
+    default: op
+  essentialsnk.setspawn:
+    default: op
+  essentialsnk.speed:
+    default: op
+  essentialsnk.speed.others:
+    default: op
+  essentialsnk.sudo:
+    default: op
+  essentialsnk.top:
+    default: op
+  essentialsnk.tpa:
+    default: true
+  essentialsnk.tpaall:
+    default: op
+  essentialsnk.tpaccept:
+    default: true
+  essentialsnk.tpahere:
+    default: true
+  essentialsnk.tpall:
+    default: op
+  essentialsnk.tpdeny:
+    default: true
+  essentialsnk.tphere:
+    default: op
+  essentialsnk.vanish:
+    default: op
+  essentialsnk.vanish.others:
+    default: op
+  essentialsnk.warp:
+    default: true
+  essentialsnk.warp.others:
+    default: op
+  essentialsnk.world:
+    default: true
