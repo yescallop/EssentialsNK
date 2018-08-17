@@ -1,6 +1,6 @@
 name: EssentialsNK
-version: "1.1.0"
-api: ["1.0.5"]
+version: "1.2.0"
+api: ["1.0.6"]
 author: Scallop
 description: EssentialsNK
 main: cn.yescallop.essentialsnk.EssentialsNK
