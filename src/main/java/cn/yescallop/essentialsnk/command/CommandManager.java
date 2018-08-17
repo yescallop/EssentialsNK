@@ -62,5 +62,6 @@ public class CommandManager {
 
         map.register("EssentialsNK", new SetSpawnCommand(api));
         map.register("EssentialsNK", new SpawnCommand(api));
+        map.register("EssenailsNK", new IgnoreCommand(api));
     }
 }

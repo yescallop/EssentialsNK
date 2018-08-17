@@ -1,6 +1,7 @@
 package cn.yescallop.essentialsnk;
 
 import cn.nukkit.AdventureSettings;
+import cn.nukkit.IPlayer;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.block.Block;
@@ -40,6 +41,7 @@ public class EssentialsAPI {
     private Config homeConfig;
     private Config warpConfig;
     private Config muteConfig;
+    private Config ignoreConfig;
 
     public EssentialsAPI(EssentialsNK plugin) {
         instance = this;
@@ -47,6 +49,7 @@ public class EssentialsAPI {
         this.homeConfig = new Config(new File(plugin.getDataFolder(), "home.yml"), Config.YAML);
         this.warpConfig = new Config(new File(plugin.getDataFolder(), "warp.yml"), Config.YAML);
         this.muteConfig = new Config(new File(plugin.getDataFolder(), "mute.yml"), Config.YAML);
+        this.ignoreConfig = new Config(new File(plugin.getDataFolder(), "ignore.yml"), Config.YAML);
     }
 
     public static EssentialsAPI getInstance() {
@@ -176,12 +179,35 @@ public class EssentialsAPI {
         }
     }
 
+    public boolean ignore(UUID player, UUID toIgnore) {
+        this.ignoreConfig.reload();
+        String playerId = player.toString();
+        String toIgnoreId = toIgnore.toString();
+        Map<String, Object> ignores = this.ignoreConfig.get(playerId, new HashMap<>());
+        boolean add = !ignores.containsKey(toIgnoreId);
+        if (add) {
+            ignores.put(toIgnoreId, null);
+        } else {
+            ignores.remove(toIgnoreId);
+        }
+        this.ignoreConfig.set(playerId, ignores);
+        this.ignoreConfig.save();
+        return add;
+    }
+
+    public boolean isIgnoring(UUID player, UUID target) {
+        String playerId = player.toString();
+        String targetId = target.toString();
+
+        Map<String, Object> ignores = this.ignoreConfig.get(playerId, null);
+
+        return ignores != null && ignores.containsKey(targetId);
+    }
+
     public boolean setHome(Player player, String name, Location pos) {
         this.homeConfig.reload();
-        Map<String, Object> map = (Map<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
-        if (map == null) {
-            map = new HashMap<>();
-        }
+        Map<String, Object> map = this.homeConfig.get(player.getName().toLowerCase(), new HashMap<>());
+
         boolean replaced = map.containsKey(name);
         Object[] home = new Object[]{pos.level.getName(), pos.x, pos.y, pos.z, pos.yaw, pos.pitch};
         map.put(name, home);
@@ -192,7 +218,7 @@ public class EssentialsAPI {
 
     public Location getHome(Player player, String name) {
         this.homeConfig.reload();
-        Map<String, ArrayList<Object>> map = (Map<String, ArrayList<Object>>) this.homeConfig.get(player.getName().toLowerCase());
+        Map<String, ArrayList<Object>> map = this.homeConfig.get(player.getName().toLowerCase(), null);
         if (map == null) {
             return null;
         }
@@ -205,7 +231,7 @@ public class EssentialsAPI {
 
     public void removeHome(Player player, String name) {
         this.homeConfig.reload();
-        Map<String, Object> map = (Map<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
+        Map<String, Object> map = this.homeConfig.get(player.getName().toLowerCase(), null);
         if (map == null) {
             return;
         }
@@ -216,18 +242,18 @@ public class EssentialsAPI {
 
     public String[] getHomesList(Player player) {
         this.homeConfig.reload();
-        Map<String, Object> map = (Map<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
+        Map<String, Object> map = this.homeConfig.get(player.getName().toLowerCase(), null);
         if (map == null) {
             return new String[]{};
         }
-        String[] list = map.keySet().stream().toArray(String[]::new);
+        String[] list = map.keySet().toArray(new String[0]);
         Arrays.sort(list, String.CASE_INSENSITIVE_ORDER);
         return list;
     }
 
     public boolean isHomeExists(Player player, String name) {
         this.homeConfig.reload();
-        Map<String, Object> map = (Map<String, Object>) this.homeConfig.get(player.getName().toLowerCase());
+        Map<String, Object> map = this.homeConfig.get(player.getName().toLowerCase(), null);
         return map != null && map.containsKey(name);
     }
 
@@ -257,7 +283,7 @@ public class EssentialsAPI {
 
     public String[] getWarpsList() {
         this.warpConfig.reload();
-        String[] list = this.warpConfig.getKeys().stream().toArray(String[]::new);
+        String[] list = this.warpConfig.getKeys().toArray(new String[0]);
         Arrays.sort(list, String.CASE_INSENSITIVE_ORDER);
         return list;
     }
