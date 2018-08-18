@@ -2,14 +2,17 @@ package cn.yescallop.essentialsnk;
 
 import cn.nukkit.Player;
 import cn.nukkit.block.Block;
+import cn.nukkit.command.CommandSender;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.*;
 import cn.nukkit.level.Location;
 
+import java.util.Iterator;
+
 public class EventListener implements Listener {
 
-    EssentialsAPI api;
+    private final EssentialsAPI api;
 
     public EventListener(EssentialsAPI api) {
         this.api = api;
@@ -47,6 +50,19 @@ public class EventListener implements Listener {
     @EventHandler
     public void onPlayerChat(PlayerChatEvent event) {
         Player player = event.getPlayer();
+        Iterator<CommandSender> iter = event.getRecipients().iterator();
+
+        while (iter.hasNext()) {
+            CommandSender sender = iter.next();
+            if (!(sender instanceof Player)) {
+                continue;
+            }
+
+            if (api.isIgnoring(((Player) sender).getUniqueId(), player.getUniqueId())) {
+                iter.remove();
+            }
+        }
+
         if (api.isMuted(player)) {
             event.setCancelled();
             player.sendMessage(Language.translate("commands.generic.muted", api.getUnmuteTimeMessage(player)));
