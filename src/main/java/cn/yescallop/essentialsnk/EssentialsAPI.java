@@ -16,8 +16,10 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
+import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
+import cn.nukkit.utils.TextFormat;
 
 import java.io.File;
 import java.sql.Timestamp;
@@ -40,6 +42,7 @@ public class EssentialsAPI {
     private Config homeConfig;
     private Config warpConfig;
     private Config muteConfig;
+    private Config nickConfig;
 
     public EssentialsAPI(EssentialsNK plugin) {
         instance = this;
@@ -47,6 +50,7 @@ public class EssentialsAPI {
         this.homeConfig = new Config(new File(plugin.getDataFolder(), "home.yml"), Config.YAML);
         this.warpConfig = new Config(new File(plugin.getDataFolder(), "warp.yml"), Config.YAML);
         this.muteConfig = new Config(new File(plugin.getDataFolder(), "mute.yml"), Config.YAML);
+        this.nickConfig = new Config(new File(plugin.getDataFolder(), "nick.yml"), Config.YAML);
     }
 
     public static EssentialsAPI getInstance() {
@@ -55,6 +59,10 @@ public class EssentialsAPI {
 
     public Server getServer() {
         return plugin.getServer();
+    }
+
+    public Plugin getPlugin(){
+        return this.plugin;
     }
 
     public PluginLogger getLogger() {
@@ -67,6 +75,48 @@ public class EssentialsAPI {
 
     public Location getLastLocation(Player player) {
         return this.playerLastLocation.get(player);
+    }
+
+    public Player getPlayer(String name){
+        if (name.length() == 0)
+                return null;
+        for(Player player:this.getServer().getOnlinePlayers().values()){
+            if (player.getName().equals(name)){
+                return player;
+            }
+        }
+        for(Player player:this.getServer().getOnlinePlayers().values()){
+            if (player.getName().contains(name)){
+                return player;
+            }
+        }
+        for(Player player:this.getServer().getOnlinePlayers().values()){
+            if (TextFormat.clean(player.getDisplayName()).contains(name)){
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public void setNick(Player player, String nick){
+        this.nickConfig.set(player.getUniqueId().toString(),nick);
+        this.nickConfig.save();
+        this.updatePrefixSuffix(player);
+    }
+
+    public void setPrefixSuffixData(Player player){
+        Object nicko = this.nickConfig.get(player.getUniqueId().toString());
+        String nick;
+        if (nicko != null){
+            nick = TextFormat.colorize('&',nicko.toString());
+        }else{
+            nick = player.getDisplayName();
+        }
+        player.setDisplayName(nick);
+    }
+
+    public void updatePrefixSuffix(Player player){
+        this.setPrefixSuffixData(player);
     }
 
     public boolean switchCanFly(Player player) {

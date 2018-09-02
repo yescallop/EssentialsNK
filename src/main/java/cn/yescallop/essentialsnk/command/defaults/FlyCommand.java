@@ -32,7 +32,7 @@ public class FlyCommand extends CommandBase {
                 this.sendPermissionMessage(sender);
                 return false;
             }
-            player = api.getServer().getPlayer(args[0]);
+            player = api.getPlayer(args[0]);
             if (player == null) {
                 sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
                 return false;

@@ -3,6 +3,7 @@ package cn.yescallop.essentialsnk;
 import cn.nukkit.Player;
 import cn.nukkit.block.Block;
 import cn.nukkit.event.EventHandler;
+import cn.nukkit.event.EventPriority;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.*;
 import cn.nukkit.level.Location;
@@ -39,9 +40,16 @@ public class EventListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPlayerLogin(PlayerJoinEvent event){
+        this.api.updatePrefixSuffix(event.getPlayer());
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        api.removeTPRequest(event.getPlayer());
+        Player player = event.getPlayer();
+        api.removeTPRequest(player);
+        player.setDisplayName(player.getName()); //In attempt to not make it so their username when they leave. Doesn't work
     }
 
     @EventHandler
@@ -51,6 +59,7 @@ public class EventListener implements Listener {
             event.setCancelled();
             player.sendMessage(Language.translate("commands.generic.muted", api.getUnmuteTimeMessage(player)));
         }
+        //TODO:Make a config that changes chat format
     }
 
     @EventHandler
