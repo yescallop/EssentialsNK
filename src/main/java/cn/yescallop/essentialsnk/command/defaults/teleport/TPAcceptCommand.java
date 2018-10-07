@@ -49,8 +49,8 @@ public class TPAcceptCommand extends CommandBase {
                 return false;
             }
         }
-        from.sendMessage(lang.translateString("commands.tpaccept.accepted", to.getDisplayName()));
-        sender.sendMessage(lang.translateString("commands.generic.teleporting"));
+        from.sendMessage(TextFormat.YELLOW + lang.translateString("commands.tpaccept.accepted", to.getDisplayName()));
+        sender.sendMessage(TextFormat.YELLOW + lang.translateString("commands.generic.teleporting"));
         if (request.isTo()) {
             from.teleport(to);
         } else {

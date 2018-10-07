@@ -38,7 +38,7 @@ public class TPAAllCommand extends CommandBase {
                 p.sendMessage(lang.translateString("commands.tpahere.invite", player.getDisplayName()));
             }
         }
-        player.sendMessage(lang.translateString("commands.tpaall.success"));
+        player.sendMessage(TextFormat.GREEN + lang.translateString("commands.tpaall.success"));
         return true;
     }
 }

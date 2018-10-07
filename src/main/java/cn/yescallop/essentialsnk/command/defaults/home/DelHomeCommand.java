@@ -29,7 +29,7 @@ public class DelHomeCommand extends CommandBase {
             return false;
         }
         api.removeHome((Player) sender, args[0].toLowerCase());
-        sender.sendMessage(lang.translateString("commands.delhome.success", args[0]));
+        sender.sendMessage(TextFormat.GREEN + lang.translateString("commands.delhome.success", args[0]));
         return true;
     }
 }

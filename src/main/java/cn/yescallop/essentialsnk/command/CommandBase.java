@@ -5,6 +5,7 @@ import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.lang.TranslationContainer;
+import cn.nukkit.permission.Permissible;
 import cn.nukkit.utils.TextFormat;
 import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.lang.BaseLang;
@@ -43,5 +44,36 @@ public abstract class CommandBase extends Command {
 
     protected void sendPermissionMessage(CommandSender sender) {
         sender.sendMessage(new TranslationContainer(TextFormat.RED + "%commands.generic.permission"));
+    }
+
+    protected int getPermissionValue(Permissible holder, String basePerm) {
+        if (holder.hasPermission(basePerm))
+            return -1;
+
+        int val = 0;
+
+        for (String perm : holder.getEffectivePermissions().keySet().stream()
+                .filter(name -> name.startsWith(basePerm + "."))
+                .map(name -> name.substring(17))
+                .toArray(String[]::new)) {
+
+            int value = -1;
+
+            try {
+                value = Integer.parseInt(perm);
+            } catch (NumberFormatException e) {
+                //ignore
+            }
+
+            if (value > 0) {
+                val = value;
+            }
+        }
+
+        if (val <= 0) {
+            val = 10;
+        }
+
+        return val;
     }
 }

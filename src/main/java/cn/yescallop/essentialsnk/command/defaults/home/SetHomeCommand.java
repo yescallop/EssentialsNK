@@ -17,13 +17,29 @@ public class SetHomeCommand extends CommandBase {
         if (!this.testPermission(sender)) {
             return false;
         }
+
         if (!this.testIngame(sender)) {
             return false;
         }
+
         if (args.length != 1) {
             this.sendUsage(sender);
             return false;
         }
+
+        Player p = (Player) sender;
+
+        int maxHomes = getPermissionValue(p, getPermission());
+
+        if (maxHomes >= 0) {
+            int homes = api.getHomesList(p).length;
+
+            if (homes >= maxHomes) {
+                sender.sendMessage(TextFormat.RED + lang.translateString("commands.sethome.limit", maxHomes));
+                return false;
+            }
+        }
+
         if (args[0].toLowerCase().equals("bed")) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.sethome.bed"));
             return false;
@@ -31,7 +47,8 @@ public class SetHomeCommand extends CommandBase {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.sethome.empty"));
             return false;
         }
-        sender.sendMessage(api.setHome((Player) sender, args[0].toLowerCase(), (Player) sender) ? lang.translateString("commands.sethome.updated", args[0]) : lang.translateString("commands.sethome.success", args[0]));
+
+        sender.sendMessage(TextFormat.GREEN + (api.setHome(p, args[0].toLowerCase(), p) ? lang.translateString("commands.sethome.updated", args[0]) : lang.translateString("commands.sethome.success", args[0])));
         return true;
     }
 }

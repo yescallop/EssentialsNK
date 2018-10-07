@@ -41,7 +41,7 @@ public class HomeCommand extends CommandBase {
             return false;
         }
         player.teleport(home);
-        sender.sendMessage(lang.translateString("commands.home.success", args[0]));
+        sender.sendMessage(TextFormat.GREEN + lang.translateString("commands.home.success", args[0]));
         return true;
     }
 }

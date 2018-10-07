@@ -54,8 +54,8 @@ public class TPDenyCommand extends CommandBase {
             default:
                 return false;
         }
-        from.sendMessage(lang.translateString("commands.tpdeny.denied", to.getDisplayName()));
-        sender.sendMessage(lang.translateString("commands.tpdeny.success", to.getDisplayName()));
+        from.sendMessage(TextFormat.RED + lang.translateString("commands.tpdeny.denied", to.getDisplayName()));
+        sender.sendMessage(TextFormat.GREEN + lang.translateString("commands.tpdeny.success", to.getDisplayName()));
         api.removeTPRequestBetween(from, to);
         return true;
     }

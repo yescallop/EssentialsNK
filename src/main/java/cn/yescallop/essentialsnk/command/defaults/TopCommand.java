@@ -2,6 +2,7 @@ package cn.yescallop.essentialsnk.command.defaults;
 
 import cn.nukkit.Player;
 import cn.nukkit.command.CommandSender;
+import cn.nukkit.level.Position;
 import cn.yescallop.essentialsnk.EssentialsAPI;
 import cn.yescallop.essentialsnk.command.CommandBase;
 
@@ -23,8 +24,15 @@ public class TopCommand extends CommandBase {
             return false;
         }
         Player player = (Player) sender;
+
+        Position pos = api.getHighestStandablePositionAt(player);
+        if (pos == null) {
+            sender.sendMessage(lang.translateString("commands.top.failed"));
+            return false;
+        }
+
         sender.sendMessage(lang.translateString("commands.generic.teleporting"));
-        player.teleport(api.getHighestStandablePositionAt(player));
+        player.teleport(pos);
         return true;
     }
 }

@@ -1,0 +1,2 @@
+#save interval in seconds (-1 to disable)
+auto_save: 300

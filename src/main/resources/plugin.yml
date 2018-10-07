@@ -82,6 +82,8 @@ permissions:
   default: true
  essentialsnk.setwarp:
   default: op
+ essentialsnk.setwarp.others:
+  default: op
  essentialsnk.spawn:
   default: true
  essentialsnk.spawn.others:

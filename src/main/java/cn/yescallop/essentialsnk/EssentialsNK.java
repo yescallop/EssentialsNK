@@ -19,6 +19,11 @@ public class EssentialsNK extends PluginBase {
         this.getLogger().info(lang.translateString("essentialsnk.loaded"));
     }
 
+    @Override
+    public void onDisable() {
+        this.api.disable();
+    }
+
     public BaseLang getLanguage() {
         return lang;
     }

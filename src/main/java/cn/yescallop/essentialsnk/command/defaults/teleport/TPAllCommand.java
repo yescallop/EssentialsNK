@@ -35,10 +35,10 @@ public class TPAllCommand extends CommandBase {
         for (Player p : api.getServer().getOnlinePlayers().values()) {
             if (p != player) {
                 p.teleport(player);
-                p.sendMessage(lang.translateString("commands.tpall.other", player.getDisplayName()));
+                p.sendMessage(TextFormat.YELLOW + lang.translateString("commands.tpall.other", player.getDisplayName()));
             }
         }
-        player.sendMessage(lang.translateString("commands.tpall.success"));
+        player.sendMessage(TextFormat.GREEN + lang.translateString("commands.tpall.success"));
         return true;
     }
 }

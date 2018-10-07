@@ -1,5 +1,6 @@
 package cn.yescallop.essentialsnk;
 
+import cn.nukkit.AdventureSettings.Type;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.block.Block;
@@ -18,6 +19,8 @@ import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
+import cn.nukkit.utils.ConfigSection;
+import cn.yescallop.essentialsnk.data.Warp;
 import cn.yescallop.essentialsnk.lang.BaseLang;
 
 import java.io.File;
@@ -39,19 +42,74 @@ public class EssentialsAPI {
     private Map<Player, Location> playerLastLocation = new HashMap<>();
     private Map<Integer, TPRequest> tpRequests = new HashMap<>();
     private List<Player> vanishedPlayers = new ArrayList<>();
+
     private Config homeConfig;
-    private Config warpConfig;
+
     private Config muteConfig;
     private Config gameruleConfig;
+
+    private Map<String, Warp> warps = new HashMap<>();
 
     public EssentialsAPI(EssentialsNK plugin) {
         instance = this;
         this.plugin = plugin;
         this.lang = plugin.getLanguage();
+
         this.homeConfig = new Config(new File(plugin.getDataFolder(), "home.yml"), Config.YAML);
-        this.warpConfig = new Config(new File(plugin.getDataFolder(), "warp.yml"), Config.YAML);
         this.muteConfig = new Config(new File(plugin.getDataFolder(), "mute.yml"), Config.YAML);
         this.gameruleConfig = new Config(new File(plugin.getDataFolder(), "gamerule.yml"), Config.YAML);
+
+        loadWarps();
+    }
+
+    public void disable() {
+        saveWarps(false);
+    }
+
+    private void loadWarps() {
+        Config cfg = new Config(new File(plugin.getDataFolder(), "warp.yml"), Config.YAML);
+
+        cfg.getAll().forEach((name, data) -> {
+            if (!(data instanceof ConfigSection)) {
+                return;
+            }
+
+            ConfigSection section = (ConfigSection) data;
+
+            Warp warp = new Warp(
+                    name,
+                    section.getString("creator", null),
+                    section.getDouble("x"),
+                    section.getDouble("y"),
+                    section.getDouble("z"),
+                    section.getDouble("yaw"),
+                    section.getDouble("pitch")
+            );
+
+            warps.put(name, warp);
+        });
+    }
+
+    private void saveWarps(boolean async) {
+        ConfigSection all = new ConfigSection();
+
+        warps.values().forEach(warp -> {
+            ConfigSection local = new ConfigSection();
+
+            local.set("creator", warp.getCreator());
+            local.set("x", warp.x);
+            local.set("y", warp.y);
+            local.set("z", warp.z);
+            local.set("yaw", warp.yaw);
+            local.set("pitch", warp.pitch);
+
+            all.set(warp.getName(), local);
+        });
+
+        Config cfg = new Config(new File(plugin.getDataFolder(), "warp.yml"), Config.YAML);
+        cfg.setAll(all);
+
+        cfg.save(async);
     }
 
     public static EssentialsAPI getInstance() {
@@ -96,11 +154,11 @@ public class EssentialsAPI {
     }
 
     public boolean canFly(Player player) {
-        return player.getAdventureSettings().canFly();
+        return player.getAdventureSettings().get(Type.ALLOW_FLIGHT);
     }
 
     public void setCanFly(Player player, boolean canFly) {
-        player.getAdventureSettings().setCanFly(canFly);
+        player.getAdventureSettings().set(Type.ALLOW_FLIGHT, canFly);
         player.getAdventureSettings().update();
     }
 
@@ -252,39 +310,33 @@ public class EssentialsAPI {
     }
 
     public boolean setWarp(String name, Location pos) {
-        this.warpConfig.reload();
-        boolean replaced = warpConfig.exists(name);
-        Object[] home = new Object[]{pos.level.getName(), pos.x, pos.y, pos.z, pos.yaw, pos.pitch};
-        this.warpConfig.set(name, home);
-        this.warpConfig.save();
+        return setWarp(name, pos, null);
+    }
+
+    public boolean setWarp(String name, Location pos, String creator) {
+        boolean replaced = warps.containsKey(name);
+        this.warps.put(name, new Warp(name, creator, pos));
         return replaced;
     }
 
-    public Location getWarp(String name) {
-        this.warpConfig.reload();
-        List warp = this.warpConfig.getList(name);
-        if (warp == null || warp.size() != 6) {
-            return null;
-        }
-        return new Location((double) warp.get(1), (double) warp.get(2), (double) warp.get(3), (double) warp.get(4), (double) warp.get(5), this.getServer().getLevelByName((String) warp.get(0)));
+    public Warp getWarp(String name) {
+        return warps.get(name);
     }
 
     public void removeWarp(String name) {
-        this.warpConfig.reload();
-        this.warpConfig.remove(name);
-        this.warpConfig.save();
+        warps.remove(name);
     }
 
     public String[] getWarpsList() {
-        this.warpConfig.reload();
-        String[] list = this.warpConfig.getKeys().stream().toArray(String[]::new);
-        Arrays.sort(list, String.CASE_INSENSITIVE_ORDER);
-        return list;
+        return warps.keySet().toArray(new String[0]);
+    }
+
+    public Warp[] getWarpsList(Player p) {
+        return warps.values().stream().filter(w -> w.getCreator().equalsIgnoreCase(p.getName())).toArray(Warp[]::new);
     }
 
     public boolean isWarpExists(String name) {
-        this.warpConfig.reload();
-        return this.warpConfig.exists(name);
+        return warps.containsKey(name);
     }
 
     public Position getStandablePositionAt(Position pos) {
@@ -302,11 +354,13 @@ public class EssentialsAPI {
     public Position getHighestStandablePositionAt(Position pos) {
         int x = pos.getFloorX();
         int z = pos.getFloorZ();
+
         for (int y = 127; y >= 0; y--) {
             if (pos.level.getBlock(this.temporalVector.setComponents(x, y, z)).isSolid()) {
                 return new Position(x + 0.5, pos.level.getBlock(this.temporalVector.setComponents(x, y, z)).getBoundingBox().maxY, z + 0.5, pos.level);
             }
         }
+
         return null;
     }
 

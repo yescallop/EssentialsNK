@@ -23,23 +23,8 @@ public class CompassCommand extends CommandBase {
             this.sendUsage(sender);
             return false;
         }
-        String direction;
-        switch (((Player) sender).getDirection()) {
-            case 0:
-                direction = "south";
-                break;
-            case 1:
-                direction = "west";
-                break;
-            case 2:
-                direction = "north";
-                break;
-            case 3:
-                direction = "east";
-                break;
-            default:
-                direction = "error";
-        }
+        String direction = ((Player) sender).getDirection().name().toLowerCase();
+
         sender.sendMessage(lang.translateString("commands.compass.success", lang.translateString("commands.compass." + direction)));
         return true;
     }

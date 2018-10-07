@@ -30,8 +30,8 @@ public class TPHereCommand extends CommandBase {
             return false;
         }
         player.teleport((Player) sender);
-        player.sendMessage(lang.translateString("commands.tphere.other", ((Player) sender).getDisplayName()));
-        sender.sendMessage(lang.translateString("commands.tphere.success", player.getDisplayName()));
+        player.sendMessage(TextFormat.YELLOW + lang.translateString("commands.tphere.other", ((Player) sender).getDisplayName()));
+        sender.sendMessage(TextFormat.GREEN + lang.translateString("commands.tphere.success", player.getDisplayName()));
         return true;
     }
 }
