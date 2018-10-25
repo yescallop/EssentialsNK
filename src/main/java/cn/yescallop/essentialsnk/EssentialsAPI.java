@@ -83,7 +83,8 @@ public class EssentialsAPI {
                     section.getDouble("y"),
                     section.getDouble("z"),
                     section.getDouble("yaw"),
-                    section.getDouble("pitch")
+                    section.getDouble("pitch"),
+                    section.getString("level")
             );
 
             warps.put(name, warp);
@@ -102,6 +103,7 @@ public class EssentialsAPI {
             local.set("z", warp.z);
             local.set("yaw", warp.yaw);
             local.set("pitch", warp.pitch);
+            local.set("level", warp.getLevel());
 
             all.set(warp.getName(), local);
         });
@@ -320,7 +322,20 @@ public class EssentialsAPI {
     }
 
     public Warp getWarp(String name) {
-        return warps.get(name);
+        Warp warp = warps.get(name);
+
+        if (warp == null) {
+            return null;
+        }
+
+        Level level = getServer().getLevelByName(warp.getLevelName());
+
+        if (level == null) {
+            return null;
+        }
+
+        warp.level = level;
+        return warp;
     }
 
     public void removeWarp(String name) {

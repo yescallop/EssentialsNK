@@ -122,3 +122,5 @@ permissions:
   default: op
  essentialsnk.world:
   default: true
+ essentialsnk.chatcolors:
+  default: op

@@ -47,6 +47,10 @@ public class EventListener implements Listener {
                 p.hidePlayer(player);
             }
         }
+
+        if (player.hasPermission("essentialsnk.chatcolors")) {
+            player.setRemoveFormat(false);
+        }
     }
 
     @EventHandler

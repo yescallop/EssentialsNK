@@ -32,10 +32,12 @@ public class WarpCommand extends CommandBase {
             return true;
         }
         Location warp = api.getWarp(args[0].toLowerCase());
+
         if (warp == null) {
             sender.sendMessage(TextFormat.RED + lang.translateString("commands.warp.notexists", args[0]));
             return false;
         }
+
         Player player;
         if (args.length == 1) {
             if (!this.testIngame(sender)) {
@@ -53,6 +55,7 @@ public class WarpCommand extends CommandBase {
                 return false;
             }
         }
+
         player.teleport(warp);
         player.sendMessage(lang.translateString("commands.warp.success", args[0]));
         if (sender != player) {
