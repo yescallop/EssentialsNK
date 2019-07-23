@@ -19,10 +19,6 @@ public class WarpCommand extends CommandBase {
         if (!this.testPermission(sender)) {
             return false;
         }
-        if (args.length > 2) {
-            this.sendUsage(sender);
-            return false;
-        }
         if (args.length == 0) {
             String[] list = api.getWarpsList();
             if (list.length == 0) {
@@ -32,32 +28,44 @@ public class WarpCommand extends CommandBase {
             sender.sendMessage(Language.translate("commands.warp.list") + "\n" + String.join(", ", list));
             return true;
         }
-        Location warp = api.getWarp(args[0].toLowerCase());
-        if (warp == null) {
-            sender.sendMessage(TextFormat.RED + Language.translate("commands.warp.notexists", args[0]));
-            return false;
-        }
-        Player player;
-        if (args.length == 1) {
+        
+        Location warp = null;
+        String warpname = "";
+        Player target = null;
+        
+        if(args.length == 1){
             if (!this.testIngame(sender)) {
                 return false;
             }
-            player = (Player) sender;
-        } else {
+            target = (Player) sender;
+            warpname = args[0];
+            warp = api.getWarp(args[0].toLowerCase());  //:/warp <warpname>
+        }else if(args.length == 2){
             if (!sender.hasPermission("essentialsnk.warp.others")) {
                 this.sendPermissionMessage(sender);
                 return false;
             }
-            player = api.getServer().getPlayer(args[0]);
-            if (player == null) {
+            target = api.getServer().getPlayer(args[0]);//:/warp <Playername> <warpname>
+            if (target == null) {
                 sender.sendMessage(TextFormat.RED + Language.translate("commands.generic.player.notfound", args[0]));
                 return false;
             }
+            warpname = args[1];
+            warp = api.getWarp(args[1].toLowerCase());  //:/warp <Playername> <warpname>
+        }else if (args.length > 2) {
+            this.sendUsage(sender);
+            return false;
         }
-        player.teleport(warp);
-        player.sendMessage(Language.translate("commands.warp.success", args[0]));
-        if (sender != player) {
-            player.sendMessage(Language.translate("commands.warp.success.other", new String[]{player.getDisplayName(), args[0]}));
+        
+        if (warp == null) {
+            sender.sendMessage(TextFormat.RED + Language.translate("commands.warp.notexists", args[0]));
+            return false;
+        }
+        
+        target.teleport(warp);
+        target.sendMessage(Language.translate("commands.warp.success", warpname));
+        if (sender != target) {
+            target.sendMessage(Language.translate("commands.warp.success.other", new String[]{target.getDisplayName(), warpname}));
         }
         return true;
     }
