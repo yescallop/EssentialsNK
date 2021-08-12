@@ -1,4 +1,5 @@
 # EssentialsNK
+
 Essentials plugin for Nukkit
 
-**NEED HELP TO IMPROVE**
+This repository is not maintained anymore. Please head for a fork for help.
